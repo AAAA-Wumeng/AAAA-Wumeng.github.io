@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Spark | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="内存计算" />
+    
+    <meta name="description" content="本地启动1[bigdata@hadoop102 spark-local]$ bin&#x2F;spark-shell  1scala&gt; sc.textFile(&quot;.&#x2F;input&quot;)	#将文件的内容读到spark中，读进来之后，每一行都是一个元素   必须保证input目录下全部都是文件，不存在任何目录 sc是入口  1scala&gt; sc.textFile(&quot;.&#x2F;in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spark">
+<meta property="og:url" content="http://example.com/2022/01/03/Spark/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本地启动1[bigdata@hadoop102 spark-local]$ bin&#x2F;spark-shell  1scala&gt; sc.textFile(&quot;.&#x2F;input&quot;)	#将文件的内容读到spark中，读进来之后，每一行都是一个元素   必须保证input目录下全部都是文件，不存在任何目录 sc是入口  1scala&gt; sc.textFile(&quot;.&#x2F;in">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/01/03/Spark/image-20220103175859476.png">
+<meta property="article:published_time" content="2022-01-03T09:13:48.000Z">
+<meta property="article:modified_time" content="2022-05-31T02:08:19.955Z">
+<meta property="article:author" content="Wumeng">
+<meta property="article:tag" content="内存计算">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/03/Spark/image-20220103175859476.png">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-Spark" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Spark
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2022/01/03/Spark/" class="article-date">
+       <time datetime="2022-01-03T09:13:48.000Z" itemprop="datePublished">2022-01-03</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2022/01/03/Spark/" class="article-date">
+     <time datetime="2022-05-31T02:08:19.955Z" itemprop="dateModified">2022-05-31</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="本地启动"><a href="#本地启动" class="headerlink" title="本地启动"></a>本地启动</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 spark-local]$ bin/spark-shell</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">scala&gt;</span><span class="bash"> sc.textFile(<span class="string">&quot;./input&quot;</span>)	<span class="comment">#将文件的内容读到spark中，读进来之后，每一行都是一个元素</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>必须保证input目录下全部都是文件，不存在任何目录</li>
+<li>sc是入口</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">scala&gt;</span><span class="bash"> sc.textFile(<span class="string">&quot;./input&quot;</span>).flatMap(_.split(<span class="string">&quot; &quot;</span>))	<span class="comment">#切割成一个个单词</span></span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>将输入的文件用空格切分</li>
+</ul>
+<p><img src="/2022/01/03/Spark/image-20220103175859476.png" alt="image-20220103175859476"></p>
+<ul>
+<li>所有的计算都是懒加载的，需要显示的运行</li>
+</ul>
+<h1 id="spark-standalone模式"><a href="#spark-standalone模式" class="headerlink" title="spark-standalone模式"></a>spark-standalone模式</h1><p>只需要spark，不需要其他框架</p>
+<p>修改配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv spark-env.sh.template spark-env.sh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SPARK_MASTER_HOST=hadoop102</span><br><span class="line">SPARK_MASTER_PORT=7077</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv slaves.template slaves	#这里配置需要启动哪些节点</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hadoop102</span><br><span class="line">hadoop103</span><br><span class="line">hadoop104</span><br></pre></td></tr></table></figure>
+
+<p>分发文件</p>
+<p>启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 module]$ cd spark-standalone/</span><br></pre></td></tr></table></figure>
+
+<p>是在Hadoop02上启动的文件，所以在hadoop102上启动了Master</p>
+<p><img src="/2022/01/03/Spark/image-20220103184022819.png" alt="image-20220103184022819"></p>
+<p>启动完成后8080端口查看Master</p>
+<p><img src="/2022/01/03/Spark/image-20220103184319149.png" alt="image-20220103184319149"></p>
+<p>启动完成后8081端口查看Worker</p>
+<p><img src="/2022/01/03/Spark/image-20220103184423232.png" alt="image-20220103184423232"></p>
+<p>测试运行集群</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">bin/spark-submit \</span><br><span class="line">--master spark://hadoop102:7077 \</span><br><span class="line">--class org.apache.spark.examples.SparkPi \</span><br><span class="line">./examples/jars/spark-examples_2.11-2.1.1.jar 100</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/03/Spark/image-20220103185045406.png" alt="image-20220103185045406"></p>
+<p>控制台输出的是driver日志。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Master：hadoop102:8080</span><br><span class="line">Worker：hadoop102:8081</span><br><span class="line">driver：hadoop102:4040</span><br></pre></td></tr></table></figure>
+
+<p>测试单词统计</p>
+<p>启动，启动时需要指定Master在哪里</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/spark-shell --master spark://hadoop102:7077</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/03/Spark/image-20220103193738743.png" alt="image-20220103193738743"></p>
+<p>运行单词统计</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">scala&gt;</span><span class="bash"> sc.textFile(<span class="string">&quot;input&quot;</span>).flatMap(_.split(<span class="string">&quot; &quot;</span>)).map((_,1)).reduceByKey(_ + _).collect</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/03/Spark/image-20220103194446595.png" alt="image-20220103194446595"></p>
+<p>在运行任务时，保证每个节点都可以读取数据</p>
+<h4 id="配置历史服务器"><a href="#配置历史服务器" class="headerlink" title="配置历史服务器"></a>配置历史服务器</h4><p>在HDFS集群上创建文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop df -mkdir /spark-job-log</span><br></pre></td></tr></table></figure>
+
+<p>准备配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp spark-defaults.conf.template spark-defaults.conf</span><br></pre></td></tr></table></figure>
+
+<p>添加配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">spark.eventLog.enabled           true</span><br><span class="line">spark.eventLog.dir               hdfs://hadoop201:9000/spark-job-log</span><br></pre></td></tr></table></figure>
+
+<p>修改spark-env.sh文件，添加如下配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export SPARK_HISTORY_OPTS=&quot;-Dspark.history.ui.port=18080 -Dspark.history.retainedApplications=30 -Dspark.history.fs.logDirectory=hdfs://hadoop201:9000/spark-job-log&quot;</span><br></pre></td></tr></table></figure>
+
+<p>注意：历史日志保存的文件夹spark-job-log必须存在</p>
+<p>启动测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bin/spark-submit \</span><br><span class="line">--master spark://hadoop102:7077 \</span><br><span class="line">--deploy-mode cluster \</span><br><span class="line">--class org.apache.spark.examples.SparkPi \</span><br><span class="line">./examples/jars/spark-examples_2.11-2.1.1.jar 100</span><br></pre></td></tr></table></figure>
+
+<p>cluster模式不输出日志</p>
+<p><img src="/2022/01/03/Spark/image-20220103211040119.png" alt="image-20220103211040119"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bin/spark-submit \</span><br><span class="line">--master spark://hadoop102:7077 \</span><br><span class="line">--deploy-mode client \</span><br><span class="line">--class org.apache.spark.examples.SparkPi \</span><br><span class="line">./examples/jars/spark-examples_2.11-2.1.1.jar 100</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/mr-jobhistory-daemon.sh start historyserver	#启动hadoop的历史服务器</span><br></pre></td></tr></table></figure>
+
+<h1 id="spark-yarn模式"><a href="#spark-yarn模式" class="headerlink" title="spark-yarn模式"></a>spark-yarn模式</h1><p>启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">start-dfs.sh	#启动hdfs</span><br><span class="line">start-yarn.sh	#启动yarn</span><br><span class="line">sbin/mr-jobhistory-daemon.sh start historyserver	#启动hadoop的历史服务器</span><br><span class="line">sbin/start-history-server.sh	#启动spark的历史服务器</span><br></pre></td></tr></table></figure>
+
+<h1 id="idea"><a href="#idea" class="headerlink" title="idea"></a>idea</h1><p><img src="/2022/01/03/Spark/image-20220103230120638.png" alt="image-20220103230120638"></p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.wu.day01</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.rdd.<span class="type">RDD</span></span><br><span class="line"><span class="keyword">import</span> org.apache.spark.&#123;<span class="type">SparkConf</span>, <span class="type">SparkContext</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">Hello</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//    创建一个SparkContext</span></span><br><span class="line">    <span class="keyword">val</span> conf: <span class="type">SparkConf</span> = <span class="keyword">new</span> <span class="type">SparkConf</span>().setMaster(<span class="string">&quot;local[2]&quot;</span>).setAppName(<span class="string">&quot;Hello&quot;</span>)</span><br><span class="line">    <span class="keyword">val</span> sc: <span class="type">SparkContext</span> = <span class="keyword">new</span> <span class="type">SparkContext</span>(conf)</span><br><span class="line">    <span class="comment">//    从数据源得到一个RDD</span></span><br><span class="line">    <span class="keyword">val</span> lineRDD: <span class="type">RDD</span>[<span class="type">String</span>] = sc.textFile(args(<span class="number">0</span>))</span><br><span class="line">    <span class="comment">//    对RDD做各种转换</span></span><br><span class="line">    <span class="keyword">val</span> resultRDD: <span class="type">RDD</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = lineRDD.flatMap(_.split(<span class="string">&quot;\\W&quot;</span>))</span><br><span class="line">      .map((_, <span class="number">1</span>))</span><br><span class="line">      .reduceByKey(_ + _)</span><br><span class="line">    <span class="comment">//    执行行动算子</span></span><br><span class="line">    <span class="keyword">val</span> wordCountArr: <span class="type">Array</span>[(<span class="type">String</span>, <span class="type">Int</span>)] = resultRDD.collect()</span><br><span class="line"></span><br><span class="line">    wordCountArr.foreach(println)</span><br><span class="line"></span><br><span class="line">    <span class="comment">//    关闭</span></span><br><span class="line">    sc.stop()</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>只能运行在本地模式下</p>
+<p>将项目打成jar包，上传到spark-yarn目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">bin/spark-submit \</span><br><span class="line">--master yarn \</span><br><span class="line">--deploy-mode client \</span><br><span class="line">--class com.wu.day01.Hello \</span><br><span class="line">./spark-core-1.0-SNAPSHOT.jar hdfs://hadoop102:9000/input</span><br></pre></td></tr></table></figure>
+
+<h1 id="RDD"><a href="#RDD" class="headerlink" title="RDD"></a>RDD</h1><p>RDD（Resilient Distributed Dataset）叫做弹性分布式数据集，是Spark中最基本的数据抽象。</p>
+<p>在代码中是一个抽象类，它代表一个弹性的、不可变、可分区、里面的元素可并行计算的集合。</p>
+<h2 id="本地模式下运行"><a href="#本地模式下运行" class="headerlink" title="本地模式下运行"></a>本地模式下运行</h2><p>map</p>
+<p><img src="/2022/01/03/Spark/image-20220104154832040.png" alt="image-20220104154832040"></p>
+<p><img src="/2022/01/03/Spark/image-20220104155029695.png" alt="image-20220104155029695"></p>
+<p><img src="/2022/01/03/Spark/image-20220104155147373.png" alt="image-20220104155147373"></p>
+<p><img src="/2022/01/03/Spark/image-20220104155254754.png" alt="image-20220104155254754"></p>
+<p><img src="/2022/01/03/Spark/image-20220104155357467.png" alt="image-20220104155357467"></p>
+<p><img src="/2022/01/03/Spark/image-20220104155536784.png" alt="image-20220104155536784"></p>
+<p><img src="/2022/01/03/Spark/image-20220104155644002.png" alt="image-20220104155644002"></p>
+<p><img src="/2022/01/03/Spark/image-20220104155822116.png" alt="image-20220104155822116"></p>
+<p><img src="/2022/01/03/Spark/image-20220104160026849.png" alt="image-20220104160026849"></p>
+<p><img src="/2022/01/03/Spark/image-20220104160758774.png" alt="image-20220104160758774"></p>
+<p><img src="/2022/01/03/Spark/image-20220104160916684.png" alt="image-20220104160916684"></p>
+<p><img src="/2022/01/03/Spark/image-20220104161135202.png" alt="image-20220104161135202"></p>
+<p><img src="/2022/01/03/Spark/image-20220104171509363.png" alt="image-20220104171509363"></p>
+<p><img src="/2022/01/03/Spark/image-20220104171610146.png" alt="image-20220104171610146"></p>
+<h2 id="读取json数据"><a href="#读取json数据" class="headerlink" title="读取json数据"></a>读取json数据</h2><p><img src="/2022/01/03/Spark/image-20220104213614794.png" alt="image-20220104213614794"></p>
+<p>读取csv文件</p>
+<p><img src="/2022/01/03/Spark/image-20220104214307231.png" alt="image-20220104214307231"></p>
+<p>直接在文件上执行SQL语句</p>
+<p><img src="/2022/01/03/Spark/image-20220104215207313.png" alt="image-20220104215207313"></p>
+<p><img src="/2022/01/03/Spark/image-20220104215310965.png" alt="image-20220104215310965"></p>
+<p><img src="/2022/01/03/Spark/image-20220104215602664.png" alt="image-20220104215602664"></p>
+<p>spark.read.csv等价于spark.read.format(“csv”)</p>
+<h2 id="写数据"><a href="#写数据" class="headerlink" title="写数据"></a>写数据</h2><p>有四种模式，error(默认失败)，overwrite(覆盖)，append(追加)，ignore(忽略)</p>
+<p>写出到csv文件</p>
+<p><img src="/2022/01/03/Spark/image-20220104220608862.png" alt="image-20220104220608862"></p>
+<p><img src="/2022/01/03/Spark/image-20220104221310854.png" alt="image-20220104221310854"></p>
+<p>自己手动添加保存模式</p>
+<p><img src="/2022/01/03/Spark/image-20220104221401964.png" alt="image-20220104221401964"></p>
+<h2 id="spark使用外置的hive"><a href="#spark使用外置的hive" class="headerlink" title="spark使用外置的hive"></a>spark使用外置的hive</h2><p>1、将hive-site.xml拷贝到spark的配置目录下</p>
+<p>2、将mysql的驱动拷贝到jars下</p>
+<p>3、如果报错，就把core-site.xml和hdfs-site.xml拷贝到配置目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 conf]$ cp /opt/module/hive/conf/hive-site.xml hive-site.xml	#复制配置</span><br></pre></td></tr></table></figure>
+
+<p>想要使用spark操纵hive，需要启动hadoop集群</p>
+<p>查看hive中的所有数据库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">scala&gt;</span><span class="bash"> spark.sql(<span class="string">&quot;show databases&quot;</span>).show</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/03/Spark/image-20220105141915085.png" alt="image-20220105141915085"></p>
+<p>切换数据库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">scala&gt;</span><span class="bash"> spark.sql(<span class="string">&quot;use default&quot;</span>).show</span></span><br></pre></td></tr></table></figure>
+
+<p>展示数据库中的所有表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">scala&gt;</span><span class="bash"> spark.sql(<span class="string">&quot;show tables&quot;</span>).show</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/03/Spark/image-20220105142031069.png" alt="image-20220105142031069"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">scala&gt;</span><span class="bash"> spark.sql(<span class="string">&quot;show tables&quot;</span>).show(100,<span class="literal">false</span>)</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/03/Spark/image-20220105142145557.png" alt="image-20220105142145557"></p>
+<ul>
+<li>可能存在数据库名称太长被截断的情况，可以使用false，设置不截断</li>
+</ul>
+<p>直接使用是spark-sql</p>
+<p><img src="/2022/01/03/Spark/image-20220105145949829.png" alt="image-20220105145949829"></p>
+<p>spark使用hiveserver2+beeline</p>
+<p><img src="/2022/01/03/Spark/image-20220105150136502.png" alt="image-20220105150136502"></p>
+<p><img src="/2022/01/03/Spark/image-20220105150502260.png" alt="image-20220105150502260"></p>
+<h2 id="yarn模式"><a href="#yarn模式" class="headerlink" title="yarn模式"></a>yarn模式</h2><p>准备：</p>
+<p>复制hive-site.xml文件到conf目录下</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 conf]$ cp ../../spark-local/conf/hive-site.xml ./</span><br></pre></td></tr></table></figure>
+
+<p>复制mysql的连接jar包</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 jars]$ cp ../../spark-local/jars/mysql-connector-java-5.1.27-bin.jar ./</span><br></pre></td></tr></table></figure>
+
+<p>需要启动hdfs、yarn和两个历史服务器</p>
+<p>启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 spark-yarn]$ bin/spark-shell --master yarn</span><br></pre></td></tr></table></figure>
+
+<p>使用spark-sql</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/spark-sql --master yarn</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/03/Spark/image-20220105160746232.png" alt="image-20220105160746232"></p>
+<h2 id="spark-streaming"><a href="#spark-streaming" class="headerlink" title="spark-streaming"></a>spark-streaming</h2><p>消费kafka中的数据</p>
+<p>需要先启动ZK集群</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 ~]$ xcall /opt/module/zookeeper-3.4.10/bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
+
+<p>再启动kafka</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 ~]$ xcall /opt/module/kafka/bin/kafka-server-start.sh -daemon /opt/module/kafka/config/server.properties</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/03/Spark/image-20220106163039933.png" alt="image-20220106163039933"></p>
+<p>启动一个生产者，进行消费</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 kafka]$ bin/kafka-console-producer.sh  --broker-list hadoop102:9092 --topic first0106</span><br></pre></td></tr></table></figure>
+
+<p>启动一个消费者，消费数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 kafka]$ bin/kafka-console-consumer.sh --bootstrap-server hadoop102:9092 --topic first0106</span><br></pre></td></tr></table></figure>
+
+<h1 id="实时项目："><a href="#实时项目：" class="headerlink" title="实时项目："></a>实时项目：</h1><h3 id="练习："><a href="#练习：" class="headerlink" title="练习："></a>练习：</h3><p>启动zk集群</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 ~]$ xcall /opt/module/zookeeper-3.4.10/bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
+
+<p>启动kafka</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">xcall /opt/module/kafka/bin/kafka-server-start.sh -daemon /opt/module/kafka/config/server.properties</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">/opt/module/kafka/bin/kafka-server-stop.sh</span><br></pre></td></tr></table></figure>
+
+<p>启动一个消费者</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-consumer.sh --bootstrap-server hadoop102:9092 --topic ads_log0107</span><br></pre></td></tr></table></figure>
+
+<p>启动redis</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-server ../etc/redis.conf	#/usr/local/redis/bin</span><br></pre></td></tr></table></figure>
+
+<h2 id="项目："><a href="#项目：" class="headerlink" title="项目："></a>项目：</h2><p>需求介绍</p>
+<p>项目需要启动的组件</p>
+<p>zk集群</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcall /opt/module/zookeeper-3.4.10/bin/zkServer.sh start</span><br></pre></td></tr></table></figure>
+
+<p>kafka</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xcall /opt/module/kafka/bin/kafka-server-start.sh -daemon /opt/module/kafka/config/server.properties</span><br></pre></td></tr></table></figure>
+
+<p>消费者gmall_startup</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-consumer.sh --bootstrap-server hadoop102:9092 --topic gmall_startup</span><br></pre></td></tr></table></figure>
+
+<p>消费者gmall_event</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-console-consumer.sh --bootstrap-server hadoop102:9092 --topic gmall_event</span><br></pre></td></tr></table></figure>
+
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2022/01/03/Spark/" data-id="cl3u9wg1d00099wvohqkngtpu" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Wumeng"
+        },
+        "headline": "Spark",
+        "image": "http://example.com/2022/01/03/Spark/image-20220103175859476.png",
+        "keywords": "内存计算",
+        "genre": "大数据",
+        "datePublished": "2022-01-03",
+        "dateCreated": "2022-01-03",
+        "dateModified": "2022-05-31",
+        "url": "http://example.com/2022/01/03/Spark/",
+        "description": "本地启动1[bigdata@hadoop102 spark-local]$ bin/spark-shell
+
+1scala&gt; sc.textFile(&quot;./input&quot;)	#将文件的内容读到spark中，读进来之后，每一行都是一个元素
+
+
+必须保证input目录下全部都是文件，不存在任何目录
+sc是入口
+
+1scala&gt; sc.textFile(&quot;./in",
+        "wordCount": 858
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            spark实时项目
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2022/01/02/Scala/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Scala</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/image-20220525174639740.png)" alt="极客时间Django项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="title">极客时间Django项目</a></p>
+                            <p class="item-date"><time datetime="2022-05-25T08:11:16.000Z" itemprop="datePublished">2022-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/04/26/Django%E5%85%A5%E9%97%A8/image-20220426215758670.png)" alt="Django入门" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="title">Django入门</a></p>
+                            <p class="item-date"><time datetime="2022-04-26T13:14:15.000Z" itemprop="datePublished">2022-04-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></p>
+                            <p class="item-title"><a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="title">vscode配置python开发环境</a></p>
+                            <p class="item-date"><time datetime="2022-04-22T02:58:28.000Z" itemprop="datePublished">2022-04-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220426165118551.png)" alt="实时项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></p>
+                            <p class="item-title"><a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="title">实时项目</a></p>
+                            <p class="item-date"><time datetime="2022-02-28T01:49:46.000Z" itemprop="datePublished">2022-02-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/01/11/elasticsearch/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/01/11/elasticsearch/" class="title">elasticsearch</a></p>
+                            <p class="item-date"><time datetime="2022-01-11T13:47:23.000Z" itemprop="datePublished">2022-01-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Django/" style="font-size: 15px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 15px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 20px;">大数据</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Wumeng</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="parent">
+                <div class="child">
+                  <span id="busuanzi_container_site_pv">
+                    访问量<span id="busuanzi_value_site_pv"></span>次
+                  </span>
+                  <span class="post-meta-divider">|</span>
+                  <span id="busuanzi_container_site_uv" style='display:none'>
+                    访客数<span id="busuanzi_value_site_uv"></span>人
+                  </span>
+                  <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                </div>
+              </div>              
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <style>
+        .parent {
+          position: relative;
+        }
+        .child {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      </style>
+      
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://example.com/2022/01/03/Spark/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>HDFS | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Hadoop" />
+    
+    <meta name="description" content="HDFS HDFS是分布式文件管理系统中的一种。 使用场景一次写入，多次读出的场景，且不支持对文件的修改【不支持对文件的随机写，可以追加】   文件在HDFS上存储时，以block为基本单位存储，没有提供对文件的在线寻址（打开）功能。 文件以块形式存储，修改一个块的内容，就会影响到当前块之后的所有块，效率低。  优缺点优点 高容错性 数据自动保存多个副本。它通过增加副本的形式，提高容错性 某一个副">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HDFS">
+<meta property="og:url" content="http://example.com/2021/11/28/HDFS/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="HDFS HDFS是分布式文件管理系统中的一种。 使用场景一次写入，多次读出的场景，且不支持对文件的修改【不支持对文件的随机写，可以追加】   文件在HDFS上存储时，以block为基本单位存储，没有提供对文件的在线寻址（打开）功能。 文件以块形式存储，修改一个块的内容，就会影响到当前块之后的所有块，效率低。  优缺点优点 高容错性 数据自动保存多个副本。它通过增加副本的形式，提高容错性 某一个副">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/11/28/HDFS/image-20211130215738201.png">
+<meta property="article:published_time" content="2021-11-28T04:12:52.000Z">
+<meta property="article:modified_time" content="2021-12-23T13:19:25.809Z">
+<meta property="article:author" content="Wumeng">
+<meta property="article:tag" content="Hadoop">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/11/28/HDFS/image-20211130215738201.png">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-HDFS" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        HDFS
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/11/28/HDFS/" class="article-date">
+       <time datetime="2021-11-28T04:12:52.000Z" itemprop="datePublished">2021-11-28</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/11/28/HDFS/" class="article-date">
+     <time datetime="2021-12-23T13:19:25.809Z" itemprop="dateModified">2021-12-23</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Hadoop/" rel="tag">Hadoop</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h1><p> HDFS是分布式文件管理系统中的一种。</p>
+<h4 id="使用场景"><a href="#使用场景" class="headerlink" title="使用场景"></a>使用场景</h4><p>一次写入，多次读出的场景，且不支持对文件的修改【不支持对文件的随机写，可以追加】</p>
+<ul>
+<li> 文件在HDFS上存储时，以block为基本单位存储，没有提供对文件的在线寻址（打开）功能。</li>
+<li>文件以块形式存储，修改一个块的内容，就会影响到当前块之后的所有块，效率低。</li>
+</ul>
+<h2 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h2><h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ul>
+<li>高容错性<ul>
+<li>数据自动保存多个副本。它通过增加副本的形式，提高容错性</li>
+<li>某一个副本丢失后，它可以自动恢复</li>
+</ul>
+</li>
+<li>适合处理大数据<ul>
+<li>数据规模：处理的数据规模达到GB、TB甚至PB级别的数据。 </li>
+<li>文件规模能够处理百万规模以上的文件数量，数量相当之大。 </li>
+</ul>
+</li>
+<li>可构建在<strong>廉价机器</strong>上，通过多副本机制，提高可靠性</li>
+</ul>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ul>
+<li><p>不适合低延时数据访问</p>
+</li>
+<li><p>无法高效对大量小文件进行存储</p>
+<ul>
+<li><p>存储大量小文件，会占用NameNode大量的内存来存储文件目录和块信息。这样是不可取的，NameNode的内存是有限的</p>
+<ul>
+<li><p>NameNode负责文件元数据（属性，块的映射）的管理，当NN运行时，必须将当前集群存储的所有文件的元数据全部都加载到内存中。</p>
+<ul>
+<li><p>举例：当前运行NameNode的机器，有64GB内存，除去系统开销，分配给NameNode50GB内存，</p>
+<ul>
+<li><p>文件A（1KB），存储到HDFS上，需要将a文件的元数据保存到NN，加载到内存</p>
+<p>文件名    创建时间    所属主    所属组    权限    修改时间    + 块的映射（1块）</p>
+<p>【占用空间150B】，最多存储的数量为{50GB/150B}个文件</p>
+</li>
+<li><p>文件B（128MB），存储到HDFS上，需要将a文件的元数据保存到NN，加载到内存</p>
+<p>文件名    创建时间    所属主    所属组    权限    修改时间    + 块的映射（1块）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>小文件存储的寻址时间，超过读取时间，违反了HDFS的涉及目标</p>
+</li>
+</ul>
+</li>
+<li><p>不支持并发写入，文件随机修改</p>
+<ul>
+<li>一个文件只能有一个写，不允许多个线程同时写</li>
+<li>仅支持文件追加（append），不支持文件的随机修改</li>
+</ul>
+</li>
+</ul>
+<h2 id="块大小"><a href="#块大小" class="headerlink" title="块大小"></a>块大小</h2><ul>
+<li>块大小取决于dfs.blocksize，默认为128MB【指的是最大块大小，如果当前块存储的数据大小不满足128M，那么存了多少数据，就占用多大的空间 】<ul>
+<li>一个块只属于一个文件</li>
+</ul>
+</li>
+<li>默认为128MB的原因，基于最佳传输损耗理论</li>
+<li>不论对磁盘的读/写，都需要消耗时间</li>
+<li>最佳传输损耗理论：一次传输中，寻址的时间，占用总传输时间的1%时，本次传输的损耗最小，为最佳性价比传输！<ul>
+<li>块在传输的时候，每64位还需要校验一次，一次块的大小，必须是2的n次方，最接近传输速率100M的就是128M</li>
+</ul>
+</li>
+<li>块大小调节<ul>
+<li>不能太大<ul>
+<li>分块读取的场景，不够灵活，会带来额外的网络消耗</li>
+<li>在上传文件时，一旦发生故障，会造成资源的浪费</li>
+</ul>
+</li>
+<li>不能太小<ul>
+<li>快太小，同样大小的文件，会占用过多的NameNode的空间</li>
+<li>在进行读取操作时，会消耗额外的寻址时间</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="副本数"><a href="#副本数" class="headerlink" title="副本数"></a>副本数</h2><p>指的是最大副本数，需要参考DataNode节点的数量， 每个DataNode节点最多存储一个副本【例如，你有3个节点，设置最大副本数位10，那么也只会保留3个副本】</p>
+<h2 id="Shell操作HDFS"><a href="#Shell操作HDFS" class="headerlink" title="Shell操作HDFS"></a>Shell操作HDFS</h2><p>hadoop fs 和hdfs dfs的区别</p>
+<ul>
+<li>hadoop fs：既可以对本地文件系统进行操作还可以操作分布式文件系统</li>
+<li>hdfs dfs：只能操作分布式文件系统</li>
+</ul>
+<h2 id="HDFS的读写流程"><a href="#HDFS的读写流程" class="headerlink" title="HDFS的读写流程"></a>HDFS的读写流程</h2><p><img src="/2021/11/28/HDFS/image-20211130215738201.png" alt="image-20211130215738201"></p>
+<ul>
+<li>完成上传功能必须要有客户端和服务端<ul>
+<li>客户端：必须是一个Distributed FileSysten客户端（分布式文件客户端）</li>
+<li>服务端： 服务端必须有NameNode、DataNode进程</li>
+</ul>
+</li>
+<li>上传1：请求发给NameNode（FileSystem客户端对象在构建时需要传一个URI【这个URI就是NameNode在那台机器上，通讯的端口号是多少】）<ul>
+<li>处理上传请求：判断你有没有权限上传文件【没有权限直接返回拒绝报错提示信息（org.apache.hadoop.security.AccessControlException）】；如果有权限上传文件会判断上传文件的目的路径是否已经存在【如果已经存在，并且在上传的时候没有设置overwrite为true，相当于是不覆盖的，意味着，文件已经存在了，就不需要再上传了】</li>
+</ul>
+</li>
+<li>2、如果都没有问题，响应可以上传文件，开始准备上传 ，根据客户端的设置，确定上传的每一个块的大小</li>
+<li>步骤三：请求上传第一个块时，NameNode就开始分配上传需要的DataNode【如何分配取决于机架感知】</li>
+</ul>
+<h3 id="写数据的流程"><a href="#写数据的流程" class="headerlink" title="写数据的流程"></a>写数据的流程</h3><ul>
+<li>1、服务端启动HDFS中的NameNode和DataNode进程</li>
+<li>2、客户端创建一个分布式文件系统客户端，由客户端向NameNode发出请求，请求上传文件</li>
+<li>3、NameNode处理请求，检查客户端是否有权限上传，路径是否合法等</li>
+<li>4、检查通过，NameNode响应客户端可以上传</li>
+<li>5、客户端根据自己设置的块的大小，开始上传第一个块，默认是0~128M<ul>
+<li>NameNode根据客户端上传的文件的副本数（默认是3）根据机架感知策略选取指定数量的DataNode节点返回</li>
+</ul>
+</li>
+<li>6、客户端根据返回的DataNode节点，请求建立传输通道<ul>
+<li>客户端向最近（网络距离最近）的DataNode节点发起通道建立请求，由这个DataNode节点依次向通道中的（距离当前DataNode距离最近）下一个节点发送建立通道请求，各个节点发送响应，通道建立成功</li>
+</ul>
+</li>
+<li>7、客户端每读取64K的数据，封装为一个packet（数据包，传输的基本单位），将packet发送到通道的下一个节点，通道中的节点收到packet之后，落盘（检验）存储，将pacjet发送给通道的下一个节点；每个节点在收到packet后，向客户端发送ack确认消息</li>
+<li>8、一个块传输完成之后，通道关闭，DataNode向NameNode上报消息，已经收到某个块</li>
+<li>9、第一个块传输完成后，第二个块开始传输，依次重复5~8。直到最后一个块传输完成。NameNode向客户端响应传输完成，客户端关闭输出流。</li>
+</ul>
+<h3 id="异常写流程"><a href="#异常写流程" class="headerlink" title="异常写流程"></a>异常写流程</h3><ul>
+<li>1~6是不变的，</li>
+<li>客户端没读取64K数据，封装为一个packet，封装成功的packet，放入到一个队列中，这个队列称为dataQueue（数据队列，封装到这个队列中的数据包都是待发送的数据包），在发送时，会先将dataQueue中的packet按顺序发送，发送后依次放入到ackqueue（正在发送的队列，都是正在发送的packet   ）中；由ackqueue发送到通道的 第一个DataNode节点 ；每个节点在收到packet后，向客户端发送ack确认消息！如果一个packet在发送后，已经收到了所有DataNode返回的ack确认消息，这个packet会在 ackqueue中删除（假如一个packet在发送后，在收到DataNode返回的ack确认消息时超时 ，传输中止，ackqueue中的packet会回滚，回滚到dataqueue）;重新建立通道，剔除坏的DataNode节点。建立完成后，继续传输；只要有一个DataNode节点收到数据，DataNode上报NameNode已经接收完此块，NameNode就认为当前块已经传输成功！NameNode会自动维护副本数。</li>
+</ul>
+<h3 id="读流程"><a href="#读流程" class="headerlink" title="读流程"></a>读流程</h3><p><img src="/2021/11/28/HDFS/image-20211201111146025.png" alt="image-20211201111146025"></p>
+<h2 id="机架感知"><a href="#机架感知" class="headerlink" title="机架感知"></a>机架感知</h2><h4 id="2-7-12默认策略"><a href="#2-7-12默认策略" class="headerlink" title="2.7.12默认策略"></a>2.7.12默认策略</h4><ul>
+<li>第一个副本放在本地的一个DataNode节点，第二个副本放在本地机架的另一个DataNode节点，第三个副本放在其他机架上的一个DataNode节点。</li>
+</ul>
+<h2 id="NameNode的工作原理"><a href="#NameNode的工作原理" class="headerlink" title="NameNode的工作原理"></a>NameNode的工作原理</h2><h3 id="NameNode的作用"><a href="#NameNode的作用" class="headerlink" title="NameNode的作用"></a>NameNode的作用</h3><ul>
+<li>NameNode保存HDFS上所有文件的元数据</li>
+<li>NameNode负责接收客户端的请求</li>
+<li>NameNode负责接收DataNode上报的信息，给DataNode分配任务（维护副本数）。</li>
+</ul>
+<h3 id="元数据的存储"><a href="#元数据的存储" class="headerlink" title="元数据的存储"></a>元数据的存储</h3><ul>
+<li><p>元数据存储在fsimage文件+edits文件中。</p>
+<ul>
+<li><p>NameNode的元数据分为两部分</p>
+<ul>
+<li>inodes：记录在fsimage文件或者edits文件中</li>
+<li>blocklist：快的位置信息（每次DataNode启动后，自动上报的）</li>
+</ul>
+</li>
+<li><p>fsimage：元数据的快照文件</p>
+<ul>
+<li>第一次格式化NameNode时，此时会创建NameNode的工作目录，其次在工作目录中会生成一个fsimage_0000000000000文件</li>
+<li>在NameNode启动时，NameNode会将所有的edits文件和fsimage文件加载到内存中合并得到最新的元数据，将元数据持久化到磁盘，生成新的fsimage</li>
+<li>启动了SecordaryNameNode也会辅助NameNode合并元数据，合并后的元数据发送到NameNode</li>
+</ul>
+</li>
+<li><p>edits：记录所有写操作的文件</p>
+<ul>
+<li>NameNode启动时，每次接收写操作请求，都会将写命令记录到edits文件中，edits文件每间隔一定的时间和大小滚动。（读操作不记录）</li>
+<li>查看edits文件的内容</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hdfs oev -i [edits文件名称] -o [输出文件的路径/edits.xml(输出文件的名称)]	#默认是以xml形式打开</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>NameNode负责集群中所有客户端的请求和所有的DataNode的请求！在一个集群中，通常NameNode需要一个较高的配置，保证NameNode可以及时处理客户端或DataNode的请求，一旦NameNode无法及时处理请求，HDFS就已经瘫痪了。</li>
+<li>第一次格式化NameNode时，会创建NameNode的工作目录，其次会在目录中生成一个fsimage_00000000的文件。</li>
+</ul>
+<h3 id="NameNode的安全模式"><a href="#NameNode的安全模式" class="headerlink" title="NameNode的安全模式"></a>NameNode的安全模式</h3><ul>
+<li>NameNode在启动时，将所有的元数据加载完成后，等待DataNode上报块的信息；当NameNode所保存的最小副本数  / 总快数 &gt; 99.99%时，NameNode会自动离开安全模式；</li>
+<li>在安全模式下（在丢快的情况下会进入安全模式），客户端只能进行有限读操作！不能写！</li>
+<li>安全模式可以在集群维护的时候手动开启</li>
+</ul>
+<p><img src="/2021/11/28/HDFS/image-20211203104612394.png" alt="image-20211203104612394"></p>
+<ul>
+<li>获取安全模式的状态/进入安全模式/离开安全模式</li>
+</ul>
+<h4 id="NameNode工作机制"><a href="#NameNode工作机制" class="headerlink" title="NameNode工作机制"></a>NameNode工作机制</h4><p><img src="/2021/11/28/HDFS/image-20211203090809578.png" alt="image-20211203090809578"></p>
+<ul>
+<li>NameNode在启动的时候需要将元数据加载到内存中（两种文件edits和fsimage文件 【每个block占元数据的150byte】）</li>
+</ul>
+<h2 id="DataNode的工作机制"><a href="#DataNode的工作机制" class="headerlink" title="DataNode的工作机制"></a>DataNode的工作机制</h2><p><img src="/2021/11/28/HDFS/image-20211203113141178.png" alt="image-20211203113141178"></p>
+<ul>
+<li>会保存数据块，同时会保存数据块的一些属性文件，包括数据长度，校验和，时间戳</li>
+</ul>
+<p><img src="/2021/11/28/HDFS/image-20211203113058379.png" alt="image-20211203113058379"></p>
+<h4 id="数据完整性校验"><a href="#数据完整性校验" class="headerlink" title="数据完整性校验"></a>数据完整性校验</h4><p><img src="/2021/11/28/HDFS/image-20211203113321269.png" alt="image-20211203113321269"></p>
+<ul>
+<li>主要是通过校验和来进行校验</li>
+</ul>
+<h1 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h1><ul>
+<li>分布式运算程序的编程框架，核心功能是将用户编写的业务逻辑代码和自带的默认组件整合成一个完整的分布式运算程序，并发运行在一个hadoop集群上</li>
+</ul>
+<h3 id="优点-1"><a href="#优点-1" class="headerlink" title="优点"></a>优点</h3><ul>
+<li>易于编程</li>
+<li>良好的扩展性</li>
+<li>高容错</li>
+<li>适合PB级以上海量数据的离线处理</li>
+</ul>
+<h3 id="缺点-1"><a href="#缺点-1" class="headerlink" title="缺点"></a>缺点</h3><ul>
+<li>不擅长实时计算<ul>
+<li>无法在毫秒或秒级，返回结果</li>
+</ul>
+</li>
+<li>不擅长流式计算<ul>
+<li>流式计算的输入数据是动态的，而MapReduce的输入数据是静态的，不能动态变化。（MapReduce自自身设计的特点决定了数据源必须是静态的）</li>
+</ul>
+</li>
+<li>不擅长DGA（有向图）计算<ul>
+<li>多个应用程序存在依赖关系，后一个应用程序的输入作为前一个的输出。在这种情况下，MapReduce并不是不能做，而是在使用后，每个MapReduce的作业的输出结果都会写入磁盘，会造成大量的磁盘IO，导致性能非常低下。</li>
+</ul>
+</li>
+</ul>
+<h3 id="核心编程思想"><a href="#核心编程思想" class="headerlink" title="核心编程思想"></a>核心编程思想</h3><ul>
+<li>Job（组作业）：一个MR程序称为一个Job</li>
+<li>MRAppMaster（MR任务的主节点）：一个Job在运行时，会先启动一个进程，这个进程为MRAppMaster.<ul>
+<li>负责Job中执行状态的监控，容错，和MR申请资源，提交Task等。</li>
+</ul>
+</li>
+<li>Task（任务）：Task是一个进程，负责某项运算</li>
+<li>Map（Map阶段）：Map是MapReduce程序运行的第一个阶段！<ul>
+<li>Map阶段的目的是将输入的数据，进行切分。将一个大数据，切分为若干个小部分；切分后，每个部分称为一片（spilt），每片数据会交给一个Task（进程）进行计算！</li>
+<li>Task负责是Map阶段程序的计算，称为MapTask！</li>
+<li>在一个MR程序的Map阶段，会启动N（N取决于切片数）个Task。每个MapTask是并行的</li>
+</ul>
+</li>
+<li>Reduce阶段：Reduce是MapReduce程序运行的第二个阶段（最后一个阶段）<ul>
+<li>Reduce阶段的目的是将Map阶段，每个MapTask计算后的结果进行合并汇总！得到最终的结果，Reduce阶段是可选的</li>
+<li>Task负责是Reduce阶段程序的计算，称为ReduceTask！一个Job可以通过设置，启动N个ReduceTask，这些ReduceTask也是并行计算的，每个ReduceTask都会产生一个结果</li>
+</ul>
+</li>
+</ul>
+<h3 id="常用组件"><a href="#常用组件" class="headerlink" title="常用组件"></a>常用组件</h3><ul>
+<li>Mapper：map阶段的核心处理器</li>
+<li>Reducer：reduce阶段的核心处理逻辑</li>
+<li>InputFormat：输入格式<ul>
+<li>MR成勋必须指定一个输入目录，一个输出目录</li>
+<li>InputFormat：代表输入目录中文件的格式<ul>
+<li>普通文件，可以使用FileInputFormat</li>
+<li>如果是SequeceFile（Hadoop提供的一种文件格式）可以使用SequnceFileInputFormat。</li>
+<li>如果处理的数据在数据库中，需要使用DBInputFormat</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>OutPutFormat：输出格式<ul>
+<li>OutPutFormat代表MR处理后的结果，要以什么样的文件格式输出</li>
+<li>将结果写出到一个普通文件中，可以使用FileOutPutFormat</li>
+<li>将结果写到数据库中，可以使用DBOutPutFormat</li>
+<li>将结果写入到SequeceFile，可以使用SequeceFileOutPutFormat</li>
+</ul>
+</li>
+<li>RecorReader：记录读取器<ul>
+<li>RecorReader负责从输入格式中，读取数据，读取后封装为一组k-v</li>
+</ul>
+</li>
+<li>RecorWroter：记录写出器<ul>
+<li>RecorWroter将处理结果以什么样的格式写出到输出文件中</li>
+</ul>
+</li>
+<li>Partitioner：分区器<ul>
+<li>负责在Mapper将数据写出时，将keyout-valueout，为每组keyout-valueout打上标记，进行分区！</li>
+<li>目的：一个ReduceTask只会处理一个分区的数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="MR中数据的流程"><a href="#MR中数据的流程" class="headerlink" title="MR中数据的流程"></a>MR中数据的流程</h3><ul>
+<li>InputFormat调用RecordReader，从输入目录的文件中读取一组数据，封装为key-value对象</li>
+<li>将封装好的key-value，交给Mapper.map() —-&gt; 将处理的结果写出keyout-valueout</li>
+<li>ReduceTask启动Reducer，使用Reduce.reduce()处理写出的keyout-valueout,</li>
+<li>OutputFormat调用RecordWrite，将Reducer处理后的keyout-valueout写出到文件</li>
+</ul>
+<p>spilt（切片）–&gt; read（读取数据，封装为输入的k-v）–&gt; map（Mapper.map()方法进行处理）–&gt;sort(分区和排序) [以上是map阶段]–&gt; copy（拷贝分区数据）–&gt;sort（合并且排序）–&gt;reduce（合并）–&gt;write（写出数据）[reduce阶段]</p>
+<p>查看haoop集群根目录下文件夹的权限</p>
+<p><img src="/2021/11/28/HDFS/image-20211204110637900.png" alt="image-20211204110637900"></p>
+<p>修改根目录下所有文件夹的权限</p>
+<p><img src="/2021/11/28/HDFS/image-20211204110714823.png" alt="image-20211204110714823"></p>
+<h3 id="切片的阶段"><a href="#切片的阶段" class="headerlink" title="切片的阶段"></a>切片的阶段</h3><ul>
+<li><p>切片是以文件为单位进行切片的</p>
+</li>
+<li><p>FileInputFormat的切片策略（默认）</p>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;InputSplit&gt; <span class="title">getSplits</span><span class="params">(JobContext job)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    StopWatch sw = <span class="keyword">new</span> StopWatch().start();</span><br><span class="line">    <span class="comment">//取两个数的最大值，getFormatMinSplitSize()默认是1，</span></span><br><span class="line">    <span class="keyword">long</span> minSize = Math.max(getFormatMinSplitSize(), getMinSplitSize(job));</span><br><span class="line">    <span class="comment">//读取最大值</span></span><br><span class="line">    <span class="keyword">long</span> maxSize = getMaxSplitSize(job);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// generate splits - 开始切片</span></span><br><span class="line">    List&lt;InputSplit&gt; splits = <span class="keyword">new</span> ArrayList&lt;InputSplit&gt;();</span><br><span class="line">    <span class="comment">//获取输入文件的状态信息（就是元数据）</span></span><br><span class="line">    List&lt;FileStatus&gt; files = listStatus(job);</span><br><span class="line">    <span class="comment">//核心，以文件为单位进行切片</span></span><br><span class="line">    <span class="keyword">for</span> (FileStatus file: files) &#123;</span><br><span class="line">        <span class="comment">//路径</span></span><br><span class="line">      Path path = file.getPath();</span><br><span class="line">        <span class="comment">//当前文件的长度</span></span><br><span class="line">      <span class="keyword">long</span> length = file.getLen();</span><br><span class="line">        <span class="comment">//length!=0，相当于这个文件不是一个空文件</span></span><br><span class="line">      <span class="keyword">if</span> (length != <span class="number">0</span>) &#123;</span><br><span class="line">        BlockLocation[] blkLocations;</span><br><span class="line">          <span class="comment">//获取块的信息</span></span><br><span class="line">        <span class="keyword">if</span> (file <span class="keyword">instanceof</span> LocatedFileStatus) &#123;</span><br><span class="line">            <span class="comment">//获取当前文件的位置</span></span><br><span class="line">          blkLocations = ((LocatedFileStatus) file).getBlockLocations();</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          FileSystem fs = path.getFileSystem(job.getConfiguration());</span><br><span class="line">          blkLocations = fs.getFileBlockLocations(file, <span class="number">0</span>, length);</span><br><span class="line">        &#125;</span><br><span class="line">          <span class="comment">//判断文件路径是否是可以切片的，FileInputForamt,默认返回true</span></span><br><span class="line">        <span class="keyword">if</span> (isSplitable(job, path)) &#123;</span><br><span class="line">            <span class="comment">//获取文件的块大小（windows下默认的大小是32M，HDFS默认是128M）</span></span><br><span class="line">          <span class="keyword">long</span> blockSize = file.getBlockSize();</span><br><span class="line">            <span class="comment">//切片的大小</span></span><br><span class="line">          <span class="keyword">long</span> splitSize = computeSplitSize(blockSize, minSize, maxSize);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//待切片的字节</span></span><br><span class="line">          <span class="keyword">long</span> bytesRemaining = length;</span><br><span class="line">            <span class="comment">//待切部分除以块大小，如果大于1.1，就走循环体里边，先切一片，再判断</span></span><br><span class="line">          <span class="keyword">while</span> (((<span class="keyword">double</span>) bytesRemaining)/splitSize &gt; SPLIT_SLOP) &#123;</span><br><span class="line">            <span class="keyword">int</span> blkIndex = getBlockIndex(blkLocations, length-bytesRemaining);</span><br><span class="line">            splits.add(makeSplit(path, length-bytesRemaining, splitSize,</span><br><span class="line">                        blkLocations[blkIndex].getHosts(),</span><br><span class="line">                        blkLocations[blkIndex].getCachedHosts()));</span><br><span class="line">            bytesRemaining -= splitSize;</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//待切部分不等于0，就是还有待切部分，将剩余的部分作为一片</span></span><br><span class="line">            <span class="comment">//最后一片，可能超过片大小，但是不超过1.1倍</span></span><br><span class="line">          <span class="keyword">if</span> (bytesRemaining != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> blkIndex = getBlockIndex(blkLocations, length-bytesRemaining);</span><br><span class="line">              <span class="comment">//添加一个切片，length-bytesRemaining：偏移量，就是剩余部分的偏移量</span></span><br><span class="line">            splits.add(makeSplit(path, ，length-bytesRemaining, bytesRemaining,</span><br><span class="line">                       blkLocations[blkIndex].getHosts(),</span><br><span class="line">                       blkLocations[blkIndex].getCachedHosts()));</span><br><span class="line">          &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123; <span class="comment">// not splitable -- 不可以切片，结果就是一个文件作为一个切片</span></span><br><span class="line">          splits.add(makeSplit(path, <span class="number">0</span>, length, blkLocations[<span class="number">0</span>].getHosts(),</span><br><span class="line">                      blkLocations[<span class="number">0</span>].getCachedHosts()));</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123; </span><br><span class="line">        <span class="comment">//Create empty hosts array for zero length files</span></span><br><span class="line">          <span class="comment">//如果是空文件，就在这里处理，创建一个切片</span></span><br><span class="line">          <span class="comment">//空文件也会创建一个切片，这个切片从当前文件的0offset起，向后读取0个字节</span></span><br><span class="line">        splits.add(makeSplit(path, <span class="number">0</span>, length, <span class="keyword">new</span> String[<span class="number">0</span>]));</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// Save the number of input files for metrics/loadgen</span></span><br><span class="line">    job.getConfiguration().setLong(NUM_INPUT_FILES, files.size());</span><br><span class="line">    sw.stop();</span><br><span class="line">    <span class="keyword">if</span> (LOG.isDebugEnabled()) &#123;</span><br><span class="line">      LOG.debug(<span class="string">&quot;Total # of splits generated by getSplits: &quot;</span> + splits.size()</span><br><span class="line">          + <span class="string">&quot;, TimeTaken: &quot;</span> + sw.now(TimeUnit.MILLISECONDS));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> splits;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="从Job的配置中获取参数，"><a href="#从Job的配置中获取参数，" class="headerlink" title="从Job的配置中获取参数，"></a>从Job的配置中获取参数，</h4><ul>
+<li>可以从配置文件中获取</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//job,可以获取Job的所有信息</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">long</span> <span class="title">getMinSplitSize</span><span class="params">(JobContext job)</span> </span>&#123;</span><br><span class="line"><span class="comment">//取到了就返回SPLIT_MINSIZE，没有取到就返回1L</span></span><br><span class="line">  <span class="keyword">return</span> job.getConfiguration().getLong(SPLIT_MINSIZE, <span class="number">1L</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>设置Job中地1参数</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">conf.setClass(INPUT_FORMAT_CLASS_ATTR,cls,InoutForamt.class)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>要为INPUT_FORMAT_CLASS_ATTR设置参数为cls，cls必须是InputFormat的子类</li>
+</ul>
+<h4 id="makeSplit方法"><a href="#makeSplit方法" class="headerlink" title="makeSplit方法"></a>makeSplit方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> FileSplit <span class="title">makeSplit</span><span class="params">(Path file, <span class="keyword">long</span> start, <span class="keyword">long</span> length, </span></span></span><br><span class="line"><span class="params"><span class="function">                                String[] hosts, String[] inMemoryHosts)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> FileSplit(file, start, length, hosts, inMemoryHosts);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="TextInputFormat判断文件是否可切"><a href="#TextInputFormat判断文件是否可切" class="headerlink" title="TextInputFormat判断文件是否可切"></a>TextInputFormat判断文件是否可切</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">isSplitable</span><span class="params">(JobContext context, Path file)</span></span>&#123;</span><br><span class="line">    <span class="comment">//根据文件使用的后缀名，来获取文件使用的压缩格式</span></span><br><span class="line">    <span class="keyword">final</span> CompressionCodec codec = </span><br><span class="line">        <span class="keyword">new</span> CompressionCodecFactory(context.getConfiguration()).getCodec(file);</span><br><span class="line">    <span class="comment">//如果文件不是压缩格式，默认文件都可以切片</span></span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">null</span> == codec)&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//否则判断是否是一个可以切片的压缩格式，默认只有Bzip2压缩格式可以切片</span></span><br><span class="line">    <span class="keyword">return</span> codec instanceOf SplittableCompressionCodec;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>片大小的计算，默认的片大小，就是块大小</p>
+<ul>
+<li>调节片大小，大于块大小：<ul>
+<li>调整minSize的大小即可【也就是调整mapreduce.input.fileinputformat.split.minsize的值】（配置mapreduce.input.fileinputformat.split.minsize的值大于块大小即可）</li>
+</ul>
+</li>
+<li>调节片大小，小于块大小<ul>
+<li>调整maxSize即可：配置mapreduce.input.fileinputformat.split.maxsize的大小</li>
+</ul>
+</li>
+<li>调节片大小的目的<ul>
+<li>理论上说：文件的数据量一定的情况下，片越大，切片的数量越少，启动的MapTask越少，Map阶段预算就慢了，片越小，启动的MapTask就越多，Map阶段的运算就越快</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//blockSize块大小，minSize/maxSize，之前已经获取过了</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">long</span> <span class="title">computeSplitSize</span><span class="params">(<span class="keyword">long</span> blockSize, <span class="keyword">long</span> minSize,</span></span></span><br><span class="line"><span class="params"><span class="function">                                  <span class="keyword">long</span> maxSize)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//计算方法，先从，maxsize和blocksize中取小的，然后在和minsize取最大</span></span><br><span class="line">    <span class="keyword">return</span> Math.max(minSize【<span class="number">1</span>】, Math.min(maxSize【<span class="keyword">long</span>的最大值】, blockSize【32M】));</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>1、获取当前输入目录中的所有文件，</li>
+<li>2、以文件为单位进行切片，如果文件是一个空文件，默认是一个空的切片</li>
+<li>3、如果文件不是一个空文件，尝试判断文件是否可切（一般情况下，只要不是压缩文件都可切）</li>
+<li>4、如果文件不可切，整个文件作为1片</li>
+<li>5、如果文件可切，先获取片大小<ul>
+<li>循环判断，待切部分除以块大小，是否大于1.1倍，如果大于，就先切去一片，再判断。。。</li>
+</ul>
+</li>
+<li>6、剩余部分，整个作为一片</li>
+</ul>
+<h3 id="常见的输入格式"><a href="#常见的输入格式" class="headerlink" title="常见的输入格式"></a>常见的输入格式</h3><h4 id="TextInputFormat："><a href="#TextInputFormat：" class="headerlink" title="TextInputFormat："></a>TextInputFormat：</h4><ul>
+<li>切片：使用默认的切片策略</li>
+<li>RecordReader：LineRecordReader，一次处理一行，将一行的内容作为偏移量作为key，一行的内容作为value。【key的类型是LongWritable；value的类型是Text】</li>
+<li>适用场景：常用于输入目录中的文件全部都是文本文件</li>
+</ul>
+<h4 id="NLineInputForamt："><a href="#NLineInputForamt：" class="headerlink" title="NLineInputForamt："></a>NLineInputForamt：</h4><ul>
+<li><p>切片：读取配置中的参数【mapreduce.input.lineinputformat.linespermap】，默认为1，以文件为单位，每一行切一片</p>
+</li>
+<li><p>RecordReader：LineRecordReader，一次处理一行，将一行的内容作为偏移量作为key，一行的内容作为value。【key的类型是LongWritable；value的类型是Text】</p>
+</li>
+<li><p>适用于每一行的数据特别长的情况；处理逻辑比较复杂。</p>
+</li>
+</ul>
+<h4 id="KeyValueTextInputFormat"><a href="#KeyValueTextInputFormat" class="headerlink" title="KeyValueTextInputFormat"></a>KeyValueTextInputFormat</h4><ul>
+<li><p>切片：使用的是默认的切片策略</p>
+</li>
+<li><p>RecordReader：KeyValueLineRecordReader，key是Text类型；value也是Text类型</p>
+</li>
+<li><p>针对文本文件，适用分隔符，将每一行的内容分割为key和value，如果没有找到分隔符，当前行的内容作为key，value为空串。</p>
+<ul>
+<li>默认分隔符为\t，可以通过参数mapreduce.input,keyvaluelinerecordreader.value.separator指定</li>
+</ul>
+</li>
+</ul>
+<h4 id="ConbineTextInputFormat"><a href="#ConbineTextInputFormat" class="headerlink" title="ConbineTextInputFormat"></a>ConbineTextInputFormat</h4><ul>
+<li><p>作用：改变了传统的切片方式，将多个小文件，划分到一个片中；适合小文件过多的场景。</p>
+</li>
+<li><p>RecordReader：LineRecordReader，一次处理一行，将一行的内容作为偏移量作为key，一行的内容作为value。【key的类型是LongWritable；value的类型是Text】</p>
+</li>
+<li><p>切片：先确定片的最大值maxSize，该参数通过mapreduce.input.fileinputformat.split.maxsize设置</p>
+</li>
+<li><p>流程：</p>
+<ul>
+<li><p>以文件为单位，将每个文件划分为若干part，</p>
+<ul>
+<li>判断待切文件的大小是否小于maxSize，如果小于，整个待切部分作为1part；</li>
+<li>如果大于maxSize但是小于2倍，将整个待切部分均分，分为2个part；</li>
+<li>文件的待切部分的大小大于2倍的maxSize，先切去maxSize的大小，作为1部分，剩余待切部分继续判断</li>
+</ul>
+</li>
+<li><p>将之前切分的若干part进行累加，累加后一旦累加后的大小超过maxSize，这些作为1片。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="块和片的关系"><a href="#块和片的关系" class="headerlink" title="块和片的关系"></a>块和片的关系</h3><ul>
+<li>片（inputSplit）：在计算MR程序时，才会切片；片在程序运行时，临时将文件从逻辑上划分为若干部分，适用的输入格式不一样，切片的方式不同，切片的数量也不一样。每片的数据最终也是以块的形式存储在HDFS上。</li>
+<li>块（Block）：在先HDFS写入文件时，文件的内容以块为单位进行存储；块时实际的物理存在</li>
+<li>建议片的大小最好等于块大小，将片大小设置和块大小一致，可以最大限度地减少因为切片带来地磁盘IO和网络。<ul>
+<li>原因：MR计算框架速度慢的原因在于执行MR时，会发生频繁的磁盘IO和网络IO;</li>
+<li>优化MR：减少磁盘IO和网络IO。</li>
+</ul>
+</li>
+</ul>
+<h4 id="如何认知MapTask的数量"><a href="#如何认知MapTask的数量" class="headerlink" title="如何认知MapTask的数量"></a>如何认知MapTask的数量</h4><ul>
+<li>MapTask的数量人为设置是无效的，只能通过切片方式来设置，MapTask只取决于切片数</li>
+</ul>
+<h3 id="Job的提交流程"><a href="#Job的提交流程" class="headerlink" title="Job的提交流程"></a>Job的提交流程</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">job.waitForCompletion(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Submit the job to the cluster and wait for it to finish.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@param</span> verbose print the progress to the user</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span> true if the job succeeded</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@throws</span> IOException thrown if the communication with the </span></span><br><span class="line"><span class="comment">   *         &lt;code&gt;JobTracker&lt;/code&gt; is lost</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">waitForCompletion</span><span class="params">(<span class="keyword">boolean</span> verbose</span></span></span><br><span class="line"><span class="params"><span class="function">                                   )</span> <span class="keyword">throws</span> IOException, InterruptedException,</span></span><br><span class="line"><span class="function">                                            ClassNotFoundException </span>&#123;</span><br><span class="line">    <span class="comment">//判断job的状态，DEFINE表示定义状态，如果是定义状态，再进行提交</span></span><br><span class="line">    <span class="keyword">if</span> (state == JobState.DEFINE) &#123;</span><br><span class="line">      submit();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (verbose) &#123;</span><br><span class="line">      monitorAndPrintJob();</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// get the completion poll interval from the client.</span></span><br><span class="line">      <span class="keyword">int</span> completionPollIntervalMillis = </span><br><span class="line">        Job.getCompletionPollInterval(cluster.getConf());</span><br><span class="line">      <span class="keyword">while</span> (!isComplete()) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">          Thread.sleep(completionPollIntervalMillis);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (InterruptedException ie) &#123;</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> isSuccessful();</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="submit方法"><a href="#submit方法" class="headerlink" title="submit方法"></a>submit方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">   * Submit the job to the cluster and return immediately.</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">submit</span><span class="params">()</span> </span></span><br><span class="line"><span class="function">         <span class="keyword">throws</span> IOException, InterruptedException, ClassNotFoundException </span>&#123;</span><br><span class="line">     <span class="comment">//再次确保job的状态是 DEFINE</span></span><br><span class="line">    ensureState(JobState.DEFINE);</span><br><span class="line">      <span class="comment">//设置新的API</span></span><br><span class="line">    setUseNewAPI();</span><br><span class="line">      <span class="comment">//连接，连接的作用就是来创建一个集群对象</span></span><br><span class="line">    connect();</span><br><span class="line">    <span class="keyword">final</span> JobSubmitter submitter = </span><br><span class="line">        getJobSubmitter(cluster.getFileSystem(), cluster.getClient());</span><br><span class="line">    status = ugi.doAs(<span class="keyword">new</span> PrivilegedExceptionAction&lt;JobStatus&gt;() &#123;</span><br><span class="line">      <span class="function"><span class="keyword">public</span> JobStatus <span class="title">run</span><span class="params">()</span> <span class="keyword">throws</span> IOException, InterruptedException, </span></span><br><span class="line"><span class="function">      ClassNotFoundException </span>&#123;</span><br><span class="line">          <span class="comment">//核心代码，把job传进来，把集群传进来，在这个集群上来提交这个job</span></span><br><span class="line">        <span class="keyword">return</span> submitter.submitJobInternal(Job.<span class="keyword">this</span>, cluster);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    state = JobState.RUNNING;</span><br><span class="line">    LOG.info(<span class="string">&quot;The url to track the job: &quot;</span> + getTrackingURL());</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="connect方法"><a href="#connect方法" class="headerlink" title="connect方法"></a>connect方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">connect</span><span class="params">()</span></span></span><br><span class="line"><span class="function">          <span class="keyword">throws</span> IOException, InterruptedException, ClassNotFoundException </span>&#123;</span><br><span class="line">    <span class="comment">//如果class对象是空，那么就给它赋值，cluster是一个集群对象</span></span><br><span class="line">    <span class="keyword">if</span> (cluster == <span class="keyword">null</span>) &#123;</span><br><span class="line">      cluster = </span><br><span class="line">        ugi.doAs(<span class="keyword">new</span> PrivilegedExceptionAction&lt;Cluster&gt;() &#123;</span><br><span class="line">                   <span class="function"><span class="keyword">public</span> Cluster <span class="title">run</span><span class="params">()</span></span></span><br><span class="line"><span class="function">                          <span class="keyword">throws</span> IOException, InterruptedException, </span></span><br><span class="line"><span class="function">                                 ClassNotFoundException </span>&#123;</span><br><span class="line">                     <span class="keyword">return</span> <span class="keyword">new</span> Cluster(getConfiguration());</span><br><span class="line">                   &#125;</span><br><span class="line">                 &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="JobSubmitter方法"><a href="#JobSubmitter方法" class="headerlink" title="JobSubmitter方法"></a>JobSubmitter方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Internal method for submitting jobs to the system.</span></span><br><span class="line"><span class="comment"> * </span></span><br><span class="line"><span class="comment"> * &lt;p&gt;The job submission process involves:</span></span><br><span class="line"><span class="comment"> * &lt;ol&gt;</span></span><br><span class="line"><span class="comment"> *   &lt;li&gt;</span></span><br><span class="line"><span class="comment"> *   Checking the input and output specifications of the job.</span></span><br><span class="line"><span class="comment"> *   &lt;/li&gt;</span></span><br><span class="line"><span class="comment"> *   &lt;li&gt;</span></span><br><span class="line"><span class="comment"> *   Computing the &#123;<span class="doctag">@link</span> InputSplit&#125;s for the job.</span></span><br><span class="line"><span class="comment"> *   &lt;/li&gt;</span></span><br><span class="line"><span class="comment"> *   &lt;li&gt;</span></span><br><span class="line"><span class="comment"> *   Setup the requisite accounting information for the </span></span><br><span class="line"><span class="comment"> *   &#123;<span class="doctag">@link</span> DistributedCache&#125; of the job, if necessary.</span></span><br><span class="line"><span class="comment"> *   &lt;/li&gt;</span></span><br><span class="line"><span class="comment"> *   &lt;li&gt;</span></span><br><span class="line"><span class="comment"> *   Copying the job&#x27;s jar and configuration to the map-reduce system</span></span><br><span class="line"><span class="comment"> *   directory on the distributed file-system. </span></span><br><span class="line"><span class="comment"> *   &lt;/li&gt;</span></span><br><span class="line"><span class="comment"> *   &lt;li&gt;</span></span><br><span class="line"><span class="comment"> *   Submitting the job to the &lt;code&gt;JobTracker&lt;/code&gt; and optionally</span></span><br><span class="line"><span class="comment"> *   monitoring it&#x27;s status.</span></span><br><span class="line"><span class="comment"> *   &lt;/li&gt;</span></span><br><span class="line"><span class="comment"> * &lt;/ol&gt;&lt;/p&gt;</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> job the configuration to submit</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> cluster the handle to the Cluster</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> ClassNotFoundException</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> InterruptedException</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IOException</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function">JobStatus <span class="title">submitJobInternal</span><span class="params">(Job job, Cluster cluster)</span> </span></span><br><span class="line"><span class="function"><span class="keyword">throws</span> ClassNotFoundException, InterruptedException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//validate the jobs output specs -- 验证job的输出空间【每次输出时要求，输出目录不存在】</span></span><br><span class="line">  checkSpecs(job);</span><br><span class="line"></span><br><span class="line">  Configuration conf = job.getConfiguration();</span><br><span class="line">  addMRFrameworkToDistributedCache(conf);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//定义一个路径，当前job运行的区域</span></span><br><span class="line">  Path jobStagingArea = JobSubmissionFiles.getStagingDir(cluster, conf);</span><br><span class="line">  <span class="comment">//configure the command line options correctly on the submitting dfs</span></span><br><span class="line">    <span class="comment">//各种设置，设置提交的IP，还有用户名等数据</span></span><br><span class="line">  InetAddress ip = InetAddress.getLocalHost();</span><br><span class="line">  <span class="keyword">if</span> (ip != <span class="keyword">null</span>) &#123;</span><br><span class="line">    submitHostAddress = ip.getHostAddress();</span><br><span class="line">    submitHostName = ip.getHostName();</span><br><span class="line">    conf.set(MRJobConfig.JOB_SUBMITHOST,submitHostName);</span><br><span class="line">    conf.set(MRJobConfig.JOB_SUBMITHOSTADDR,submitHostAddress);</span><br><span class="line">  &#125;</span><br><span class="line">    <span class="comment">//生成Job的ID</span></span><br><span class="line">  JobID jobId = submitClient.getNewJobID();</span><br><span class="line">  job.setJobID(jobId);</span><br><span class="line">    <span class="comment">//生产当前job的作业目录</span></span><br><span class="line">  Path submitJobDir = <span class="keyword">new</span> Path(jobStagingArea, jobId.toString());</span><br><span class="line">  JobStatus status = <span class="keyword">null</span>;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    conf.set(MRJobConfig.USER_NAME,</span><br><span class="line">        UserGroupInformation.getCurrentUser().getShortUserName());</span><br><span class="line">    conf.set(<span class="string">&quot;hadoop.http.filter.initializers&quot;</span>, </span><br><span class="line">        <span class="string">&quot;org.apache.hadoop.yarn.server.webproxy.amfilter.AmFilterInitializer&quot;</span>);</span><br><span class="line">    conf.set(MRJobConfig.MAPREDUCE_JOB_DIR, submitJobDir.toString());</span><br><span class="line">    LOG.debug(<span class="string">&quot;Configuring job &quot;</span> + jobId + <span class="string">&quot; with &quot;</span> + submitJobDir </span><br><span class="line">        + <span class="string">&quot; as the submit dir&quot;</span>);</span><br><span class="line">    <span class="comment">// get delegation token for the dir</span></span><br><span class="line">    TokenCache.obtainTokensForNamenodes(job.getCredentials(),</span><br><span class="line">        <span class="keyword">new</span> Path[] &#123; submitJobDir &#125;, conf);</span><br><span class="line">    </span><br><span class="line">    populateTokenCache(conf, job.getCredentials());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// generate a secret to authenticate shuffle transfers - 验证和授权</span></span><br><span class="line">    <span class="keyword">if</span> (TokenCache.getShuffleSecretKey(job.getCredentials()) == <span class="keyword">null</span>) &#123;</span><br><span class="line">      KeyGenerator keyGen;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        keyGen = KeyGenerator.getInstance(SHUFFLE_KEYGEN_ALGORITHM);</span><br><span class="line">        keyGen.init(SHUFFLE_KEY_LENGTH);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">&quot;Error generating shuffle secret key&quot;</span>, e);</span><br><span class="line">      &#125;</span><br><span class="line">      SecretKey shuffleKey = keyGen.generateKey();</span><br><span class="line">      TokenCache.setShuffleSecretKey(shuffleKey.getEncoded(),</span><br><span class="line">          job.getCredentials());</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (CryptoUtils.isEncryptedSpillEnabled(conf)) &#123;</span><br><span class="line">      conf.setInt(MRJobConfig.MR_AM_MAX_ATTEMPTS, <span class="number">1</span>);</span><br><span class="line">      LOG.warn(<span class="string">&quot;Max job attempts set to 1 since encrypted intermediate&quot;</span> +</span><br><span class="line">              <span class="string">&quot;data spill is enabled&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    copyAndConfigureFiles(job, submitJobDir);</span><br><span class="line"></span><br><span class="line">    Path submitJobFile = JobSubmissionFiles.getJobConfPath(submitJobDir);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// Create the splits for the job -- 创建切片，切片在MapTask之前来切</span></span><br><span class="line">    LOG.debug(<span class="string">&quot;Creating splits at &quot;</span> + jtFs.makeQualified(submitJobDir));</span><br><span class="line">    <span class="keyword">int</span> maps = writeSplits(job, submitJobDir);</span><br><span class="line">      <span class="comment">//你要启动几个MapTask，切几片，就是启动几个MapTask</span></span><br><span class="line">    conf.setInt(MRJobConfig.NUM_MAPS, maps);</span><br><span class="line">    LOG.info(<span class="string">&quot;number of splits:&quot;</span> + maps);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write &quot;queue admins of the queue to which job is being submitted&quot;</span></span><br><span class="line">    <span class="comment">// to job file.</span></span><br><span class="line">    String queue = conf.get(MRJobConfig.QUEUE_NAME,</span><br><span class="line">        JobConf.DEFAULT_QUEUE_NAME);</span><br><span class="line">    AccessControlList acl = submitClient.getQueueAdmins(queue);</span><br><span class="line">    conf.set(toFullPropertyName(queue,</span><br><span class="line">        QueueACL.ADMINISTER_JOBS.getAclName()), acl.getAclString());</span><br><span class="line"></span><br><span class="line">    <span class="comment">// removing jobtoken referrals before copying the jobconf to HDFS</span></span><br><span class="line">    <span class="comment">// as the tasks don&#x27;t need this setting, actually they may break</span></span><br><span class="line">    <span class="comment">// because of it if present as the referral will point to a</span></span><br><span class="line">    <span class="comment">// different job.</span></span><br><span class="line">    TokenCache.cleanUpTokenReferral(conf);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (conf.getBoolean(</span><br><span class="line">        MRJobConfig.JOB_TOKEN_TRACKING_IDS_ENABLED,</span><br><span class="line">        MRJobConfig.DEFAULT_JOB_TOKEN_TRACKING_IDS_ENABLED)) &#123;</span><br><span class="line">      <span class="comment">// Add HDFS tracking ids</span></span><br><span class="line">      ArrayList&lt;String&gt; trackingIds = <span class="keyword">new</span> ArrayList&lt;String&gt;();</span><br><span class="line">      <span class="keyword">for</span> (Token&lt;? extends TokenIdentifier&gt; t :</span><br><span class="line">          job.getCredentials().getAllTokens()) &#123;</span><br><span class="line">        trackingIds.add(t.decodeIdentifier().getTrackingId());</span><br><span class="line">      &#125;</span><br><span class="line">      conf.setStrings(MRJobConfig.JOB_TOKEN_TRACKING_IDS,</span><br><span class="line">          trackingIds.toArray(<span class="keyword">new</span> String[trackingIds.size()]));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Set reservation info if it exists</span></span><br><span class="line">    ReservationId reservationId = job.getReservationId();</span><br><span class="line">    <span class="keyword">if</span> (reservationId != <span class="keyword">null</span>) &#123;</span><br><span class="line">      conf.set(MRJobConfig.RESERVATION_ID, reservationId.toString());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Write job file to submit dir - 整个运行的文件写道一个提交目录里边</span></span><br><span class="line">    writeConf(conf, submitJobFile);</span><br><span class="line">    </span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    <span class="comment">// Now, actually submit the job (using the submit name)</span></span><br><span class="line">    <span class="comment">//</span></span><br><span class="line">    printTokens(jobId, job.getCredentials());</span><br><span class="line">      <span class="comment">//现在开始提交job，之前都是准备阶段</span></span><br><span class="line">    status = submitClient.submitJob(</span><br><span class="line">        jobId, submitJobDir.toString(), job.getCredentials());</span><br><span class="line">    <span class="keyword">if</span> (status != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> status;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> IOException(<span class="string">&quot;Could not launch job&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (status == <span class="keyword">null</span>) &#123;</span><br><span class="line">      LOG.info(<span class="string">&quot;Cleaning up the staging area &quot;</span> + submitJobDir);</span><br><span class="line">      <span class="keyword">if</span> (jtFs != <span class="keyword">null</span> &amp;&amp; submitJobDir != <span class="keyword">null</span>)</span><br><span class="line">        jtFs.delete(submitJobDir, <span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="Job提交阶段总结"><a href="#Job提交阶段总结" class="headerlink" title="Job提交阶段总结"></a>Job提交阶段总结</h4><ul>
+<li><p>准备阶段</p>
+<ul>
+<li>运行Job.waitForCompletion()先使用JobSubmitter提交Job，在提交之前，会在Job的作业目录下生成以下信息：<ul>
+<li>job.split：当前Job的切片信息，有几个切片对象</li>
+<li>job.splitmetainfo：切片对象的属性信息</li>
+<li>job.xml：当前Job的所有属性配置</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>提交阶段</p>
+<ul>
+<li><p>本地模式：使用LocalJobRunner进行提交；创建一个LocalJobRunner.Job对象</p>
+</li>
+<li><p>Map阶段：采用线程池提交多个MapTaskRunable线程；每个MapTaskRunable线程上，实例化一个MapTask对象；每个MapTask对象，实例化一个Mapper；Mapper.run()</p>
+<ul>
+<li>线程运行结束，会在线程的作业目录中生成file.out文件，保存MapTask输出的所有key-value</li>
+<li>阶段定义<ul>
+<li>如果有reduceTask，MapTask运行期间分为两个阶段，map占67%，sort占33%</li>
+<li>如果没有ReduceTask阶段，MapTask运行期间，map占100%</li>
+</ul>
+</li>
+<li>map：使用RecordReader将切片中的数据读入到Mapper.map() — context.write(key.value)</li>
+</ul>
+</li>
+<li><p>Reduce阶段：采用线程池提交多个ReduceTaskRunable线程</p>
+<ul>
+<li>每个ReduceTaskRunable线程上，实例化一个ReduceTask对象；每个ReduceTask对象，实例化一个Reduce；reduce.run()</li>
+<li>线程运行结束，会在输出目录生成part-r-000X文件，保存ReducerTask输出的所有key-value</li>
+<li>阶段定义：<ul>
+<li>copy：使用shuffer线程拷贝MaoTask指定分区的数据</li>
+<li>sort：将拷贝的所有的分区数据汇总后，排序</li>
+<li>reduce阶段：对排好序的数据进行合并。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="MR程序的编写"><a href="#MR程序的编写" class="headerlink" title="MR程序的编写"></a>MR程序的编写</h3><p>可以分为3个阶段</p>
+<h4 id="1、Mapper"><a href="#1、Mapper" class="headerlink" title="1、Mapper"></a>1、Mapper</h4><ul>
+<li>MapTask负责Map阶段核心运算逻辑的类<ul>
+<li>继承Mapper&lt;KEYIN，VALUEIN,KEYOUT.VALUEOUT&gt;</li>
+<li>KEYIN，VLALUEIN取决于InputFormat中RecordReader的设置</li>
+<li>KEUYOUT，VALUEOUT可以自定义</li>
+<li>在Mapper的map方法中编写核心处理逻辑</li>
+</ul>
+</li>
+</ul>
+<h4 id="2、Reducer"><a href="#2、Reducer" class="headerlink" title="2、Reducer"></a>2、Reducer</h4><ul>
+<li>ReduceTask负责Reduce阶段核心运算逻辑的类</li>
+<li>继承Reduce&lt;KEYIN,VALUEIN,KEYOUT,VALUEOUT&gt;<ul>
+<li>KEYIN.VALUEIN取决于Map的输出，</li>
+<li>KEYOUT,VALUEOUT可以自定义</li>
+</ul>
+</li>
+<li>是否需要Reduce的判断<ul>
+<li>1、是否需要合并<ul>
+<li>不需要合并的情况：仅有一个MapTask，切MapTask不存在相同的key数据</li>
+<li>需要合并：有多个MapTask，最终期望生成一个结果文件，需要汇总，需要有Reduce</li>
+</ul>
+</li>
+<li>2、是否将结果进行排序<ul>
+<li>没有Reduce：MapTask—map</li>
+<li>有Reduce：MapTask—map—sort—ReduceTask—copy—sort—reduce</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="3、Job"><a href="#3、Job" class="headerlink" title="3、Job"></a>3、Job</h4><ul>
+<li>创建job，调用Job.getInstance(COnfiguration  conf);</li>
+<li>可以对Job进行简单设置，可以设置名称和类名等属性</li>
+<li>配置Job<ul>
+<li>设置输入和输出格式，如果不设置，则使用默认</li>
+<li>设置Mapper和Reduce</li>
+<li>设置Mapper和Reduce的输出类型【主要是为了方便根据类型获取对应的序列化器】</li>
+<li>设置输入和输出的目录</li>
+</ul>
+</li>
+<li>运行Job<ul>
+<li>true表示打印细节</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">job.waitForCompletion(<span class="keyword">true</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="Read阶段的流程"><a href="#Read阶段的流程" class="headerlink" title="Read阶段的流程"></a>Read阶段的流程</h3><p>根据InputFormat阶段</p>
+<ul>
+<li>切片，调用InputForamt的getSplit()方法</li>
+<li>使用输入格式的RecordReader读取数据</li>
+</ul>
+<h3 id="自定义输入格式"><a href="#自定义输入格式" class="headerlink" title="自定义输入格式"></a>自定义输入格式</h3><h4 id="sequnceFile：是hadoop特有的文件格式"><a href="#sequnceFile：是hadoop特有的文件格式" class="headerlink" title="sequnceFile：是hadoop特有的文件格式"></a>sequnceFile：是hadoop特有的文件格式</h4><ul>
+<li>优点：适合key-value类型数据的存储；比普通文件格式节省空间</li>
+</ul>
+<p>默认的输出格式是TextOutPutFormat（文本输出格式）</p>
+<h3 id="MapTask的工作机制"><a href="#MapTask的工作机制" class="headerlink" title="MapTask的工作机制"></a>MapTask的工作机制</h3><p>官方：map –&gt;sort</p>
+<h4 id="MapTask的shuffle的细节"><a href="#MapTask的shuffle的细节" class="headerlink" title="MapTask的shuffle的细节"></a>MapTask的shuffle的细节</h4><ul>
+<li>记录输出收集器的赋值</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(job.geyNumReduceTasks()==<span class="number">0</span>)&#123;</span><br><span class="line">    output = </span><br><span class="line">        <span class="keyword">new</span> NewDorectOutputCollector(taskContext,job,umbilical,repoter);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    output = <span class="keyword">new</span> NewOutputCollector(taskContext,job,umbilical,reporter);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果没有Reduce阶段，使用直接的记录收集器，它不会对数据进行排序！按照Mapper输出的顺序，来输出</p>
+<p>如果有Reduce阶段，使用NewOutputCollector来收集记录。</p>
+<h3 id="Combiner"><a href="#Combiner" class="headerlink" title="Combiner"></a>Combiner</h3><ul>
+<li>本质是一个Reduce类，Combiner只有在设置之后，才会运行</li>
+<li>意义：在shuffer阶段，提前对相同key的key-value进行提前合并，可以减少磁盘和网络IO。</li>
+<li>使用条件：可以用在加减操作的场景【累加】，不能用在乘除操作的场景【求平均数】，在使用Combiner时必须保证不能影响处理逻辑和结果。可以优化MR程序，提高运行效率</li>
+</ul>
+<h4 id="Combiner和Reduce的区别"><a href="#Combiner和Reduce的区别" class="headerlink" title="Combiner和Reduce的区别"></a>Combiner和Reduce的区别</h4><ul>
+<li>Reduce是在reduce阶段调用</li>
+<li>Combiner是在shuffer阶段调用【既会在MapTask阶段调用，也会在ReduceTask阶段进行调用】<ul>
+<li>Combiner在MapTask端的调用情况说明<ul>
+<li>每次溢写前会调用Combiner对溢写数据进行局部合并</li>
+<li>在merge时，如果溢写的片段数&gt;=3，如果设置了Combiner，Combiner会再次对数据进行Combiner。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>本质都是Reducer类，作用都是对有相同key的key-value进行合并</li>
+</ul>
+<h4 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h4><p><strong>分区</strong></p>
+<ul>
+<li>总的分区数取决于reduceTask的数量；一个job要启动几个reduceTask取决于期望产生几个分区，每个分区最后都会生成一个结果文件</li>
+<li>Partition分区器的确定<ul>
+<li>reduceTask大于1，尝试获取用户设置的Partitionner，如果没有设置使用HashPartitionner</li>
+<li>reduceTask小于等于1，系统默认提供一个Partitionner，它会将所有的记录都分到0号区。</li>
+</ul>
+</li>
+</ul>
+<p><strong>排序</strong></p>
+<ul>
+<li>每次溢写前，使用快速排序；最后merge时使用归并排序</li>
+</ul>
+<p><strong>比较器</strong></p>
+<ul>
+<li>排序时，根据比较器比较的结果进行排序<ul>
+<li>用户如果自定义了比较器，MR就使用用户自定义的比较器</li>
+<li>如果用户没有自定义，那么Mapper输出Key需要实现WritableComparable接口【系统会自动提供比较器】。</li>
+</ul>
+</li>
+</ul>
+<p>不管自己提供比较器还是实现WritableComparable接口，最后在比较时，都是调用自己实现的compareTo()方法</p>
+<p><strong>Combiner(合并器)</strong></p>
+<ul>
+<li>在shuffer阶段运行，<ul>
+<li>每次溢写前会调用Combiner对溢写的数据进行局部合并</li>
+<li>在merge时，如果溢写的片段数大于等于3，如果设置了Combiner，Combiner会再次对数据进行Combiner</li>
+</ul>
+</li>
+</ul>
+<p><strong>执行流程</strong></p>
+<ul>
+<li>Partitioner计算分区</li>
+<li>满足溢写条件，所有数据进行排序，排序时用比较器来对比key<ul>
+<li>每次溢写前的排序，默认使用快排</li>
+<li>如果设置Combiner，在溢写之前，排好序的结果会先被Combiner进行combine，再溢写【这个过程可能会发生N次】</li>
+<li>所有的溢写片段需要merge为一个总的文件<ul>
+<li>合并时，使用归并排序，对Key进行排序</li>
+<li>如果溢写片段的数量超过3，那就再溢写成一个最终的文件时，Combiner会再次调用执行combine，combine后会再次进行溢写</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="ReduceTask的shuffer细节"><a href="#ReduceTask的shuffer细节" class="headerlink" title="ReduceTask的shuffer细节"></a>ReduceTask的shuffer细节</h3><ul>
+<li>获取分组比较器，从配置中读取mapreduce.job.output.group.comparator.class，如果没有设置，默认就使用MapTask对key排序时，key的比较器；用户设置了，就使用用户自定义的比较器</li>
+</ul>
+<h1 id="HA"><a href="#HA" class="headerlink" title="HA"></a>HA</h1><p>Hadoop的HA</p>
+<p>HA（high avilable）：高可用，意味着必须有容错机制，不能因为集群故障导致不可用</p>
+<h3 id="HDFS：满足高可用"><a href="#HDFS：满足高可用" class="headerlink" title="HDFS：满足高可用"></a>HDFS：满足高可用</h3><ul>
+<li>NameNode：一个集群只有一个，负责接收客户端请求</li>
+<li>DataNode：一个集群可以启动N个</li>
+</ul>
+<h3 id="YARN：满足高可用"><a href="#YARN：满足高可用" class="headerlink" title="YARN：满足高可用"></a>YARN：满足高可用</h3><ul>
+<li>ResourceManager：一个集群只有一个，负责接收客户端请求</li>
+<li>NodeManager ：一个集群可以有N个</li>
+</ul>
+<p>实现Hadoop的HA，必须保证在NameNode和ResourceManager故障时，采取容错机制，可以让集群继续使用。</p>
+<p>核心：避免NameNode和ResourceManager单点故障</p>
+<ul>
+<li><p>NameNode启动多个进程，一旦当前正在提供服务的NameNode故障了，让其他备用的NameNode继续顶上。</p>
+</li>
+<li><p>NameNode负责接收客户端请求；在接收客户端写请求时，NameNode还负责记录用户上传文件的元数据</p>
+<ul>
+<li>需要保证，正在提供服务的NameNode，必须和备用的NameNode之中的元数据必须是一致的<ul>
+<li>在active的NameNode格式化以后，将空白的fsimage文件拷贝到所有的NameNode机器上</li>
+<li>active在NameNode启动后，将edits文件中的内容发送给Journalnode进程，standby状态的NameNode主动从Journalnode进程拷贝数据，保证元数据的同步。</li>
+</ul>
+</li>
+</ul>
+<p>注意：Journalnode在设计时，采用paxos协议，Journalnode适合在奇数台机器上启动，在Hadoop中，要求至少需要3个Journalnode进程。</p>
+<p>如果开启了HDFS的HA，那么就不能在启动SecordaryNameNode。</p>
+<ul>
+<li>启动多个NameNode时，不允许多个NameNode同时提供服务，因为多个NameNode同时提供服务，那么在同步数据时，非常消耗性能，而且容易出错。</li>
+<li>在同一时刻，最多只能有一个NameNode作为主节点，对外提供服务；其余的NameNode作为备用节点</li>
+</ul>
+</li>
+</ul>
+<h2 id="HA集群搭建"><a href="#HA集群搭建" class="headerlink" title="HA集群搭建"></a>HA集群搭建</h2><p>配置</p>
+<ul>
+<li>fs.defaultFS=hdfs://hadoop102:9000修改</li>
+<li>在整个集群中需要启动N个NameNode，配置N个运行的NameNode的主机和开发端口</li>
+<li>配置Journalnode</li>
+</ul>
+<p>启动</p>
+<ul>
+<li>先启动Journalnode</li>
+<li>格式化NameNode，将格式化后的fsimage文件同步到其他NameNode中</li>
+<li>启动所有的NameNode，在启动完成后需要将其中之一转为active状态，只有active状态的NameNode才可以接收读请求（只有主节点可以对外提供服务）。<ul>
+<li>状态转移，需要先手动将active节点转化为stably状态，再将其转化为active状态</li>
+</ul>
+</li>
+</ul>
+<p>修改的配置文件的路径</p>
+<p><img src="/2021/11/28/HDFS/image-20211210215354233.png" alt="image-20211210215354233"></p>
+<p>需要修改core-site.xml文件和hdfs-site.xml。</p>
+<h2 id="启动集群"><a href="#启动集群" class="headerlink" title="启动集群"></a>启动集群</h2><p>先启动journalnode</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sbin/hadoop-daemon.sh start journalnode</span><br></pre></td></tr></table></figure>
+
+<p>格式化nn1节点，并且启动NameNode</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">bin/hdfs namenode -format</span><br><span class="line">sbin/hadoop-daemon.sh start namenode</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/11/28/HDFS/image-20211211164408896.png" alt="image-20211211164408896"></p>
+<p>ResourceManager只能在本机启动，另外一个Resource需要自己去另一个机器手动启动。</p>
+<p><img src="/2021/11/28/HDFS/image-20211211170021807.png" alt="image-20211211170021807"></p>
+<h2 id="HDFS-Federation架构设计"><a href="#HDFS-Federation架构设计" class="headerlink" title="HDFS Federation架构设计"></a>HDFS Federation架构设计</h2><h4 id="NameNode架构的局限性"><a href="#NameNode架构的局限性" class="headerlink" title="NameNode架构的局限性"></a>NameNode架构的局限性</h4><h5 id="Namespace（命名空间）的限制"><a href="#Namespace（命名空间）的限制" class="headerlink" title="Namespace（命名空间）的限制"></a>Namespace（命名空间）的限制</h5><p>由于NameNode在内存中存储所有的元数据（metadata），因此单个NameNode所能存储的对象（文件+块）数目受到NameNode所在JVM的heap size的限制。50G的heap能够存储20亿（200million）个对象，这20亿个对象支持4000个DataNode，12PB的存储（假设文件平均大小为40MB）。随着数据的飞速增长，存储的需求也随之增长。单个DataNode从4T增长到36T，集群的尺寸增长到8000个DataNode。存储的需求从12PB增长到大于100PB。</p>
+<h5 id="隔离问题"><a href="#隔离问题" class="headerlink" title="隔离问题"></a>隔离问题</h5><p>由于HDFS仅有一个NameNode，无法隔离各个程序，因此HDFS上的一个实验程序就很有可能影响整个HDFS上运行的程序。</p>
+<h5 id="性能的瓶颈"><a href="#性能的瓶颈" class="headerlink" title="性能的瓶颈"></a>性能的瓶颈</h5><p>由于是单个NameNode的HDFS架构，因此整个HDFS文件系统的吞吐量受限于单个NameNode的吞吐量。</p>
+<h1 id="Hadoop数据的压缩"><a href="#Hadoop数据的压缩" class="headerlink" title="Hadoop数据的压缩"></a>Hadoop数据的压缩</h1><p>压缩是提高Hadoop运行效率的一种优化策略。</p>
+<p>通过对Mapper，Reducer运行过程中的数据进行压缩，可以减少磁盘IO，提高MR的运行速度。</p>
+<p>注意：采用压缩技术可以减少磁盘IO，但同时增加了CPU运算负担，所以压缩特性运算得当能提高性能，但运用不当也可能会降低性能。</p>
+<h4 id="压缩基本原则"><a href="#压缩基本原则" class="headerlink" title="压缩基本原则"></a>压缩基本原则</h4><ul>
+<li>运算密集型的Job，少用压缩</li>
+<li>IO密集型的Job，多用压缩</li>
+</ul>
+<h2 id="MR支持的压缩编码"><a href="#MR支持的压缩编码" class="headerlink" title="MR支持的压缩编码"></a>MR支持的压缩编码</h2><table>
+<thead>
+<tr>
+<th>压缩格式</th>
+<th>Hadoop自带</th>
+<th>算法</th>
+<th>文件扩展名</th>
+<th>是否可切分</th>
+<th>转换后，源程序是否需要修改</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DEFLATE</td>
+<td>是，直接使用</td>
+<td>DEFLATE</td>
+<td>.deflate</td>
+<td>否</td>
+<td>和文本处理一样，不需要修改</td>
+</tr>
+<tr>
+<td>Gzip</td>
+<td>是，直接使用</td>
+<td>DEFLATE</td>
+<td>.gz</td>
+<td>否</td>
+<td>和文本处理一样，不需要修改</td>
+</tr>
+<tr>
+<td>bzip2</td>
+<td>是，直接使用</td>
+<td>bzip2</td>
+<td>.bz3</td>
+<td>是</td>
+<td>和文本处理一样，不需要修改</td>
+</tr>
+<tr>
+<td>LZO</td>
+<td>否，需要安装</td>
+<td>LZO</td>
+<td>.lzo</td>
+<td>是</td>
+<td>需建立索引，还需指定输入的格式</td>
+</tr>
+<tr>
+<td>Snappy</td>
+<td>否，需要安装</td>
+<td>Snappy</td>
+<td>.snappy</td>
+<td>否</td>
+<td>和文本处理一样，不需要修改</td>
+</tr>
+</tbody></table>
+<h4 id="Hadoop引入了编码-解码器"><a href="#Hadoop引入了编码-解码器" class="headerlink" title="Hadoop引入了编码/解码器"></a>Hadoop引入了编码/解码器</h4><table>
+<thead>
+<tr>
+<th>压缩格式</th>
+<th>对应的编码/解码器</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>DEFLATE</td>
+<td>org.apache.hadoop.io.compress.DefaultCodec</td>
+</tr>
+<tr>
+<td>gzip</td>
+<td>org.apache.hadoop.io.compress.GzipCodec</td>
+</tr>
+<tr>
+<td>bzip2</td>
+<td>org.apache.hadoop.io.compress.BZip2Codec</td>
+</tr>
+<tr>
+<td>LZO</td>
+<td>com.hadoop.compression.lzo.LzopCodec</td>
+</tr>
+<tr>
+<td>Snappy</td>
+<td>org.apache.hadoop.io.compress.SnappyCodec</td>
+</tr>
+</tbody></table>
+<h4 id="压缩性能的比较"><a href="#压缩性能的比较" class="headerlink" title="压缩性能的比较"></a>压缩性能的比较</h4><p><img src="/2021/11/28/HDFS/image-20211212111023548.png" alt="image-20211212111023548"></p>
+<h4 id="特点说明"><a href="#特点说明" class="headerlink" title="特点说明"></a>特点说明</h4><ul>
+<li> bzip2压缩比最高，压缩速度最慢；snappy压缩速度最快，压缩比凑合；deflate，gzip折中</li>
+<li>使用的便利性的比较<ul>
+<li>LZO压缩格式最麻烦！<ul>
+<li>额外安装LZO压缩格式；如果JOB输入目录中的文件为LZO压缩格式，需要为每个文件创建索引，如果不创建索引，那么输入的文件无法切片，整个文件作为1片；还需要使用LZO特定的输入格式，使用LZOInputFormat！</li>
+</ul>
+</li>
+<li>其他的压缩格式，和纯文本文件使用一致的，不需要额外设置！</li>
+</ul>
+</li>
+<li>是否可切片<ul>
+<li> 如果Job的输入采用了以下压缩格式，只有以下格式支持切片！</li>
+<li> 只有bzip2和lzo可以切片！</li>
+</ul>
+</li>
+<li>使用场景<ul>
+<li>Bzip2：  对速度没有要求，常作为reduce输出结果的压缩格式！<pre><code>            即便job运行后，输出的结果还需要被另一个Job继续处理，Bzip2格式也可以支持切片！
+</code></pre>
+</li>
+<li>Lzo:    作为Job输入文件的压缩格式！</li>
+<li>Snappy: 作为shuffle阶段的压缩格式！<ul>
+<li>Mapper 运算结束后，需要向磁盘溢写  500M的数据，没有用压缩之前，写的速度100M/s<pre><code>     采用了Snappy压缩，需要向磁盘溢写  500M的数据，采用了snappy压缩，写的速度100M/s，500M---&gt;300M
+</code></pre>
+</li>
+<li>Reduce拷贝300M的数据—-&gt; 解压缩（速度很快，解压缩消耗的时间可以忽略不计）     </li>
+</ul>
+</li>
+</ul>
+</li>
+<li>压缩考虑<ul>
+<li>Mapper的输入： 主要考虑每个文件的大小，如果文件过大，需要使用可以切片的压缩格式！</li>
+<li>Reducer的输出： reducer的输出主要考虑，输出之后，是否需要下一个Job继续处理！<ul>
+<li>单个reducer输出的结果的大小！如果需要被下个Job继续处理，且单个文件过大，也要使用可以切片的压缩格式！</li>
+</ul>
+</li>
+<li>shuffle阶段：   速度快即可</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2021/11/28/HDFS/image-20211212112245506.png" alt="image-20211212112245506"></p>
+<h3 id="压缩的参数配置"><a href="#压缩的参数配置" class="headerlink" title="压缩的参数配置"></a>压缩的参数配置</h3><h4 id="io-compression-codecs"><a href="#io-compression-codecs" class="headerlink" title="io.compression.codecs"></a>io.compression.codecs</h4><ul>
+<li><p>作用</p>
+<p>代表整个Job运行期间，可以使用那些压缩格式，配置这个参数后，配置的压缩格式会被自动初始化</p>
+</li>
+<li><p>位置：core-site.xml</p>
+</li>
+<li><p>使用阶段：输入压缩</p>
+</li>
+<li><p>默认值</p>
+<ul>
+<li>org.apache.hadoop.io.compress.DefaultCodec,</li>
+<li>org.apache.hadoop.io.compress.GzipCodec</li>
+<li>org.apache.hadoop.io.compress.BZip2Codec</li>
+</ul>
+</li>
+</ul>
+<h4 id="mapreduce-map-output-compress"><a href="#mapreduce-map-output-compress" class="headerlink" title="mapreduce.map.output.compress"></a>mapreduce.map.output.compress</h4><ul>
+<li><p>作用</p>
+<p>map阶段输出的key-value是否采用压缩，默认不压缩</p>
+</li>
+<li><p>位置：mapred-site.xml</p>
+</li>
+<li><p>使用阶段：mapper输出</p>
+</li>
+<li><p>默认值：false</p>
+</li>
+</ul>
+<h4 id="mapreduce-map-output-compress-codec"><a href="#mapreduce-map-output-compress-codec" class="headerlink" title="mapreduce.map.output.compress.codec"></a>mapreduce.map.output.compress.codec</h4><ul>
+<li><p>作用</p>
+<p>map阶段输出的key-value采用何种压缩格式</p>
+</li>
+<li><p>位置：mapred-site.xml</p>
+</li>
+<li><p>使用阶段：mapper输出</p>
+</li>
+<li><p>默认值：org.apache.hadoop.io.compress.DefaultCodec</p>
+</li>
+</ul>
+<h4 id="mapreduce-output-fileoutputformat-compress"><a href="#mapreduce-output-fileoutputformat-compress" class="headerlink" title="mapreduce.output.fileoutputformat.compress"></a>mapreduce.output.fileoutputformat.compress</h4><ul>
+<li><p>作用</p>
+<p>Job在reduce阶段最终的输出是否采用压缩。</p>
+</li>
+<li><p>位置：mapred-site.xml</p>
+</li>
+<li><p>使用阶段：reducer输出</p>
+</li>
+<li><p>默认值：false</p>
+</li>
+</ul>
+<h4 id="mapreduce-output-fileoutputformat-compress-codec"><a href="#mapreduce-output-fileoutputformat-compress-codec" class="headerlink" title="mapreduce.output.fileoutputformat.compress.codec"></a>mapreduce.output.fileoutputformat.compress.codec</h4><ul>
+<li><p>作用</p>
+<p>Job在reduce阶段最终的输出，阶段采用那种方式进行压缩</p>
+</li>
+<li><p>位置：mapred-site.xml</p>
+</li>
+<li><p>使用阶段：reducer输出</p>
+</li>
+<li><p>默认值：org.apache.hadoop.io.compress. DefaultCodec</p>
+</li>
+</ul>
+<h4 id="mapreduce-output-fileoutputformat-compress-type"><a href="#mapreduce-output-fileoutputformat-compress-type" class="headerlink" title="mapreduce.output.fileoutputformat.compress.type"></a>mapreduce.output.fileoutputformat.compress.type</h4><ul>
+<li><p>作用</p>
+<p>如果Job输出的文件以SequenceFile格式，SequenceFile中的数据，采用那种压缩格式。</p>
+</li>
+<li><p>位置：mapred-site.xml</p>
+</li>
+<li><p>使用阶段：reducer输出</p>
+</li>
+<li><p>默认值：RECORD（每个Key-vlue对作为一个单位，压缩一个）</p>
+</li>
+<li><p>可选值：NONE（是否压缩取决于操作系统）；BLOCK（SequenceFile中的block，SequenceFile中的block默认为64K，每个block压缩一次）</p>
+</li>
+</ul>
+<h1 id="调度器"><a href="#调度器" class="headerlink" title="调度器"></a>调度器</h1>
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/11/28/HDFS/" data-id="cl3u9wg2400289wvo6la19e06" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Wumeng"
+        },
+        "headline": "HDFS",
+        "image": "http://example.com/2021/11/28/HDFS/image-20211130215738201.png",
+        "keywords": "Hadoop",
+        "genre": "大数据",
+        "datePublished": "2021-11-28",
+        "dateCreated": "2021-11-28",
+        "dateModified": "2021-12-23",
+        "url": "http://example.com/2021/11/28/HDFS/",
+        "description": "HDFS HDFS是分布式文件管理系统中的一种。
+使用场景一次写入，多次读出的场景，且不支持对文件的修改【不支持对文件的随机写，可以追加】
+
+ 文件在HDFS上存储时，以block为基本单位存储，没有提供对文件的在线寻址（打开）功能。
+文件以块形式存储，修改一个块的内容，就会影响到当前块之后的所有块，效率低。
+
+优缺点优点
+高容错性
+数据自动保存多个副本。它通过增加副本的形式，提高容错性
+某一个副",
+        "wordCount": 4193
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/12/08/Zookeeper/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Zookeeper
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/11/23/Linux/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Linux</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/image-20220525174639740.png)" alt="极客时间Django项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="title">极客时间Django项目</a></p>
+                            <p class="item-date"><time datetime="2022-05-25T08:11:16.000Z" itemprop="datePublished">2022-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/04/26/Django%E5%85%A5%E9%97%A8/image-20220426215758670.png)" alt="Django入门" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="title">Django入门</a></p>
+                            <p class="item-date"><time datetime="2022-04-26T13:14:15.000Z" itemprop="datePublished">2022-04-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></p>
+                            <p class="item-title"><a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="title">vscode配置python开发环境</a></p>
+                            <p class="item-date"><time datetime="2022-04-22T02:58:28.000Z" itemprop="datePublished">2022-04-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220426165118551.png)" alt="实时项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></p>
+                            <p class="item-title"><a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="title">实时项目</a></p>
+                            <p class="item-date"><time datetime="2022-02-28T01:49:46.000Z" itemprop="datePublished">2022-02-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/01/11/elasticsearch/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/01/11/elasticsearch/" class="title">elasticsearch</a></p>
+                            <p class="item-date"><time datetime="2022-01-11T13:47:23.000Z" itemprop="datePublished">2022-01-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Django/" style="font-size: 15px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 15px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 20px;">大数据</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Wumeng</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="parent">
+                <div class="child">
+                  <span id="busuanzi_container_site_pv">
+                    访问量<span id="busuanzi_value_site_pv"></span>次
+                  </span>
+                  <span class="post-meta-divider">|</span>
+                  <span id="busuanzi_container_site_uv" style='display:none'>
+                    访客数<span id="busuanzi_value_site_uv"></span>人
+                  </span>
+                  <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                </div>
+              </div>              
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <style>
+        .parent {
+          position: relative;
+        }
+        .child {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      </style>
+      
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://example.com/2021/11/28/HDFS/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

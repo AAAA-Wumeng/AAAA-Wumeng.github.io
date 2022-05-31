@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Scala | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="" />
+    
+    <meta name="description" content="aaaa 在windows目录下解压scala开发包，配置环境变量，在Idea中安装scala插件创建一个maven项目 右键项目名称，选择Add Framework Support，打开选择scala，并配置scala-sdk  新建文件夹scala，并设置weisource root   测试开发环境 1234567891011121314151617package com.wu.scala0">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Scala">
+<meta property="og:url" content="http://example.com/2022/01/02/Scala/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="aaaa 在windows目录下解压scala开发包，配置环境变量，在Idea中安装scala插件创建一个maven项目 右键项目名称，选择Add Framework Support，打开选择scala，并配置scala-sdk  新建文件夹scala，并设置weisource root   测试开发环境 1234567891011121314151617package com.wu.scala0">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/01/02/Scala/image-20220103124717920.png">
+<meta property="article:published_time" content="2022-01-02T14:55:43.000Z">
+<meta property="article:modified_time" content="2022-05-31T02:07:28.215Z">
+<meta property="article:author" content="Wumeng">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/02/Scala/image-20220103124717920.png">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    未分类
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-Scala" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Scala
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2022/01/02/Scala/" class="article-date">
+       <time datetime="2022-01-02T14:55:43.000Z" itemprop="datePublished">2022-01-02</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2022/01/02/Scala/" class="article-date">
+     <time datetime="2022-05-31T02:07:28.215Z" itemprop="dateModified">2022-05-31</time>
+  </a>
+</div>
+
+
+                
+
+                
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>aaaa</p>
+<p>在windows目录下解压scala开发包，配置环境变量，在Idea中安装scala插件创建一个maven项目</p>
+<p>右键项目名称，选择Add Framework Support，打开选择scala，并配置scala-sdk</p>
+<p><img src="/2022/01/02/Scala/image-20220103124717920.png" alt="image-20220103124717920"></p>
+<p>新建文件夹scala，并设置weisource root</p>
+<p><img src="/2022/01/02/Scala/image-20220103124949775.png" alt="image-20220103124949775"></p>
+<p><img src="/2022/01/02/Scala/image-20220103125031735.png" alt="image-20220103125031735"></p>
+<p>测试开发环境</p>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.wu.scala01.day01</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">HelloWord</span> </span>&#123;</span><br><span class="line"><span class="comment">//  类似与Java的main方法</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;</span><br><span class="line"><span class="comment">//    执行控制台打印</span></span><br><span class="line">    println(<span class="string">&quot;hello world scala!&quot;</span>)</span><br><span class="line">    <span class="type">System</span>.out.println(<span class="string">&quot;hello world!&quot;</span>)</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 执行代码：</span></span><br><span class="line"><span class="comment"> * java：定义类，然后在类中定义一个静态的main方法</span></span><br><span class="line"><span class="comment"> * scala：没有静态的概念，创建对象，在对象中定义main方法</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
+
+<p>如果控制台成功打印，说明，环境配置正确。</p>
+<p><img src="/2022/01/02/Scala/image-20220103131108195.png" alt="image-20220103131108195"></p>
+<h1 id="标识符命名规范"><a href="#标识符命名规范" class="headerlink" title="标识符命名规范"></a>标识符命名规范</h1><p>Scala中的标识符声明，基本和Java是一致的，但是细节上会有所变化，有以下四种规则：</p>
+<ul>
+<li>以字母或者下划线开头，后接字母、数字、下划线</li>
+<li>以操作符开头，且只包含操作符（+ - * / # !等）</li>
+<li>第一种和第二种拼接，第一种在前，二者以下划线分隔</li>
+<li>用反引号<code>....</code>包括的任意字符串，即使是关键字（39个）也可以</li>
+</ul>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>基本语法</p>
+<p>var | val 变量名 [: 变量类型] = 变量值</p>
+<p>说明：在Scala中声明一个变量时，<strong>可以不指定类型</strong>，编译器<strong>根据值确定</strong></p>
+<ul>
+<li>声明变量时，类型可以省略（编译器自动推导，即类型推导）</li>
+<li>类型确定后，就不能修改，说明Scala是强数据类型语言。</li>
+<li>变量声明时，需要初始值</li>
+<li>在声明/定义一个变量时，可以使用var或者val来修饰，var修饰的变量可改变，val修饰的变量不可改。</li>
+<li>val修饰的变量在编译后，等同于加上final</li>
+<li>var修饰的对象引用可以改变，val修饰的则不可改变，但对象的状态（值）却是可以改变的。（比如：自定义对象、数组、集合等等）</li>
+</ul>
+<p>数据类型</p>
+<ul>
+<li>Scala中一切数据都是对象，都是Any的子类。</li>
+<li>Scala中数据类型分为两大类：数值类型（AnyVal）、引用类型（AnyRef），<strong>不管是值类型还是引用类型都是对象。</strong></li>
+<li>Scala数据类型仍然遵守，低精度的值类型向高精度值类型，自动转换（隐式转换）</li>
+<li>Scala特殊的类型之Null，它只有一个实例就是Null，它是所有引用类型（AnyRef）的子类。</li>
+<li>Scala特殊类型之Nothing，是所有数据类型的子类，主要在一个函数没有正常返回值使用，因为这样我们可以把抛出的返回值，返回给任何的变量或者函数。</li>
+</ul>
+<h4 id="整数类型（Byte、Short、Int、Long）"><a href="#整数类型（Byte、Short、Int、Long）" class="headerlink" title="整数类型（Byte、Short、Int、Long）"></a><strong>整数类型（Byte、Short、Int、Long）</strong></h4><p>Scala的整数类型就是用于存放整数值的</p>
+<p>整形分类</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Byte[1]</td>
+<td>8位有符号补码整数。数值区间为 -128 到 127</td>
+</tr>
+<tr>
+<td>Short [2]</td>
+<td>16位有符号补码整数。数值区间为 -32768 到 32767</td>
+</tr>
+<tr>
+<td>Int [4]</td>
+<td>32位有符号补码整数。数值区间为 -2147483648 到 2147483647</td>
+</tr>
+<tr>
+<td>Long [8]</td>
+<td>64位有符号补码整数。数值区间为 -9223372036854775808 到 9223372036854775807 = 2的(64-1)次方-1</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Scala各整数类型有固定的表数范围和字段长度，不受具体操作的影响，以保证Scala程序的可移植性。</li>
+<li>Scala的整型，默认为Int型，声明Long型，须后加‘l’或‘L’</li>
+<li>Scala程序中变量常声明为Int型，除非不足以表示大数，才使用Long</li>
+</ul>
+<h4 id="浮点类型（Float、Double）"><a href="#浮点类型（Float、Double）" class="headerlink" title="浮点类型（Float、Double）"></a><strong>浮点类型（Float、Double）</strong></h4><p>Scala的浮点类型可以表示一个小数</p>
+<table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Float [4]</td>
+<td>32 位, IEEE 754标准的单精度浮点数</td>
+</tr>
+<tr>
+<td>Double [8]</td>
+<td>64 位 IEEE 754标准的双精度浮点数</td>
+</tr>
+</tbody></table>
+<ul>
+<li>Scala的浮点型常量默认为Double型，声明Float型常量，须后加‘f’或‘F’</li>
+</ul>
+<h4 id="字符类型（Char）"><a href="#字符类型（Char）" class="headerlink" title="字符类型（Char）"></a>字符类型（Char）</h4><p>字符类型可以表示单个字符，字符类型是Char，16位无符号Unicode字符（2个字节），区间值为U+0000到U+FFFF。</p>
+<p><strong>案例实操</strong></p>
+<ul>
+<li>字符常量是用单引号 ‘ ‘ 括起来的单个字符。</li>
+<li>字符常量是用单引号 ‘ ‘ 括起来的单个字符。</li>
+</ul>
+<figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.wu.scala01.day01</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">object</span> <span class="title">TestCharType</span> </span>&#123;</span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">main</span></span>(args: <span class="type">Array</span>[<span class="type">String</span>]): <span class="type">Unit</span> = &#123;  </span><br><span class="line">      <span class="comment">//字符常量是用单引号 &#x27; &#x27; 括起来的单个字符。</span></span><br><span class="line">    <span class="keyword">var</span> c1: <span class="type">Char</span> = &#x27;a&#x27;</span><br><span class="line"></span><br><span class="line">    println(<span class="string">&quot;c1=&quot;</span> + c1 )</span><br><span class="line"></span><br><span class="line">      <span class="comment">//字符常量是用单引号 &#x27; &#x27; 括起来的单个字符。</span></span><br><span class="line">    println(<span class="string">&quot;c1的码值=&quot;</span> + c1.toInt)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;      </span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/02/Scala/image-20220103144904427.png" alt="image-20220103144904427"></p>
+<h4 id="Unit类型、Null类型和Nothing类型"><a href="#Unit类型、Null类型和Nothing类型" class="headerlink" title="Unit类型、Null类型和Nothing类型"></a>Unit类型、Null类型和Nothing类型</h4><table>
+<thead>
+<tr>
+<th>数据类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Unit</td>
+<td>表示无值，和其他语言中void等同。用作不返回任何结果的方法的结果类型。Unit只有一个实例值，写成()。</td>
+</tr>
+<tr>
+<td>Null</td>
+<td>null , Null 类型只有一个实例值null</td>
+</tr>
+<tr>
+<td>Nothing</td>
+<td>Nothing类型在Scala的类层级的最低端；它是任何其他类型的子类型。当一个函数，我们确定没有正常的返回值，可以用Nothing来指定返回类型，这样有一个好处，就是我们可以把返回的值（异常）赋给其它的函数或者变量（兼容性）</td>
+</tr>
+</tbody></table>
+<h3 id="数值类型间转换"><a href="#数值类型间转换" class="headerlink" title="数值类型间转换"></a>数值类型间转换</h3><h4 id="数值类型总自动转换"><a href="#数值类型总自动转换" class="headerlink" title="数值类型总自动转换"></a>数值类型总自动转换</h4><p>当Scala程序在进行赋值或者运算时，精度小的类型自动转换为精度大的数值类型，这个就是自动类型转换（隐式转换）。数据类型按精度（容量）大小排序为：</p>
+<p><img src="/2022/01/02/Scala/image-20220103145243765.png" alt="image-20220103145243765"></p>
+<p>说明：</p>
+<ul>
+<li>自动提升原则：有多种类型的数据混合运算时，系统首先自动将所有数据转换成精度大的那种数据类型，然后再进行计算。</li>
+<li>当我们把精度大的数值类型赋值给精度小的数值类型时，就会报错，反之就会进行自动类型转换。</li>
+<li>（byte，short）和char之间不会相互自动转换。</li>
+<li>byte，short，char他们三者可以计算，在计算时首先转换为int类型。</li>
+</ul>
+<h4 id="强制类型转换"><a href="#强制类型转换" class="headerlink" title="强制类型转换"></a>强制类型转换</h4><p>自动类型转换的逆过程，将精度大的数值类型转换为精度小的数值类型。使用时要加上强制转函数，但可能造成精度降低或溢出，格外要注意。</p>
+<ul>
+<li>当进行数据的从大——&gt;小，就需要使用到强制转换</li>
+<li>强转符号只针对于最近的操作数有效，往往会使用小括号提升优先级</li>
+<li>Char类型可以保存Int的常量值，但不能保存Int的变量值，需要强转</li>
+<li>Byte和Short类型在进行运算时，当做Int类型处理</li>
+</ul>
+<h4 id="数值类型和String类型间转换"><a href="#数值类型和String类型间转换" class="headerlink" title="数值类型和String类型间转换"></a>数值类型和String类型间转换</h4><p>在程序开发中，我们经常需要将基本数值类型转成String类型。或者将String类型转成基本数值类型。</p>
+<ul>
+<li>基本类型转String类型（语法：将基本类型的值+”” 即可）</li>
+<li>String类型转基本数值类型（语法：s1.toInt、s1.toFloat、s1.toDouble、s1.toByte、s1.toLong、s1.toShort）</li>
+<li>在将String类型转成基本数值类型时，要确保String类型能够转成有效的数据，比如我们可以把”123”，转成一个整数，但是不能把”hello”转成一个整数。</li>
+</ul>
+<h2 id="算数运算符"><a href="#算数运算符" class="headerlink" title="算数运算符"></a>算数运算符</h2><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>运算</th>
+<th>范例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>+</td>
+<td>正号</td>
+<td>+3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>-</td>
+<td>负号</td>
+<td>b=4;-b</td>
+<td>-4</td>
+</tr>
+<tr>
+<td>+</td>
+<td>加号</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>-</td>
+<td>减号</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>*</td>
+<td>乘</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>/</td>
+<td>除</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>%</td>
+<td>取余</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>+</td>
+<td>字符相加</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<ul>
+<li>对于除号“/”，它的整数除和小数除是有区别的：整数之间做除法时，只保留整数部分而舍弃小数部分。</li>
+<li>对一个数取模a%b，和Java的取模规则一样。</li>
+</ul>
+<h2 id="关系运算符（比较运算符）"><a href="#关系运算符（比较运算符）" class="headerlink" title="关系运算符（比较运算符）"></a>关系运算符（比较运算符）</h2><table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>运算</th>
+<th>范例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>==</td>
+<td>相等于</td>
+<td>4==3</td>
+<td>false</td>
+</tr>
+<tr>
+<td>!=</td>
+<td>不等于</td>
+<td>4!=3</td>
+<td>true</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>小于</td>
+<td>4&lt;3</td>
+<td>false</td>
+</tr>
+<tr>
+<td>&gt;</td>
+<td>大于</td>
+<td>4&gt;3</td>
+<td>true</td>
+</tr>
+<tr>
+<td>&lt;=</td>
+<td>小于等于</td>
+<td>4&lt;=3</td>
+<td>false</td>
+</tr>
+<tr>
+<td>&gt;=</td>
+<td>大于等于</td>
+<td>4&gt;=3</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<h2 id="逻辑运算符"><a href="#逻辑运算符" class="headerlink" title="逻辑运算符"></a>逻辑运算符</h2><p>用于连接多个条件（一般来讲就是关系表达式），最终的结果也是一个Boolean值。</p>
+<p>变量A为true，B为false</p>
+<table>
+<thead>
+<tr>
+<th>运算符</th>
+<th>描述</th>
+<th>实例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&amp;&amp;</td>
+<td>逻辑与</td>
+<td>(A&amp;&amp;B)</td>
+<td>false</td>
+</tr>
+<tr>
+<td>||</td>
+<td>逻辑或</td>
+<td>(A||B)</td>
+<td>true</td>
+</tr>
+<tr>
+<td>!</td>
+<td>逻辑非</td>
+<td>!(A&amp;&amp;B)</td>
+<td>true</td>
+</tr>
+</tbody></table>
+<h2 id="赋值运算符"><a href="#赋值运算符" class="headerlink" title="赋值运算符"></a>赋值运算符</h2><p>赋值运算符就是将某个运算后的值，赋给指定的变量。</p>
+<table>
+<thead>
+<tr>
+<th><strong>运算符</strong></th>
+<th><strong>描述</strong></th>
+<th><strong>实例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>=</strong></td>
+<td>简单的赋值运算符，将一个表达式的值赋给一个左值</td>
+<td>C = A + B 将 A + B 表达式结果赋值给 C</td>
+</tr>
+<tr>
+<td><strong>+=</strong></td>
+<td>相加后再赋值</td>
+<td>C += A 等于 C = C + A</td>
+</tr>
+<tr>
+<td><strong>-=</strong></td>
+<td>相减后再赋值</td>
+<td>C -= A 等于 C = C - A</td>
+</tr>
+<tr>
+<td>***=**</td>
+<td>相乘后再赋值</td>
+<td>C *= A 等于 C = C * A</td>
+</tr>
+<tr>
+<td><strong>/=</strong></td>
+<td>相除后再赋值</td>
+<td>C /= A 等于 C = C / A</td>
+</tr>
+<tr>
+<td><strong>%=</strong></td>
+<td>求余后再赋值</td>
+<td>C %= A 等于 C = C % A</td>
+</tr>
+<tr>
+<td><strong>&lt;&lt;=</strong></td>
+<td>左移后赋值</td>
+<td>C &lt;&lt;=  2 等于 C = C  &lt;&lt; 2</td>
+</tr>
+<tr>
+<td><strong>&gt;&gt;=</strong></td>
+<td>右移后赋值</td>
+<td>C &gt;&gt;= 2 等于 C = C  &gt;&gt; 2</td>
+</tr>
+<tr>
+<td><strong>&amp;=</strong></td>
+<td>按位与后赋值</td>
+<td>C &amp;=  2  等于 C = C &amp; 2</td>
+</tr>
+<tr>
+<td><strong>^=</strong></td>
+<td>按位异或后赋值</td>
+<td>C ^= 2  等于 C = C ^ 2</td>
+</tr>
+<tr>
+<td><strong>|=</strong></td>
+<td>按位或后赋值</td>
+<td>C |= 2  等于 C = C | 2</td>
+</tr>
+</tbody></table>
+<p>注意：Scala中没有++、–操作符，需要通过+=、-=来实现同样的效果</p>
+<h2 id="位运算符"><a href="#位运算符" class="headerlink" title="位运算符"></a>位运算符</h2><table>
+<thead>
+<tr>
+<th><strong>运算符</strong></th>
+<th><strong>描述</strong></th>
+<th><strong>实例</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>&amp;</strong></td>
+<td>按位与运算符</td>
+<td>(a &amp; b) 输出结果 12 ，二进制解释： 0000 1100</td>
+</tr>
+<tr>
+<td><strong>|</strong></td>
+<td>按位或运算符</td>
+<td>(a | b) 输出结果 61 ，二进制解释： 0011 1101</td>
+</tr>
+<tr>
+<td><strong>^</strong></td>
+<td>按位异或运算符</td>
+<td>(a ^ b) 输出结果 49 ，二进制解释： 0011 0001</td>
+</tr>
+<tr>
+<td><strong>~</strong></td>
+<td>按位取反运算符</td>
+<td>(~a ) 输出结果 -61 ，二进制解释： 1100 0011， 在一个有符号二进制数的补码形式。</td>
+</tr>
+<tr>
+<td><strong>&lt;&lt;</strong></td>
+<td>左移动运算符</td>
+<td>a &lt;&lt; 2 输出结果 240 ，二进制解释： 1111 0000</td>
+</tr>
+<tr>
+<td><strong>&gt;&gt;</strong></td>
+<td>右移动运算符</td>
+<td>a &gt;&gt; 2 输出结果 15 ，二进制解释： 0000 1111</td>
+</tr>
+<tr>
+<td><strong>&gt;&gt;&gt;</strong></td>
+<td>无符号右移</td>
+<td>A  &gt;&gt;&gt;2 输出结果 15, 二进制解释: 0000 1111</td>
+</tr>
+</tbody></table>
+<h1 id="流程控制"><a href="#流程控制" class="headerlink" title="流程控制"></a>流程控制</h1><h4 id="分支控制if-else"><a href="#分支控制if-else" class="headerlink" title="分支控制if-else"></a>分支控制if-else</h4><p>程序有选择的的执行，分支控制有三种：单分支、双分支、多分支</p>
+<h5 id="单分支"><a href="#单分支" class="headerlink" title="单分支"></a>单分支</h5><p>基本语法</p>
+<p>if (条件表达式) {</p>
+<p>​    执行代码块</p>
+<p>}</p>
+<p>说明：当条件表达式为ture时，就会执行{ }的代码。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2022/01/02/Scala/" data-id="cl3u9wg1b00079wvoe9ptghop" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Wumeng"
+        },
+        "headline": "Scala",
+        "image": "http://example.com/2022/01/02/Scala/image-20220103124717920.png",
+        "keywords": "",
+        "genre": "",
+        "datePublished": "2022-01-02",
+        "dateCreated": "2022-01-02",
+        "dateModified": "2022-05-31",
+        "url": "http://example.com/2022/01/02/Scala/",
+        "description": "aaaa
+在windows目录下解压scala开发包，配置环境变量，在Idea中安装scala插件创建一个maven项目
+右键项目名称，选择Add Framework Support，打开选择scala，并配置scala-sdk
+
+新建文件夹scala，并设置weisource root
+
+
+测试开发环境
+1234567891011121314151617package com.wu.scala0",
+        "wordCount": 487
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2022/01/03/Spark/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Spark
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2022/01/02/Sqoop/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Sqoop</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/image-20220525174639740.png)" alt="极客时间Django项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="title">极客时间Django项目</a></p>
+                            <p class="item-date"><time datetime="2022-05-25T08:11:16.000Z" itemprop="datePublished">2022-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/04/26/Django%E5%85%A5%E9%97%A8/image-20220426215758670.png)" alt="Django入门" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="title">Django入门</a></p>
+                            <p class="item-date"><time datetime="2022-04-26T13:14:15.000Z" itemprop="datePublished">2022-04-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></p>
+                            <p class="item-title"><a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="title">vscode配置python开发环境</a></p>
+                            <p class="item-date"><time datetime="2022-04-22T02:58:28.000Z" itemprop="datePublished">2022-04-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220426165118551.png)" alt="实时项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></p>
+                            <p class="item-title"><a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="title">实时项目</a></p>
+                            <p class="item-date"><time datetime="2022-02-28T01:49:46.000Z" itemprop="datePublished">2022-02-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/01/11/elasticsearch/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/01/11/elasticsearch/" class="title">elasticsearch</a></p>
+                            <p class="item-date"><time datetime="2022-01-11T13:47:23.000Z" itemprop="datePublished">2022-01-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Django/" style="font-size: 15px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 15px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 20px;">大数据</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Wumeng</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="parent">
+                <div class="child">
+                  <span id="busuanzi_container_site_pv">
+                    访问量<span id="busuanzi_value_site_pv"></span>次
+                  </span>
+                  <span class="post-meta-divider">|</span>
+                  <span id="busuanzi_container_site_uv" style='display:none'>
+                    访客数<span id="busuanzi_value_site_uv"></span>人
+                  </span>
+                  <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                </div>
+              </div>              
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <style>
+        .parent {
+          position: relative;
+        }
+        .child {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      </style>
+      
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://example.com/2022/01/02/Scala/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

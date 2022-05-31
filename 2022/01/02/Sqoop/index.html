@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Sqoop | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="Hadoop" />
+    
+    <meta name="description" content="Sqoop：SQL To Hadoop：目的是关系型数据库，导入导出到Hadoop Sqoop的原理是将命令翻译为MR执行,MR是没有reduce阶段，只有Map阶段 安装上传并解压到指定文件夹 1tar -zxvf sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz -C ..&#x2F;module&#x2F;   配置 1、可以在环境变量中进行配置 2、可以在sqoop-env">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Sqoop">
+<meta property="og:url" content="http://example.com/2022/01/02/Sqoop/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Sqoop：SQL To Hadoop：目的是关系型数据库，导入导出到Hadoop Sqoop的原理是将命令翻译为MR执行,MR是没有reduce阶段，只有Map阶段 安装上传并解压到指定文件夹 1tar -zxvf sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz -C ..&#x2F;module&#x2F;   配置 1、可以在环境变量中进行配置 2、可以在sqoop-env">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/01/02/Sqoop/image-20220102150418238.png">
+<meta property="article:published_time" content="2022-01-02T06:13:10.000Z">
+<meta property="article:modified_time" content="2022-05-31T02:08:49.062Z">
+<meta property="article:author" content="Wumeng">
+<meta property="article:tag" content="Hadoop">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/02/Sqoop/image-20220102150418238.png">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-Sqoop" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Sqoop
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2022/01/02/Sqoop/" class="article-date">
+       <time datetime="2022-01-02T06:13:10.000Z" itemprop="datePublished">2022-01-02</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2022/01/02/Sqoop/" class="article-date">
+     <time datetime="2022-05-31T02:08:49.062Z" itemprop="dateModified">2022-05-31</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Hadoop/" rel="tag">Hadoop</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>Sqoop：SQL To Hadoop：目的是关系型数据库，导入导出到Hadoop</p>
+<p>Sqoop的原理是将命令翻译为MR执行,MR是没有reduce阶段，只有Map阶段</p>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><p>上传并解压到指定文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz -C ../module/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/02/Sqoop/image-20220102150418238.png" alt="image-20220102150418238"></p>
+<p>配置</p>
+<p>1、可以在环境变量中进行配置</p>
+<p>2、可以在sqoop-env.sh中进行配置；配置的内容包括HADOOP_HOME，HIVE_HOME,HBASE_HOME,ZOOKEERPER_HOME</p>
+<p><img src="/2022/01/02/Sqoop/image-20220102150759893.png" alt="image-20220102150759893"></p>
+<p>将连接mysql的驱动，拷贝到sqoop的lib目录</p>
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin<span class="operator">/</span>sqoop list<span class="operator">-</span>databases <span class="comment">--connect jdbc:mysql://hadoop102:3306/ --username root --password java</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/02/Sqoop/image-20220102151744468.png" alt="image-20220102151744468"></p>
+<p>导入数据</p>
+<p>从关系数据库将数据导入到HDFS中</p>
+<h4 id="导入到HDFS中"><a href="#导入到HDFS中" class="headerlink" title="导入到HDFS中"></a>导入到HDFS中</h4><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="operator">/</span><span class="operator">/</span> \代表在shell窗口中换行</span><br><span class="line">bin<span class="operator">/</span>sqoop import \</span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 连接的url</span><br><span class="line"><span class="comment">--connect jdbc:mysql://hadoop102:3306/mydb \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 用户名</span><br><span class="line"><span class="comment">--username root \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 密码</span><br><span class="line"><span class="comment">--password 123456 \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 要导哪个表的数据</span><br><span class="line"><span class="comment">--table staff \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 将数据导入到hdfs的哪个路径</span><br><span class="line"><span class="comment">--target-dir /company \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 如果目标目录存在就删除</span><br><span class="line"><span class="comment">--delete-target-dir \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 导入到hdfs上时，mysql中的字段使用\t作为分隔符</span><br><span class="line"><span class="comment">--fields-terminated-by &quot;\t&quot; \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 设置几个MapTask来运行</span><br><span class="line"><span class="comment">--num-mappers 2 \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 基于ID列，将数据切分为<span class="number">2</span>片，只有在<span class="comment">--num-mappers&gt;1时才需要指定,选的列最好不要有null值，否则null</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 是无法被导入的！尽量选取主键列，数字列</span><br><span class="line"><span class="comment">--split-by id</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 只导入id和name 列</span><br><span class="line"><span class="comment">--columns id,name \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 只导入复合过滤条件的行</span><br><span class="line"><span class="comment">--where &#x27;id &gt;= 10 and id &lt;= 20&#x27; \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 执行查询的<span class="keyword">SQL</span>，讲查询的数据进行导入，如果使用了<span class="comment">--query,不加再用--table,--where,--columns</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 只要使用<span class="comment">--query ，必须添加$CONDITONS,这个条件会被Sqoop自动替换为一些表达式</span></span><br><span class="line"><span class="comment">--query &quot;SQL&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">bin<span class="operator">/</span>sqoop import \</span><br><span class="line"><span class="comment">--connect jdbc:mysql://hadoop102:3306/mydb \</span></span><br><span class="line"><span class="comment">--username root \</span></span><br><span class="line"><span class="comment">--password java \</span></span><br><span class="line"><span class="comment">--table collect \</span></span><br><span class="line"><span class="comment">--target-dir /collect \</span></span><br><span class="line"><span class="comment">--delete-target-dir \</span></span><br><span class="line"><span class="comment">--fields-terminated-by &quot;\t&quot; \</span></span><br><span class="line"><span class="comment">--num-mappers 2 \</span></span><br><span class="line"><span class="comment">--split-by id </span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/02/Sqoop/image-20220102163702582.png" alt="image-20220102163702582"></p>
+<p>执行边界值查询，查询最小值，最大值是多少</p>
+<p>导入部分行</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">bin<span class="operator">/</span>sqoop import \</span><br><span class="line"><span class="comment">--connect jdbc:mysql://hadoop102:3306/mydb \</span></span><br><span class="line"><span class="comment">--username root \</span></span><br><span class="line"><span class="comment">--password java \</span></span><br><span class="line"><span class="comment">--table collect \</span></span><br><span class="line"><span class="comment">--target-dir /t_collect2 \</span></span><br><span class="line"><span class="comment">--delete-target-dir \</span></span><br><span class="line"><span class="comment">--fields-terminated-by &quot;\t&quot; \</span></span><br><span class="line"><span class="comment">--num-mappers 2 \</span></span><br><span class="line"><span class="comment">--split-by id \</span></span><br><span class="line"><span class="comment">--columns user_id,type \</span></span><br><span class="line"><span class="comment">--where &#x27;id &gt;= 5 and id &lt;= 20&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>导入自定义查询语句</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">bin<span class="operator">/</span>sqoop import \</span><br><span class="line"><span class="comment">--connect jdbc:mysql://hadoop102:3306/mydb \</span></span><br><span class="line"><span class="comment">--username root \</span></span><br><span class="line"><span class="comment">--password java \</span></span><br><span class="line"><span class="comment">--query &quot;select * from collect where \$CONDITIONS and id &gt;=2&quot; \</span></span><br><span class="line"><span class="comment">--target-dir /t_collect3 \</span></span><br><span class="line"><span class="comment">--delete-target-dir \</span></span><br><span class="line"><span class="comment">--fields-terminated-by &quot;\t&quot; \</span></span><br><span class="line"><span class="comment">--num-mappers 2 \</span></span><br><span class="line"><span class="comment">--split-by id</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="导入到Hive"><a href="#导入到Hive" class="headerlink" title="导入到Hive"></a>导入到Hive</h4><p>Sqoop导入到hive，先讲数据导入到HDFS，再讲HDFS的数据，load到hive表中！</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">$ bin<span class="operator">/</span>sqoop import \</span><br><span class="line"><span class="comment">--connect jdbc:mysql://hadoop102:3306/company \</span></span><br><span class="line"><span class="comment">--username root \</span></span><br><span class="line"><span class="comment">--password 123456 \</span></span><br><span class="line"><span class="comment">--table staff \</span></span><br><span class="line"><span class="comment">--num-mappers 1 \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>导入到hive</span><br><span class="line"><span class="comment">--hive-import \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>导入到hive表中字段的分隔符</span><br><span class="line"><span class="comment">--fields-terminated-by &quot;\t&quot; \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 是否以<span class="keyword">insert</span> overwrite方式覆盖导入数据</span><br><span class="line"><span class="comment">--hive-overwrite \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 要导入的hive表的名称，会自动帮助我们建表。建议还是在hive中手动建表，需要注意和mysql表的数据类型匹配</span><br><span class="line"><span class="comment">--hive-table staff_hive</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">bin<span class="operator">/</span>sqoop import \</span><br><span class="line"><span class="comment">--connect jdbc:mysql://hadoop102:3306/mydb \</span></span><br><span class="line"><span class="comment">--username root \</span></span><br><span class="line"><span class="comment">--password java \</span></span><br><span class="line"><span class="comment">--table collect \</span></span><br><span class="line"><span class="comment">--num-mappers 1 \</span></span><br><span class="line"><span class="comment">--hive-import \</span></span><br><span class="line"><span class="comment">--fields-terminated-by &quot;\t&quot; \</span></span><br><span class="line"><span class="comment">--hive-overwrite \</span></span><br><span class="line"><span class="comment">--hive-table staff_hive</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="数据导入到Hbase"><a href="#数据导入到Hbase" class="headerlink" title="数据导入到Hbase"></a>数据导入到Hbase</h4><p>目前使用的sqoop1.4.6对应的是低版本的hbase,目前的1.3.0的hbase版本有点高！在执行导入时，sqoop是可以帮我们自动建表，在使用1.3.0hbase时，建表会失败！建议手动建表！</p>
+<p>在hbase中建表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="string">&#x27;t_collect&#x27;</span>,&quot;info&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">bin<span class="operator">/</span>sqoop import \</span><br><span class="line"><span class="comment">--connect jdbc:mysql://hadoop102:3306/mydb \</span></span><br><span class="line"><span class="comment">--username root \</span></span><br><span class="line"><span class="comment">--password 123456 \</span></span><br><span class="line"><span class="comment">--table collect \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>如果表不存在，hbase自动建表</span><br><span class="line"><span class="comment">--hbase-create-table \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 导入的表名</span><br><span class="line"><span class="comment">--hbase-table &quot;t_collect&quot; \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> mysql的哪一列作为rowkey</span><br><span class="line"><span class="comment">--hbase-row-key &quot;id&quot; \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>导入的列族名</span><br><span class="line"><span class="comment">--column-family &quot;info&quot; \</span></span><br><span class="line"><span class="comment">--num-mappers 1 \</span></span><br><span class="line"><span class="comment">--split-by id</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">bin<span class="operator">/</span>sqoop import \</span><br><span class="line"><span class="comment">--connect jdbc:mysql://hadoop102:3306/mydb \</span></span><br><span class="line"><span class="comment">--username root \</span></span><br><span class="line"><span class="comment">--password java \</span></span><br><span class="line"><span class="comment">--table collect \</span></span><br><span class="line"><span class="comment">--hbase-create-table \</span></span><br><span class="line"><span class="comment">--hbase-table &quot;t_collect&quot; \</span></span><br><span class="line"><span class="comment">--hbase-row-key &quot;id&quot; \</span></span><br><span class="line"><span class="comment">--column-family &quot;info&quot; \</span></span><br><span class="line"><span class="comment">--num-mappers 1 </span></span><br></pre></td></tr></table></figure>
+
+<h3 id="数据导出"><a href="#数据导出" class="headerlink" title="数据导出"></a>数据导出</h3><p>Hive/Hbase到关系型数据库（RDBMS)</p>
+<p>如果MySQL中不存在对应的表，不会自动建表，需要我们手动建表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"> bin<span class="operator">/</span>sqoop export \</span><br><span class="line"><span class="comment">--connect jdbc:mysql://hadoop102:3306/mydb \</span></span><br><span class="line"><span class="comment">--username root \</span></span><br><span class="line"><span class="comment">--password java \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>要导出的mysql的表名</span><br><span class="line"><span class="comment">--table t_collect \</span></span><br><span class="line"><span class="comment">--num-mappers 1 \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span>导出的数据在hdfs上的路径</span><br><span class="line"><span class="comment">--export-dir /collect \</span></span><br><span class="line"><span class="operator">/</span><span class="operator">/</span> 导出的数据的分隔符</span><br><span class="line"><span class="comment">--input-fields-terminated-by &quot;\t&quot;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> bin<span class="operator">/</span>sqoop export \</span><br><span class="line"><span class="comment">--connect jdbc:mysql://hadoop102:3306/mydb \</span></span><br><span class="line"><span class="comment">--username root \</span></span><br><span class="line"><span class="comment">--password java \</span></span><br><span class="line"><span class="comment">--table t_collect \</span></span><br><span class="line"><span class="comment">--num-mappers 1 \</span></span><br><span class="line"><span class="comment">--export-dir /collect \</span></span><br><span class="line"><span class="comment">--input-fields-terminated-by &quot;\t&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果有中文，需要在url中设置中文编码</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">--connect &#x27;jdbc:mysql://hadoop102:3306/mydb?useUnicode=true&amp;characterEncoding=utf-8&#x27; \</span></span><br></pre></td></tr></table></figure>
+
+<p>在MySQL中，在执行插入时，如果对于某些列，出现重复的数据，那么会报错DupLicate Key！此时，对于重复的列，如果希望指定更新其他列的操作，那么可以使用以下写法：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> t_emp2 <span class="keyword">VALUE</span>(<span class="number">6</span>,<span class="string">&#x27;jack&#x27;</span>,<span class="number">30</span>,<span class="number">3</span>,<span class="number">100001</span>) <span class="keyword">ON</span> DUPLICATE KEY UPDATE</span><br><span class="line">NAME<span class="operator">=</span><span class="keyword">VALUES</span>(NAME),age<span class="operator">=</span><span class="keyword">VALUES</span>(age),deptid<span class="operator">=</span><span class="keyword">VALUES</span>(deptid),empno<span class="operator">=</span><span class="keyword">VALUES</span>(empno);</span><br></pre></td></tr></table></figure>
+
+<p>在执行export导出时，默认的导出语句适用于向一个新的空表导数据的场景！每一行要导出的记录，都会<br>转换为Insert语句执行查询，此时如果说触犯了表的某些约束，例如主键唯一约束，此时Insert失败，<br>Job失败！</p>
+<p>如果要导入的表已经有数据了，此时可以指定–update-key参数，通过此参数，可以讲导入的数据，使用<br>updata语句进行导入，此时，只会更新重复的数据，不重复的数据是无法导入的！</p>
+<p>如果希望遇到重复的数据，就更新，不重复的数据就新增导入，可以使用–update-key，结合<br>–update-mode(默认为updateonly)=allowinsert。</p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2022/01/02/Sqoop/" data-id="cl3u9wg1e000d9wvo6vla1sxd" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Wumeng"
+        },
+        "headline": "Sqoop",
+        "image": "http://example.com/2022/01/02/Sqoop/image-20220102150418238.png",
+        "keywords": "Hadoop",
+        "genre": "大数据",
+        "datePublished": "2022-01-02",
+        "dateCreated": "2022-01-02",
+        "dateModified": "2022-05-31",
+        "url": "http://example.com/2022/01/02/Sqoop/",
+        "description": "Sqoop：SQL To Hadoop：目的是关系型数据库，导入导出到Hadoop
+Sqoop的原理是将命令翻译为MR执行,MR是没有reduce阶段，只有Map阶段
+安装上传并解压到指定文件夹
+1tar -zxvf sqoop-1.4.6.bin__hadoop-2.0.4-alpha.tar.gz -C ../module/
+
+
+配置
+1、可以在环境变量中进行配置
+2、可以在sqoop-env",
+        "wordCount": 803
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2022/01/02/Scala/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Scala
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2022/01/01/Phoenix/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Phoenix</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/image-20220525174639740.png)" alt="极客时间Django项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="title">极客时间Django项目</a></p>
+                            <p class="item-date"><time datetime="2022-05-25T08:11:16.000Z" itemprop="datePublished">2022-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/04/26/Django%E5%85%A5%E9%97%A8/image-20220426215758670.png)" alt="Django入门" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="title">Django入门</a></p>
+                            <p class="item-date"><time datetime="2022-04-26T13:14:15.000Z" itemprop="datePublished">2022-04-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></p>
+                            <p class="item-title"><a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="title">vscode配置python开发环境</a></p>
+                            <p class="item-date"><time datetime="2022-04-22T02:58:28.000Z" itemprop="datePublished">2022-04-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220426165118551.png)" alt="实时项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></p>
+                            <p class="item-title"><a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="title">实时项目</a></p>
+                            <p class="item-date"><time datetime="2022-02-28T01:49:46.000Z" itemprop="datePublished">2022-02-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/01/11/elasticsearch/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/01/11/elasticsearch/" class="title">elasticsearch</a></p>
+                            <p class="item-date"><time datetime="2022-01-11T13:47:23.000Z" itemprop="datePublished">2022-01-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Django/" style="font-size: 15px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 15px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 20px;">大数据</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Wumeng</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="parent">
+                <div class="child">
+                  <span id="busuanzi_container_site_pv">
+                    访问量<span id="busuanzi_value_site_pv"></span>次
+                  </span>
+                  <span class="post-meta-divider">|</span>
+                  <span id="busuanzi_container_site_uv" style='display:none'>
+                    访客数<span id="busuanzi_value_site_uv"></span>人
+                  </span>
+                  <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                </div>
+              </div>              
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <style>
+        .parent {
+          position: relative;
+        }
+        .child {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      </style>
+      
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://example.com/2022/01/02/Sqoop/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

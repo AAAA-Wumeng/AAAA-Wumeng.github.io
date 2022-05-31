@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Phoenix | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="中间件" />
+    
+    <meta name="description" content="HBase和Phoenix的对应关系    Hbase Phoenix     namespace（名称空间） database（库）    table（表） table（表）    column family（列族） cf:cq    column quliafier（列）     rowkey 主键   SQL中如果建表的时候，指定的主键是联合主键（由多个列共同作为主键） 在hbase中，ro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Phoenix">
+<meta property="og:url" content="http://example.com/2022/01/01/Phoenix/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="HBase和Phoenix的对应关系    Hbase Phoenix     namespace（名称空间） database（库）    table（表） table（表）    column family（列族） cf:cq    column quliafier（列）     rowkey 主键   SQL中如果建表的时候，指定的主键是联合主键（由多个列共同作为主键） 在hbase中，ro">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/01/01/Phoenix/image-20220101174411890.png">
+<meta property="article:published_time" content="2022-01-01T07:45:59.000Z">
+<meta property="article:modified_time" content="2022-05-31T02:06:19.479Z">
+<meta property="article:author" content="Wumeng">
+<meta property="article:tag" content="中间件">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/01/Phoenix/image-20220101174411890.png">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-Phoenix" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Phoenix
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2022/01/01/Phoenix/" class="article-date">
+       <time datetime="2022-01-01T07:45:59.000Z" itemprop="datePublished">2022-01-01</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2022/01/01/Phoenix/" class="article-date">
+     <time datetime="2022-05-31T02:06:19.479Z" itemprop="dateModified">2022-05-31</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="HBase和Phoenix的对应关系"><a href="#HBase和Phoenix的对应关系" class="headerlink" title="HBase和Phoenix的对应关系"></a>HBase和Phoenix的对应关系</h1><table>
+<thead>
+<tr>
+<th></th>
+<th>Hbase</th>
+<th>Phoenix</th>
+</tr>
+</thead>
+<tbody><tr>
+<td></td>
+<td>namespace（名称空间）</td>
+<td>database（库）</td>
+</tr>
+<tr>
+<td></td>
+<td>table（表）</td>
+<td>table（表）</td>
+</tr>
+<tr>
+<td></td>
+<td>column family（列族）</td>
+<td>cf:cq</td>
+</tr>
+<tr>
+<td></td>
+<td>column quliafier（列）</td>
+<td></td>
+</tr>
+<tr>
+<td></td>
+<td>rowkey</td>
+<td>主键</td>
+</tr>
+</tbody></table>
+<p>SQL中如果建表的时候，指定的主键是联合主键（由多个列共同作为主键）</p>
+<p>在hbase中，rowkey就是多个主键共同拼接的结果。</p>
+<h1 id="Phoenix定义"><a href="#Phoenix定义" class="headerlink" title="Phoenix定义"></a>Phoenix定义</h1><p>Phoenix 最早是 saleforce 的一个开源项目，后来成为 Apache 的顶级项目。</p>
+<p>Phoenix 构建在 HBase 之上的开源 SQL 层. 能够让我们使用标准的 JDBC API 去建表, 插入数据和查询 HBase 中的数据, 从而可以避免使用 HBase 的客户端 API.</p>
+<h3 id="Phoenix-特点"><a href="#Phoenix-特点" class="headerlink" title="Phoenix 特点"></a>Phoenix 特点</h3><ul>
+<li><p>将 SQl 查询编译为 HBase 扫描</p>
+</li>
+<li><p> 确定扫描 Rowkey 的最佳开始和结束位置</p>
+</li>
+<li><p>扫描并行执行</p>
+</li>
+<li><p>将 where 子句推送到服务器端的过滤器</p>
+</li>
+<li><p>通过协处理器进行聚合操作</p>
+</li>
+<li><p>完美支持 HBase 二级索引创建</p>
+</li>
+<li><p> DML命令以及通过DDL命令创建和操作表和版本化增量更改。</p>
+</li>
+<li><p>容易集成：如Spark，Hive，Pig，Flume和Map Reduce。</p>
+</li>
+</ul>
+<h1 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h1><ul>
+<li>上传安装包，并解压到指定的文件夹</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tar -zxvf apache-phoenix-4.14.2-HBase-1.3-bin.tar.gz -C ../module/</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220101174411890.png" alt="image-20220101174411890"></p>
+<p>phoenix没有把jar包放在lib目录中，而是直接放在根目录下</p>
+<ul>
+<li>将phoenix访问Hbase的jar包拷贝到Hbase的目录中，保证每次访问Hbase是，可以调用phoenix</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cp phoenix-4.14.2-HBase-1.3-server.jar /opt/module/hbase/lib</span><br><span class="line">cp phoenix-4.14.2-HBase-1.3-client.jar /opt/module/hbase/lib</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>将拷贝的节点分发至其他hbase节点</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">xsync lib/</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>配置环境变量</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">export PHOENIX_HOME=/opt/module/phoenix</span><br><span class="line">export PHOENIX_CLASSPATH=$PHOENIX_HOME</span><br><span class="line">export PATH=$PATH:$PHIENOX_HOME/bin</span><br></pre></td></tr></table></figure>
+
+<h2 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h2><p>在启动phoenix之前需要启动启动 hadoop, zookeeper, HBase</p>
+<p><img src="/2022/01/01/Phoenix/image-20220101175248563.png" alt="image-20220101175248563"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 phoenix]$ bin/sqlline.py hadoop102:2181</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220101181138635.png" alt="image-20220101181138635"></p>
+<p>退出</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">!quit</span><br></pre></td></tr></table></figure>
+
+<p>phoenix在启动后会创建这些表</p>
+<p><img src="/2022/01/01/Phoenix/image-20220101181402101.png" alt="image-20220101181402101"></p>
+<p>在hbase中查看</p>
+<p><img src="/2022/01/01/Phoenix/image-20220101181426632.png" alt="image-20220101181426632"></p>
+<p>帮助信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><span class="line">0: jdbc:phoenix:hadoop102:2181&gt; help</span><br><span class="line">!all                Execute the specified SQL against all the current</span><br><span class="line">                    connections</span><br><span class="line">!autocommit         Set autocommit mode on or off</span><br><span class="line">!batch              Start or execute a batch of statements</span><br><span class="line">!brief              Set verbose mode off</span><br><span class="line">!call               Execute a callable statement</span><br><span class="line">!close              Close the current connection to the database</span><br><span class="line">!closeall           Close all current open connections</span><br><span class="line">!columns            List all the columns for the specified table</span><br><span class="line">!commit             Commit the current transaction (if autocommit is off)</span><br><span class="line">!connect            Open a new connection to the database.</span><br><span class="line">!dbinfo             Give metadata information about the database</span><br><span class="line">!describe           Describe a table</span><br><span class="line">!dropall            Drop all tables in the current database</span><br><span class="line">!exportedkeys       List all the exported keys for the specified table</span><br><span class="line">!go                 Select the current connection</span><br><span class="line">!help               Print a summary of command usage</span><br><span class="line">!history            Display the command history</span><br><span class="line">!importedkeys       List all the imported keys for the specified table</span><br><span class="line">!indexes            List all the indexes for the specified table</span><br><span class="line">!isolation          Set the transaction isolation for this connection</span><br><span class="line">!list               List the current connections</span><br><span class="line">!manual             Display the SQLLine manual</span><br><span class="line">!metadata           Obtain metadata information</span><br><span class="line">!nativesql          Show the native SQL for the specified statement</span><br><span class="line">!outputformat       Set the output format for displaying results</span><br><span class="line">                    (table,vertical,csv,tsv,xmlattrs,xmlelements)</span><br><span class="line">!primarykeys        List all the primary keys for the specified table</span><br><span class="line">!procedures         List all the procedures</span><br><span class="line">!properties         Connect to the database specified in the properties file(s)</span><br><span class="line">!quit               Exits the program</span><br><span class="line">!reconnect          Reconnect to the database</span><br><span class="line">!record             Record all output to the specified file</span><br><span class="line">!rehash             Fetch table and column names for command completion</span><br><span class="line">!rollback           Roll back the current transaction (if autocommit is off)</span><br><span class="line">!run                Run a script from the specified file</span><br><span class="line">!save               Save the current variabes and aliases</span><br><span class="line">!scan               Scan for installed JDBC drivers</span><br><span class="line">!script             Start saving a script to a file</span><br><span class="line">!set                Set a sqlline variable</span><br><span class="line"></span><br><span class="line">Variable        Value      Description</span><br><span class="line">=============== ========== ================================</span><br><span class="line">autoCommit      true/false Enable/disable automatic</span><br><span class="line">                           transaction commit</span><br><span class="line">autoSave        true/false Automatically save preferences</span><br><span class="line">color           true/false Control whether color is used</span><br><span class="line">                           for display</span><br><span class="line">fastConnect     true/false Skip building table/column list</span><br><span class="line">                           for tab-completion</span><br><span class="line">force           true/false Continue running script even</span><br><span class="line">                           after errors</span><br><span class="line">headerInterval  integer    The interval between which</span><br><span class="line">                           headers are displayed</span><br><span class="line">historyFile     path       File in which to save command</span><br><span class="line">                           history. Default is</span><br><span class="line">                           $HOME/.sqlline/history (UNIX,</span><br><span class="line">                           Linux, Mac OS),</span><br><span class="line">                           $HOME/sqlline/history (Windows)</span><br><span class="line">incremental     true/false Do not receive all rows from</span><br><span class="line">                           server before printing the first</span><br><span class="line">                           row. Uses fewer resources,</span><br><span class="line">                           especially for long-running</span><br><span class="line">                           queries, but column widths may</span><br><span class="line">                           be incorrect.</span><br><span class="line">isolation       LEVEL      Set transaction isolation level</span><br><span class="line">maxColumnWidth  integer    The maximum width to use when</span><br><span class="line">                           displaying columns</span><br><span class="line">maxHeight       integer    The maximum height of the</span><br><span class="line">                           terminal</span><br><span class="line">maxWidth        integer    The maximum width of the</span><br><span class="line">                           terminal</span><br><span class="line">numberFormat    pattern    Format numbers using</span><br><span class="line">                           DecimalFormat pattern</span><br><span class="line">outputFormat    table/vertical/csv/tsv Format mode for</span><br><span class="line">                           result display</span><br><span class="line">propertiesFile  path       File from which SqlLine reads</span><br><span class="line">                           properties on startup; default is</span><br><span class="line">                           $HOME/.sqlline/sqlline.properties</span><br><span class="line">                           (UNIX, Linux, Mac OS),</span><br><span class="line">                           $HOME/sqlline/sqlline.properties</span><br><span class="line">                           (Windows)</span><br><span class="line">rowLimit        integer    Maximum number of rows returned</span><br><span class="line">                           from a query; zero means no</span><br><span class="line">                           limit</span><br><span class="line">showElapsedTime true/false Display execution time when</span><br><span class="line">                           verbose</span><br><span class="line">showHeader      true/false Show column names in query</span><br><span class="line">                           results</span><br><span class="line">showNestedErrs  true/false Display nested errors</span><br><span class="line">showWarnings    true/false Display connection warnings</span><br><span class="line">silent          true/false Be more silent</span><br><span class="line">timeout         integer    Query timeout in seconds; less</span><br><span class="line">                           than zero means no timeout</span><br><span class="line">trimScripts     true/false Remove trailing spaces from</span><br><span class="line">                           lines read from script files</span><br><span class="line">verbose         true/false Show verbose error messages and</span><br><span class="line">                           debug info</span><br><span class="line">!sql                Execute a SQL command</span><br><span class="line">!tables             List all the tables in the database</span><br><span class="line">!typeinfo           Display the type map for the current connection</span><br><span class="line">!verbose            Set verbose mode on</span><br><span class="line"></span><br><span class="line">Comments, bug reports, and patches go to ???</span><br><span class="line">0: jdbc:phoenix:hadoop102:2181&gt; </span><br></pre></td></tr></table></figure>
+
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><h4 id="新建"><a href="#新建" class="headerlink" title="新建"></a>新建</h4><h5 id="Hbase中没有表。"><a href="#Hbase中没有表。" class="headerlink" title="Hbase中没有表。"></a>Hbase中没有表。</h5><p>希望在pnoenix中建表，在phoneix中使用SQL先hbase中插入数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> us_population(</span><br><span class="line">    state <span class="type">CHAR</span>(<span class="number">2</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    city <span class="type">VARCHAR</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    population <span class="type">BIGINT</span></span><br><span class="line">    <span class="keyword">CONSTRAINT</span> my_pk <span class="keyword">PRIMARY</span> KEY (state,city));</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">city <span class="type">VARCHAR</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>	#没有定义长度，无限可变长度</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CONSTRAINT</span> my_pk	#<span class="keyword">CONSTRAINT</span>表示约束，约束名叫my_pk（可以自己起）</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">PRIMARY KEY (state,city)	#PRIMARY KEY 表示主键约束，使用state和city作为联合主键</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220101204321157.png" alt="image-20220101204321157"></p>
+<p><img src="/2022/01/01/Phoenix/image-20220101204619792.png" alt="image-20220101204619792"></p>
+<p>自动加了很多协处理器</p>
+<p>插入一条数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">upsert <span class="keyword">into</span> us_population <span class="keyword">values</span>(<span class="string">&#x27;NY&#x27;</span>,<span class="string">&#x27;NewYork&#x27;</span>,<span class="number">8143197</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220101204951333.png" alt="image-20220101204951333"></p>
+<p><img src="/2022/01/01/Phoenix/image-20220101205036420.png" alt="image-20220101205036420"></p>
+<p>如果已经有了记录，那么执行的就是更新操作</p>
+<p><img src="/2022/01/01/Phoenix/image-20220101205321121.png" alt="image-20220101205321121"></p>
+<p>在创建表时，如果不定义列族，那么默认为0号列族，如果不想显示x00这些可以在建表的时候加上<strong>column_encoded_bytes=0</strong>；建表时使用小写，建表完成后，表名会自动转换为大写，如果需要小写可以在表名上加双引号。指定</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> <span class="keyword">TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span>  &quot;ns1&quot;.&quot;us_population&quot;(</span><br><span class="line">    state <span class="type">CHAR</span>(<span class="number">2</span>) <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    city <span class="type">VARCHAR</span> <span class="keyword">NOT</span> <span class="keyword">NULL</span>,</span><br><span class="line">    info.population <span class="type">BIGINT</span></span><br><span class="line">    <span class="keyword">CONSTRAINT</span> my_pk <span class="keyword">PRIMARY</span> KEY (state,city)) column_encoded_bytes<span class="operator">=</span><span class="number">0</span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;ns1&quot;.&quot;us_population&quot;	#使用这样的方式指定库</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">info.population <span class="type">BIGINT</span>	#指定列族</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220101210439596.png" alt="image-20220101210439596"></p>
+<p>插入数据</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">upsert <span class="keyword">into</span> &quot;ns1&quot;.&quot;us_population&quot; <span class="keyword">values</span>(<span class="string">&#x27;NY&#x27;</span>,<span class="string">&#x27;NewYork&#x27;</span>,<span class="number">8143197</span>);</span><br><span class="line">upsert <span class="keyword">into</span> &quot;ns1&quot;.&quot;us_population&quot; <span class="keyword">values</span>(<span class="string">&#x27;CA&#x27;</span>,<span class="string">&#x27;Los Angeles&#x27;</span>,<span class="number">3844829</span>);</span><br><span class="line">upsert <span class="keyword">into</span> &quot;ns1&quot;.&quot;us_population&quot; <span class="keyword">values</span>(<span class="string">&#x27;IL&#x27;</span>,<span class="string">&#x27;Chicago&#x27;</span>,<span class="number">2842518</span>);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220101210727426.png" alt="image-20220101210727426"></p>
+<h5 id="Hbase中已经有表"><a href="#Hbase中已经有表" class="headerlink" title="Hbase中已经有表"></a>Hbase中已经有表</h5><p>需要在phoneix中进行映射，映射之后，再执行操作</p>
+<h6 id="情况一"><a href="#情况一" class="headerlink" title="情况一"></a>情况一</h6><p>如果这个表只希望执行查询操作，不希望执行修改，那么可以创建视图（view）</p>
+<p>列的名称要对应，列的数据类型要匹配</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">view</span>  &quot;emp&quot;(</span><br><span class="line">  &quot;empno&quot; <span class="type">varchar</span> <span class="keyword">primary</span> key, </span><br><span class="line">  &quot;info&quot;.&quot;ename&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;job&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;mgr&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;hiredate&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;sal&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;comm&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;deptno&quot; <span class="type">varchar</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>phoenix不支持int类型</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;empno&quot; <span class="type">varchar</span> <span class="keyword">primary</span> key, 	#主键不能加列族名</span><br></pre></td></tr></table></figure>
+
+
+
+<p>查询</p>
+<p><img src="/2022/01/01/Phoenix/image-20220101214114966.png" alt="image-20220101214114966"></p>
+<p>表名自动转为大写，需要加上引号</p>
+<p><img src="/2022/01/01/Phoenix/image-20220101214213656.png" alt="image-20220101214213656"></p>
+<p>删除视图</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">view</span> &quot;emp&quot;;</span><br></pre></td></tr></table></figure>
+
+
+
+<h6 id="情况二"><a href="#情况二" class="headerlink" title="情况二"></a>情况二</h6><p>如果这个表需要增删改查，可以创建表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">table</span>  &quot;emp&quot;(</span><br><span class="line">  &quot;empno&quot; <span class="type">varchar</span> <span class="keyword">primary</span> key, </span><br><span class="line">   &quot;info&quot;.&quot;ename&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;job&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;mgr&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;hiredate&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;sal&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;comm&quot; <span class="type">varchar</span>, </span><br><span class="line">  &quot;info&quot;.&quot;deptno&quot; <span class="type">varchar</span></span><br><span class="line">)column_encoded_bytes<span class="operator">=</span><span class="number">0</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220101214718652.png" alt="image-20220101214718652"></p>
+<p><strong>注意视图和表是不能重复的</strong></p>
+<h4 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h4><p>删表</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> <span class="keyword">table</span> us_population;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220101211029734.png" alt="image-20220101211029734"></p>
+<h3 id="二级索引"><a href="#二级索引" class="headerlink" title="二级索引"></a>二级索引</h3><p>在hbase中，查询数据时，一般会指定rowkey，或者rowkey的范围，rowkey称为一级索引；如果查询某个具体的列，hbase也支持在列上创建索引，在列上创建的索引称为二级索引 </p>
+<p>如果使用Phoenix，只需要一行create index 索引名 on 表名(列) SQL，Phoenix会自动帮助我们创建二级索引</p>
+<p>二级索引的目的是在执行查询某些列的数据时，加快效率！</p>
+<h4 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h4><p>路径</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">configuration</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span>     </span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rootdir<span class="tag">&lt;/<span class="name">name</span>&gt;</span>     </span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>hdfs://hadoop102:9000/HBase<span class="tag">&lt;/<span class="name">value</span>&gt;</span>   </span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span>   </span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.cluster.distributed<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>true<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="comment">&lt;!-- 0.98后的新变动，之前版本没有.port,默认端口为60000 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.master.port<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">value</span>&gt;</span>16000<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span>    </span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.quorum<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	     <span class="tag">&lt;<span class="name">value</span>&gt;</span>hadoop102,hadoop103,hadoop104<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span>   </span><br><span class="line">		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.zookeeper.property.dataDir<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">	     <span class="tag">&lt;<span class="name">value</span>&gt;</span>/opt/module/zookeeper-3.4.10/datas<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- phoenix regionserver 配置参数 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.regionserver.wal.codec<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.hbase.regionserver.wal.IndexedWALEditCodec<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.region.server.rpc.scheduler.factory.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.hbase.ipc.PhoenixRpcSchedulerFactory<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">		<span class="tag">&lt;<span class="name">description</span>&gt;</span>Factory to create the Phoenix RPC Scheduler that uses separate queues for index and metadata updates<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.rpc.controllerfactory.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">   	 	<span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.hadoop.hbase.ipc.controller.ServerRpcControllerFactory<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">description</span>&gt;</span>Factory to create the Phoenix RPC Scheduler that uses separate queues for index and metadata updates<span class="tag">&lt;/<span class="name">description</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">	<span class="comment">&lt;!-- phoenix master 配置参数 --&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.master.loadbalancer.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.phoenix.hbase.index.balancer.IndexLoadBalancer<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line">	<span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">name</span>&gt;</span>hbase.coprocessor.master.classes<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    		<span class="tag">&lt;<span class="name">value</span>&gt;</span>org.apache.phoenix.hbase.index.master.IndexMasterObserver<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">configuration</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>创建全局索引的方法</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> INDEX my_index <span class="keyword">ON</span> my_table (my_col)</span><br></pre></td></tr></table></figure>
+
+<p>示例</p>
+<p>查询emp表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from &quot;emp&quot;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220102112244301.png" alt="image-20220102112244301"></p>
+<p>条件查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> &quot;emp&quot; <span class="keyword">where</span> &quot;job&quot;<span class="operator">=</span><span class="string">&#x27;CLERK&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220102112334165.png" alt="image-20220102112334165"></p>
+<p>使用explain + SQL查看是否使用了索引</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain select &quot;job&quot; from &quot;emp&quot; where &quot;job&quot;=&#x27;CLERK&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220102112557473.png" alt="image-20220102112557473"></p>
+<p>在Phoenix中如果出现了FULL SCAN，代表没有使用二级索引，出现了全部扫描</p>
+<p>在job列创建索引（info表示列族名）【加上列族信息】</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> index idx_job <span class="keyword">on</span> &quot;emp&quot;(&quot;info&quot;.&quot;job&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>索引创建后查看</p>
+<p><img src="/2022/01/01/Phoenix/image-20220102113355644.png" alt="image-20220102113355644"></p>
+<p>执行查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain <span class="keyword">select</span> &quot;job&quot; <span class="keyword">from</span> &quot;emp&quot; <span class="keyword">where</span> &quot;job&quot;<span class="operator">=</span><span class="string">&#x27;CLERK&#x27;</span> ;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220102131905521.png" alt="image-20220102131905521"></p>
+<p>复合索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain <span class="keyword">select</span> &quot;job&quot; <span class="keyword">from</span> &quot;emp&quot; <span class="keyword">where</span> &quot;job&quot;<span class="operator">=</span><span class="string">&#x27;CLERK&#x27;</span> <span class="keyword">and</span> &quot;ename&quot;<span class="operator">=</span><span class="string">&#x27;SMITH&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220102133033311.png" alt="image-20220102133033311"></p>
+<p>建立复合索引之前执行查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> index idx_job_name <span class="keyword">on</span> &quot;emp&quot;(&quot;info&quot;.&quot;job&quot;,&quot;info&quot;.&quot;ename&quot;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220102133407017.png" alt="image-20220102133407017"></p>
+<p>建立复合索引之后执行查询</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">explain <span class="keyword">select</span> &quot;job&quot; <span class="keyword">from</span> &quot;emp&quot; <span class="keyword">where</span> &quot;job&quot;<span class="operator">=</span><span class="string">&#x27;CLERK&#x27;</span> <span class="keyword">and</span> &quot;ename&quot;<span class="operator">=</span><span class="string">&#x27;SMITH&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/01/Phoenix/image-20220102133449016.png" alt="image-20220102133449016"></p>
+<p>删除索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">drop</span> index idx_job <span class="keyword">on</span> &quot;emp&quot;;</span><br></pre></td></tr></table></figure>
+
+<p>二级索引的分类</p>
+<p>在hbase中二级索引分为gloal（全局）和local（本地）二级索引；从作用上说，不管是本地索引还是全局索引，都是为了加快查询；区别在于适合的场景不同 ：gloal（全局）在创建后，专门在hbase中，生成一个表。将索引的信息存储在表中【适合多读少些的场景，因为你的索引是一张表，数据也是一张表；数据表在rs1中，索引表在rs2中，每次发送一次put请求，必须先请求rs1，再请求rs2，才能完成更新，网络开销大，加重rs的压力 ；读操作不需要更新索引，只需要查询索引就可以】 ；local（本地），在创建后，在表中，创建一个列族，在这个列族中保存索引的信息【适合多写少读的情景！索引是以列族的形式在表中存储，索引和数据在一个rs上，此时频频繁的写操作，只需要请求当前的regionserver】。</p>
+<p>创建本地索引</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">create</span> <span class="keyword">local</span> index idx_ename <span class="keyword">on</span> &quot;emp&quot;(&quot;info&quot;.&quot;ename&quot;);</span><br></pre></td></tr></table></figure>
+
+<p>创建完成后，并没有在hbase中生成新的表</p>
+<p><img src="/2022/01/01/Phoenix/image-20220102135830650.png" alt="image-20220102135830650"></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2022/01/01/Phoenix/" data-id="cl3u9wg1v001s9wvo7tzt44c0" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Wumeng"
+        },
+        "headline": "Phoenix",
+        "image": "http://example.com/2022/01/01/Phoenix/image-20220101174411890.png",
+        "keywords": "中间件",
+        "genre": "大数据",
+        "datePublished": "2022-01-01",
+        "dateCreated": "2022-01-01",
+        "dateModified": "2022-05-31",
+        "url": "http://example.com/2022/01/01/Phoenix/",
+        "description": "HBase和Phoenix的对应关系
+
+
+
+Hbase
+Phoenix
+
+
+
+
+namespace（名称空间）
+database（库）
+
+
+
+table（表）
+table（表）
+
+
+
+column family（列族）
+cf:cq
+
+
+
+column quliafier（列）
+
+
+
+
+rowkey
+主键
+
+
+SQL中如果建表的时候，指定的主键是联合主键（由多个列共同作为主键）
+在hbase中，ro",
+        "wordCount": 3330
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2022/01/02/Sqoop/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Sqoop
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/12/25/Hbase/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Hbase</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/image-20220525174639740.png)" alt="极客时间Django项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="title">极客时间Django项目</a></p>
+                            <p class="item-date"><time datetime="2022-05-25T08:11:16.000Z" itemprop="datePublished">2022-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/04/26/Django%E5%85%A5%E9%97%A8/image-20220426215758670.png)" alt="Django入门" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="title">Django入门</a></p>
+                            <p class="item-date"><time datetime="2022-04-26T13:14:15.000Z" itemprop="datePublished">2022-04-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></p>
+                            <p class="item-title"><a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="title">vscode配置python开发环境</a></p>
+                            <p class="item-date"><time datetime="2022-04-22T02:58:28.000Z" itemprop="datePublished">2022-04-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220426165118551.png)" alt="实时项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></p>
+                            <p class="item-title"><a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="title">实时项目</a></p>
+                            <p class="item-date"><time datetime="2022-02-28T01:49:46.000Z" itemprop="datePublished">2022-02-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/01/11/elasticsearch/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/01/11/elasticsearch/" class="title">elasticsearch</a></p>
+                            <p class="item-date"><time datetime="2022-01-11T13:47:23.000Z" itemprop="datePublished">2022-01-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Django/" style="font-size: 15px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 15px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 20px;">大数据</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Wumeng</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="parent">
+                <div class="child">
+                  <span id="busuanzi_container_site_pv">
+                    访问量<span id="busuanzi_value_site_pv"></span>次
+                  </span>
+                  <span class="post-meta-divider">|</span>
+                  <span id="busuanzi_container_site_uv" style='display:none'>
+                    访客数<span id="busuanzi_value_site_uv"></span>人
+                  </span>
+                  <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                </div>
+              </div>              
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <style>
+        .parent {
+          position: relative;
+        }
+        .child {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      </style>
+      
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://example.com/2022/01/01/Phoenix/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

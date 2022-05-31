@@ -1,0 +1,944 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>Kafka | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="消息队列" />
+    
+    <meta name="description" content="Kafka的特点 类似于消息队列和商业消息系统，Kafka提供对流式数据的发布和订阅 Kafka提供一种持久的容错方式存储流式数据 Kafka拥有良好的性能，可以及时处理流式数据  核心概念Broker： 一台kafka服务器就是一个broker。一个集群由多个broker组成。 Topic： Topic 就是数据主题，kafka建议根据业务系统将不同的数据存放在不同的topic中！Kafka中">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kafka">
+<meta property="og:url" content="http://example.com/2021/12/23/Kafka/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Kafka的特点 类似于消息队列和商业消息系统，Kafka提供对流式数据的发布和订阅 Kafka提供一种持久的容错方式存储流式数据 Kafka拥有良好的性能，可以及时处理流式数据  核心概念Broker： 一台kafka服务器就是一个broker。一个集群由多个broker组成。 Topic： Topic 就是数据主题，kafka建议根据业务系统将不同的数据存放在不同的topic中！Kafka中">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2021/12/23/Kafka/image-20211223211122345.png">
+<meta property="article:published_time" content="2021-12-23T13:08:32.000Z">
+<meta property="article:modified_time" content="2022-05-31T02:05:05.430Z">
+<meta property="article:author" content="Wumeng">
+<meta property="article:tag" content="消息队列">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2021/12/23/Kafka/image-20211223211122345.png">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-Kafka" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        Kafka
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2021/12/23/Kafka/" class="article-date">
+       <time datetime="2021-12-23T13:08:32.000Z" itemprop="datePublished">2021-12-23</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2021/12/23/Kafka/" class="article-date">
+     <time datetime="2022-05-31T02:05:05.430Z" itemprop="dateModified">2022-05-31</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p><img src="/2021/12/23/Kafka/image-20211223211122345.png" alt="image-20211223211122345"></p>
+<h2 id="Kafka的特点"><a href="#Kafka的特点" class="headerlink" title="Kafka的特点"></a>Kafka的特点</h2><ul>
+<li>类似于消息队列和商业消息系统，Kafka提供对流式数据的发布和订阅</li>
+<li>Kafka提供一种持久的容错方式存储流式数据</li>
+<li>Kafka拥有良好的性能，可以及时处理流式数据</li>
+</ul>
+<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><p><strong>Broker</strong>：</p>
+<p>一台kafka服务器就是一个broker。一个集群由多个broker组成。</p>
+<p><strong>Topic</strong>：</p>
+<p>Topic 就是数据主题，kafka建议根据业务系统将不同的数据存放在不同的topic中！Kafka中的Topics总是多订阅者模式，一个topic可以拥有一个或者多个消费者来订阅它的数据。一个大的Topic可以分布式存储在多个kafka broker中！Topic可以类比为数据库中的库！</p>
+<p><strong>Partition</strong>：</p>
+<p>每个topic可以有多个分区，通过分区的设计，topic可以不断进行扩展！即一个Topic的多个分区分布式存储在多个broker!</p>
+<p>此外通过分区还可以让一个topic被多个consumer进行消费！以达到并行处理！分区可以类比为数据库中的表！</p>
+<p>kafka只保证按一个partition中的顺序将消息发给consumer，不保证一个topic的整体（多个partition间）的顺序。</p>
+<p><strong>Offset</strong></p>
+<p>数据会按照时间顺序被不断第追加到分区的一个结构化的commit log中！每个分区中存储的记录都是有序的，且顺序不可变！</p>
+<p>这个顺序是通过一个称之为offset的id来唯一标识！因此也可以认为offset是有序且不可变的！ </p>
+<p>在每一个消费者端，会唯一保存的元数据是offset（偏移量）,即消费在log中的位置.偏移量由消费者所控制。通常在读取记录后，消费者会以线性的方式增加偏移量，但是实际上，由于这个位置由消费者控制，所以消费者可以采用任何顺序来消费记录。例如，一个消费者可以重置到一个旧的偏移量，从而重新处理过去的数据；也可以跳过最近的记录，从”现在”开始消费。</p>
+<p>这些细节说明Kafka 消费者是非常廉价的—消费者的增加和减少，对集群或者其他消费者没有多大的影响。比如，你可以使用命令行工具，对一些topic内容执行 tail操作，并不会影响已存在的消费者消费数据。</p>
+<p><strong>持久化</strong></p>
+<p>Kafka 集群保留所有发布的记录—无论他们是否已被消费—并通过一个可配置的参数——保留期限来控制。举个例子， 如果保留策略设置为2天，一条记录发布后两天内，可以随时被消费，两天过后这条记录会被清除并释放磁盘空间。</p>
+<p>Kafka的性能和数据大小无关，所以长时间存储数据没有什么问题。</p>
+<p><strong>副本机制</strong></p>
+<p>日志的分区partition （分布）在Kafka集群的服务器上。每个服务器在处理数据和请求时，共享这些分区。每一个分区都会在已配置的服务器上进行备份，确保容错性。</p>
+<p>每个分区都有一台 server 作为 “leader”，零台或者多台server作为 follwers 。leader server 处理一切对 partition （分区）的读写请求，而follwers只需被动的同步leader上的数据。当leader宕机了，followers 中的一台服务器会自动成为新的 leader。通过这种机制，既可以保证数据有多个副本，也实现了一个高可用的机制！</p>
+<p>基于安全考虑，每个分区的Leader和follower一般会错在在不同的broker!</p>
+<p><strong>Producer</strong></p>
+<p>消息生产者，就是向kafka broker发消息的客户端。生产者负责将记录分配到topic的指定 partition（分区）中</p>
+<p> <strong>Consumer</strong></p>
+<p>消息消费者，向kafka broker取消息的客户端。每个消费者都要维护自己读取数据的offset。低版本0.9之前将offset保存在Zookeeper中，0.9及之后保存在Kafka的“__consumer_offsets”主题中。</p>
+<p><strong>Consumer Group</strong></p>
+<p>每个消费者都会使用一个消费组名称来进行标识。同一个组中的不同的消费者实例，可以分布在多个进程或多个机器上！</p>
+<p>如果所有的消费者实例在同一消费组中，消息记录会负载平衡到每一个消费者实例（单播）。即每个消费者可以同时读取一个topic的不同分区！</p>
+<p>如果所有的消费者实例在不同的消费组中，每条消息记录会广播到所有的消费者进程(广播)。</p>
+<p>如果需要实现广播，只要每个consumer有一个独立的组就可以了。要实现单播只要所有的consumer在同一个组。</p>
+<p>一个topic可以有多个consumer group。topic的消息会复制（不是真的复制，是概念上的）到所有的CG，但每个partion只会把消息发给该CG中的一个consumer。</p>
+<h1 id="Kafka基础架构"><a href="#Kafka基础架构" class="headerlink" title="Kafka基础架构"></a>Kafka基础架构</h1><p><img src="/2021/12/23/Kafka/image-20211224112335451.png" alt="image-20211224112335451"></p>
+<ul>
+<li>同一时刻一个分区只能由一个消费者消费，同一时刻一个消费者可以消费多个主题的。</li>
+<li>Kafka中消息是以<strong>topic</strong>进行分类的，生产者生产消息，消费者消费消息，都是面向topic的。</li>
+<li>topic是逻辑上的概念，而partition是物理上的概念，每个partition对应于一个log文件，该log文件中存储的就是producer生产的数据。Producer生产的数据会被不断追加到该log文件末端，且每条数据都有自己的offset。消费者组中的每个消费者，都会实时记录自己消费到了哪个offset，以便出错恢复时，从上次的位置继续消费。</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211225110954997.png" alt="image-20211225110954997"></p>
+<p>由于生产者生产的消息会不断追加到log文件末尾，为防止log文件过大导致数据定位效率低下，Kafka采取了<strong>分片</strong>和<strong>索引</strong>机制，将每个partition分为多个segment。</p>
+<p>每个partition(目录)相当于一个巨型文件被平均分配到多个大小相等的segment(段)数据文件中（每个segment 文件中消息数量不一定相等），这种特性也方便old segment的删除，即方便已被消费的消息的清理，提高磁盘的利用率。每个partition只需要支持顺序读写就行，segment的文件生命周期由服务端配置参数（log.segment.bytes，log.roll.{ms,hours}等若干参数）决定。</p>
+<p>每个segment对应两个文件——“.index”文件和“.log”文件。分别表示为segment索引文件和数据文件（引入索引文件的目的就是便于利用二分查找快速定位message位置）。这两个文件的命令规则为：partition全局的第一个segment从0开始，后续每个segment文件名为上一个segment文件最后一条消息的offset值，数值大小为64位，20位数字字符长度，没有数字用0填充。</p>
+<p>这些文件位于一个文件夹下（partition目录），该文件夹的命名规则为：topic名称+分区序号。例如，first这个topic有三个分区，则其对应的文件夹为first-0,first-1,first-2。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">00000000000000000000.index</span><br><span class="line">00000000000000000000.log</span><br><span class="line">00000000000000170410.index</span><br><span class="line">00000000000000170410.log</span><br><span class="line">00000000000000239430.index</span><br><span class="line">00000000000000239430.log</span><br></pre></td></tr></table></figure>
+
+<p>ndex和log文件以当前segment的第一条消息的offset命名。</p>
+<p>上传到安装目录下，进行解压</p>
+<p><img src="/2021/12/23/Kafka/image-20211224132157497.png" alt="image-20211224132157497"></p>
+<p>修改配置文件（）</p>
+<p><img src="/2021/12/23/Kafka/image-20211224132952896.png" alt="image-20211224132952896"></p>
+<p><img src="/2021/12/23/Kafka/image-20211224133333851.png" alt="image-20211224133333851"></p>
+<p><img src="/2021/12/23/Kafka/image-20211224133547296.png" alt="image-20211224133547296"></p>
+<p>完成配置后，分发kafka至所有的机器，注意修改唯一编号</p>
+<h3 id="启动"><a href="#启动" class="headerlink" title="启动"></a>启动</h3><ul>
+<li>kafaka依赖于Zookeeper，所以需要先启动ZK集群</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211224151753431.png" alt="image-20211224151753431"></p>
+<ul>
+<li>连接hadoop102的2181端口</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/module/zookeeper-3.4.10/bin/zkCli.sh -server  hadoop102:2181 </span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224151734920.png" alt="image-20211224151734920"></p>
+<ul>
+<li>启动kafka（集群）</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-server-start.sh -daemon /opt/module/kafka/config/server.properties</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224152252796.png" alt="image-20211224152252796"></p>
+<ul>
+<li>查看当前启动的Kafka实例</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211224152458735.png" alt="image-20211224152458735"></p>
+<ul>
+<li>查看102保存的内容</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211224152617294.png" alt="image-20211224152617294"></p>
+<ul>
+<li>停止集群的节</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/opt/module/kafka/bin/kafka-server-stop.sh</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224152758136.png" alt="image-20211224152758136"></p>
+<ul>
+<li>重新查看ZK数据</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211224152833973.png" alt="image-20211224152833973"></p>
+<h3 id="主题操作"><a href="#主题操作" class="headerlink" title="主题操作"></a>主题操作</h3><h4 id="创建主题-1"><a href="#创建主题-1" class="headerlink" title="创建主题-1"></a>创建主题-1</h4><ul>
+<li>kafka-topics.sh命令</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211224153149555.png" alt="image-20211224153149555"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop102 kafka]$ bin/kafka-topics.sh </span><br><span class="line">Create, delete, describe, or change a topic.</span><br><span class="line">Option                                   Description                            </span><br><span class="line">------                                   -----------                            </span><br><span class="line">--alter                                  Alter the number of partitions,        </span><br><span class="line">                                           replica assignment, and/or           </span><br><span class="line">                                           configuration for the topic.         </span><br><span class="line">--config &lt;String: name=value&gt;            A topic configuration override for the </span><br><span class="line">                                           topic being created or altered.The   </span><br><span class="line">                                           following is a list of valid         </span><br><span class="line">                                           configurations:                      </span><br><span class="line">                                         	cleanup.policy                        </span><br><span class="line">                                         	compression.type                      </span><br><span class="line">                                         	delete.retention.ms                   </span><br><span class="line">                                         	file.delete.delay.ms                  </span><br><span class="line">                                         	flush.messages                        </span><br><span class="line">                                         	flush.ms                              </span><br><span class="line">                                         	follower.replication.throttled.       </span><br><span class="line">                                           replicas                             </span><br><span class="line">                                         	index.interval.bytes                  </span><br><span class="line">                                         	leader.replication.throttled.replicas </span><br><span class="line">                                         	max.message.bytes                     </span><br><span class="line">                                         	message.format.version                </span><br><span class="line">                                         	message.timestamp.difference.max.ms   </span><br><span class="line">                                         	message.timestamp.type                </span><br><span class="line">                                         	min.cleanable.dirty.ratio             </span><br><span class="line">                                         	min.compaction.lag.ms                 </span><br><span class="line">                                         	min.insync.replicas                   </span><br><span class="line">                                         	preallocate                           </span><br><span class="line">                                         	retention.bytes                       </span><br><span class="line">                                         	retention.ms                          </span><br><span class="line">                                         	segment.bytes                         </span><br><span class="line">                                         	segment.index.bytes                   </span><br><span class="line">                                         	segment.jitter.ms                     </span><br><span class="line">                                         	segment.ms                            </span><br><span class="line">                                         	unclean.leader.election.enable        </span><br><span class="line">                                         See the Kafka documentation for full   </span><br><span class="line">                                           details on the topic configs.        </span><br><span class="line">--create                                 Create a new topic.                    </span><br><span class="line">--delete                                 Delete a topic                         </span><br><span class="line">--delete-config &lt;String: name&gt;           A topic configuration override to be   </span><br><span class="line">                                           removed for an existing topic (see   </span><br><span class="line">                                           the list of configurations under the </span><br><span class="line">                                           --config option).                    </span><br><span class="line">--describe                               List details for the given topics.     </span><br><span class="line">--disable-rack-aware                     Disable rack aware replica assignment  </span><br><span class="line">--force                                  Suppress console prompts               </span><br><span class="line">--help                                   Print usage information.               </span><br><span class="line">--if-exists                              if set when altering or deleting       </span><br><span class="line">                                           topics, the action will only execute </span><br><span class="line">                                           if the topic exists                  </span><br><span class="line">--if-not-exists                          if set when creating topics, the       </span><br><span class="line">                                           action will only execute if the      </span><br><span class="line">                                           topic does not already exist         </span><br><span class="line">--list                                   List all available topics.             </span><br><span class="line">--partitions &lt;Integer: # of partitions&gt;  The number of partitions for the topic </span><br><span class="line">                                           being created or altered (WARNING:   </span><br><span class="line">                                           If partitions are increased for a    </span><br><span class="line">                                           topic that has a key, the partition  </span><br><span class="line">                                           logic or ordering of the messages    </span><br><span class="line">                                           will be affected                     </span><br><span class="line">--replica-assignment &lt;String:            A list of manual partition-to-broker   </span><br><span class="line">  broker_id_for_part1_replica1 :           assignments for the topic being      </span><br><span class="line">  broker_id_for_part1_replica2 ,           created or altered.                  </span><br><span class="line">  broker_id_for_part2_replica1 :                                                </span><br><span class="line">  broker_id_for_part2_replica2 , ...&gt;                                           </span><br><span class="line">--replication-factor &lt;Integer:           The replication factor for each        </span><br><span class="line">  replication factor&gt;                      partition in the topic being created.</span><br><span class="line">--topic &lt;String: topic&gt;                  The topic to be create, alter or       </span><br><span class="line">                                           describe. Can also accept a regular  </span><br><span class="line">                                           expression except for --create option</span><br><span class="line">--topics-with-overrides                  if set when describing topics, only    </span><br><span class="line">                                           show topics that have overridden     </span><br><span class="line">                                           configs                              </span><br><span class="line">--unavailable-partitions                 if set when describing topics, only    </span><br><span class="line">                                           show partitions whose leader is not  </span><br><span class="line">                                           available                            </span><br><span class="line">--under-replicated-partitions            if set when describing topics, only    </span><br><span class="line">                                           show under replicated partitions     </span><br><span class="line">--zookeeper &lt;String: urls&gt;               REQUIRED: The connection string for    </span><br><span class="line">                                           the zookeeper connection in the form </span><br><span class="line">                                           host:port. Multiple URLS can be      </span><br><span class="line">                                           given to allow fail-over.</span><br></pre></td></tr></table></figure>
+
+<p>主题的信息属于Kafka的元数据，是存储在Zookeeper中的</p>
+<ul>
+<li>在ZK中查询Kafka主题的信息</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211224153755458.png" alt="image-20211224153755458"></p>
+<ul>
+<li>创建主题-1【使用该方式创建主题必须指定分区数和副本数】</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --zookeeper hadoop102:2181 --create --topic myTopicTest --partitions 2 --replication-factor 2</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224154345844.png" alt="image-20211224154345844"></p>
+<ul>
+<li>查看创建好的主题信息</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211224155224479.png" alt="image-20211224155224479"></p>
+<p><img src="/2021/12/23/Kafka/image-20211224155328584.png" alt="image-20211224155328584"></p>
+<p><img src="/2021/12/23/Kafka/image-20211224155430050.png" alt="image-20211224155430050"></p>
+<p><img src="/2021/12/23/Kafka/image-20211224155521681.png" alt="image-20211224155521681"></p>
+<p><img src="/2021/12/23/Kafka/image-20211224155650086.png" alt="image-20211224155650086"></p>
+<p>参数解释</p>
+<ul>
+<li>–zookeeper：创建主题，需要写到Zookeeper中</li>
+<li>hadoop102:2181：主机和端口</li>
+<li>–create：创建一个主题，所以参数跟–create</li>
+<li>–topic hello：设置创建的主题名</li>
+<li>–partitions 2：分区的信息</li>
+<li>–replication-factor 2：副本的信息</li>
+</ul>
+<h4 id="查询主题"><a href="#查询主题" class="headerlink" title="查询主题"></a>查询主题</h4><ul>
+<li>查询所有的可用主题</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --zookeeper hadoop102:2181 --list</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224155836053.png" alt="image-20211224155836053"></p>
+<ul>
+<li>查询某个主题的详细信息</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bin/kafka-topics.sh --zookeeper hadoop102:2181 --describe --topic hello</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224160018604.png" alt="image-20211224160018604"></p>
+<p>设置分区数为4，副本数为4</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --zookeeper hadoop102:2181 --create --topic hello1 --partitions 4 --replication-factor 4</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224162027366.png" alt="image-20211224162027366"></p>
+<p>【每个brokers只保存一个副本，所以在创建主题是，副本数不能超过当前可用的broker数量】</p>
+<ul>
+<li>设置3个副本</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211224162229223.png" alt="image-20211224162229223"></p>
+<p>【没有详细指定partitions信息，所以Kafka会根据负载均衡策略，自动将分区分配到对应的broker实例中】</p>
+<h4 id="创建主题-2"><a href="#创建主题-2" class="headerlink" title="创建主题-2"></a>创建主题-2</h4><p>明确告诉Kafka集群，创建多少个分区，以及每个分区副本到底选择那个broker</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --zookeeper hadoop102:2181 --create --topic hello2 --replica-assignment 102:103,103:104</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>102:103,103:104：表示创建两个分区：0号区保存在102和103，1号区保存在103和104</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211224163321051.png" alt="image-20211224163321051"></p>
+<ul>
+<li>指定0号区一个副本，1号区2个副本，会报错</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --zookeeper hadoop102:2181 --create --topic hello2 --replica-assignment 103,103:104</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224163738572.png" alt="image-20211224163738572"></p>
+<h4 id="修改主题"><a href="#修改主题" class="headerlink" title="修改主题"></a>修改主题</h4><p>【只能修改分区数和副本的放置策略】</p>
+<ul>
+<li>修改分区数（将主题hello2的分区数修改为一个）【报错，分区数只能增，不能减】</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --zookeeper hadoop102:2181 --alter --topic hello2 --partitions 1</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224175841562.png" alt="image-20211224175841562"></p>
+<ul>
+<li>将分区数修改为3</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --zookeeper hadoop102:2181 --alter --topic hello2 --partitions 3</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224175942973.png" alt="image-20211224175942973"></p>
+<ul>
+<li>修改副本数量</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --zookeeper hadoop102:2181 --alter --topic hello2 -replica-assignment 102:104,103:104,102:103</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224211025895.png" alt="image-20211224211025895"></p>
+<ul>
+<li>删除hello</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-topics.sh --zookeeper hadoop102:2181 --delete --topic hello</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224211225003.png" alt="image-20211224211225003"></p>
+<p><img src="/2021/12/23/Kafka/image-20211224211401942.png" alt="image-20211224211401942"></p>
+<h4 id="生产数据"><a href="#生产数据" class="headerlink" title="生产数据"></a>生产数据</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-producer.sh	#用于测试</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line">Option                                   Description                            </span><br><span class="line">------                                   -----------                            </span><br><span class="line">--batch-size &lt;Integer: size&gt;             Number of messages to send in a single </span><br><span class="line">                                           batch if they are not being sent     </span><br><span class="line">                                           synchronously. (default: 200)        </span><br><span class="line">--broker-list &lt;String: broker-list&gt;      REQUIRED: The broker list string in    </span><br><span class="line">                                           the form HOST1:PORT1,HOST2:PORT2.    </span><br><span class="line">--compression-codec [String:             The compression codec: either &#x27;none&#x27;,  </span><br><span class="line">  compression-codec]                       &#x27;gzip&#x27;, &#x27;snappy&#x27;, or &#x27;lz4&#x27;.If        </span><br><span class="line">                                           specified without value, then it     </span><br><span class="line">                                           defaults to &#x27;gzip&#x27;                   </span><br><span class="line">--key-serializer &lt;String:                The class name of the message encoder  </span><br><span class="line"><span class="meta">  encoder_class&gt;</span><span class="bash">                           implementation to use <span class="keyword">for</span></span>            </span><br><span class="line">                                           serializing keys. (default: kafka.   </span><br><span class="line">                                           serializer.DefaultEncoder)           </span><br><span class="line">--line-reader &lt;String: reader_class&gt;     The class name of the class to use for </span><br><span class="line">                                           reading lines from standard in. By   </span><br><span class="line">                                           default each line is read as a       </span><br><span class="line">                                           separate message. (default: kafka.   </span><br><span class="line">                                           tools.                               </span><br><span class="line">                                           ConsoleProducer$LineMessageReader)   </span><br><span class="line">--max-block-ms &lt;Long: max block on       The max time that the producer will    </span><br><span class="line"><span class="meta">  send&gt;</span><span class="bash">                                    block <span class="keyword">for</span> during a send request</span>      </span><br><span class="line">                                           (default: 60000)                     </span><br><span class="line">--max-memory-bytes &lt;Long: total memory   The total memory used by the producer  </span><br><span class="line">  in bytes&gt;                                to buffer records waiting to be sent </span><br><span class="line">                                           to the server. (default: 33554432)   </span><br><span class="line">--max-partition-memory-bytes &lt;Long:      The buffer size allocated for a        </span><br><span class="line">  memory in bytes per partition&gt;           partition. When records are received </span><br><span class="line">                                           which are smaller than this size the </span><br><span class="line">                                           producer will attempt to             </span><br><span class="line">                                           optimistically group them together   </span><br><span class="line">                                           until this size is reached.          </span><br><span class="line">                                           (default: 16384)                     </span><br><span class="line">--message-send-max-retries &lt;Integer&gt;     Brokers can fail receiving the message </span><br><span class="line">                                           for multiple reasons, and being      </span><br><span class="line">                                           unavailable transiently is just one  </span><br><span class="line">                                           of them. This property specifies the </span><br><span class="line">                                           number of retires before the         </span><br><span class="line">                                           producer give up and drop this       </span><br><span class="line">                                           message. (default: 3)                </span><br><span class="line">--metadata-expiry-ms &lt;Long: metadata     The period of time in milliseconds     </span><br><span class="line">  expiration interval&gt;                     after which we force a refresh of    </span><br><span class="line">                                           metadata even if we haven&#x27;t seen any </span><br><span class="line">                                           leadership changes. (default: 300000)</span><br><span class="line">--old-producer                           Use the old producer implementation.   </span><br><span class="line">--producer-property &lt;String:             A mechanism to pass user-defined       </span><br><span class="line"><span class="meta">  producer_prop&gt;</span><span class="bash">                           properties <span class="keyword">in</span> the form key=value to</span>  </span><br><span class="line">                                           the producer.                        </span><br><span class="line">--producer.config &lt;String: config file&gt;  Producer config properties file. Note  </span><br><span class="line">                                           that [producer-property] takes       </span><br><span class="line">                                           precedence over this config.         </span><br><span class="line">--property &lt;String: prop&gt;                A mechanism to pass user-defined       </span><br><span class="line">                                           properties in the form key=value to  </span><br><span class="line">                                           the message reader. This allows      </span><br><span class="line">                                           custom configuration for a user-     </span><br><span class="line">                                           defined message reader.              </span><br><span class="line">--queue-enqueuetimeout-ms &lt;Integer:      Timeout for event enqueue (default:    </span><br><span class="line">  queue enqueuetimeout ms&gt;                 2147483647)                          </span><br><span class="line">--queue-size &lt;Integer: queue_size&gt;       If set and the producer is running in  </span><br><span class="line">                                           asynchronous mode, this gives the    </span><br><span class="line">                                           maximum amount of  messages will     </span><br><span class="line">                                           queue awaiting sufficient batch      </span><br><span class="line">                                           size. (default: 10000)               </span><br><span class="line">--request-required-acks &lt;String:         The required acks of the producer      </span><br><span class="line">  request required acks&gt;                   requests (default: 1)                </span><br><span class="line">--request-timeout-ms &lt;Integer: request   The ack timeout of the producer        </span><br><span class="line">  timeout ms&gt;                              requests. Value must be non-negative </span><br><span class="line">                                           and non-zero (default: 1500)         </span><br><span class="line">--retry-backoff-ms &lt;Integer&gt;             Before each retry, the producer        </span><br><span class="line">                                           refreshes the metadata of relevant   </span><br><span class="line">                                           topics. Since leader election takes  </span><br><span class="line">                                           a bit of time, this property         </span><br><span class="line">                                           specifies the amount of time that    </span><br><span class="line">                                           the producer waits before refreshing </span><br><span class="line">                                           the metadata. (default: 100)         </span><br><span class="line">--socket-buffer-size &lt;Integer: size&gt;     The size of the tcp RECV size.         </span><br><span class="line">                                           (default: 102400)                    </span><br><span class="line">--sync                                   If set message send requests to the    </span><br><span class="line">                                           brokers are synchronously, one at a  </span><br><span class="line">                                           time as they arrive.                 </span><br><span class="line">--timeout &lt;Integer: timeout_ms&gt;          If set and the producer is running in  </span><br><span class="line">                                           asynchronous mode, this gives the    </span><br><span class="line">                                           maximum amount of time a message     </span><br><span class="line">                                           will queue awaiting sufficient batch </span><br><span class="line">                                           size. The value is given in ms.      </span><br><span class="line">                                           (default: 1000)                      </span><br><span class="line">--topic &lt;String: topic&gt;                  REQUIRED: The topic id to produce      </span><br><span class="line">                                           messages to.                         </span><br><span class="line">--value-serializer &lt;String:              The class name of the message encoder  </span><br><span class="line"><span class="meta">  encoder_class&gt;</span><span class="bash">                           implementation to use <span class="keyword">for</span></span>            </span><br><span class="line">                                           serializing values. (default: kafka. </span><br><span class="line">                                           serializer.DefaultEncoder)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-producer.sh --topic hello --broker-list hadoop102:9092</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211224212308515.png" alt="image-20211224212308515"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-consumer.sh	#消费消息</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br></pre></td><td class="code"><pre><span class="line">The console consumer is a tool that reads data from Kafka and outputs it to standard output.</span><br><span class="line">Option                                   Description                            </span><br><span class="line">------                                   -----------                            </span><br><span class="line">--blacklist &lt;String: blacklist&gt;          Blacklist of topics to exclude from    </span><br><span class="line">                                           consumption.                         </span><br><span class="line">--bootstrap-server &lt;String: server to    REQUIRED (unless old consumer is       </span><br><span class="line">  connect to&gt;                              used): The server to connect to.     </span><br><span class="line">--consumer-property &lt;String:             A mechanism to pass user-defined       </span><br><span class="line"><span class="meta">  consumer_prop&gt;</span><span class="bash">                           properties <span class="keyword">in</span> the form key=value to</span>  </span><br><span class="line">                                           the consumer.                        </span><br><span class="line">--consumer.config &lt;String: config file&gt;  Consumer config properties file. Note  </span><br><span class="line">                                           that [consumer-property] takes       </span><br><span class="line">                                           precedence over this config.         </span><br><span class="line">--csv-reporter-enabled                   If set, the CSV metrics reporter will  </span><br><span class="line">                                           be enabled                           </span><br><span class="line">--delete-consumer-offsets                If specified, the consumer path in     </span><br><span class="line">                                           zookeeper is deleted when starting up</span><br><span class="line">--enable-systest-events                  Log lifecycle events of the consumer   </span><br><span class="line">                                           in addition to logging consumed      </span><br><span class="line">                                           messages. (This is specific for      </span><br><span class="line">                                           system tests.)                       </span><br><span class="line">--formatter &lt;String: class&gt;              The name of a class to use for         </span><br><span class="line">                                           formatting kafka messages for        </span><br><span class="line">                                           display. (default: kafka.tools.      </span><br><span class="line">                                           DefaultMessageFormatter)             </span><br><span class="line">--from-beginning                         If the consumer does not already have  </span><br><span class="line">                                           an established offset to consume     </span><br><span class="line">                                           from, start with the earliest        </span><br><span class="line">                                           message present in the log rather    </span><br><span class="line">                                           than the latest message.             </span><br><span class="line">--isolation-level &lt;String&gt;               Set to read_committed in order to      </span><br><span class="line">                                           filter out transactional messages    </span><br><span class="line">                                           which are not committed. Set to      </span><br><span class="line">                                           read_uncommittedto read all          </span><br><span class="line">                                           messages. (default: read_uncommitted)</span><br><span class="line">--key-deserializer &lt;String:                                                     </span><br><span class="line">  deserializer for key&gt;                                                         </span><br><span class="line">--max-messages &lt;Integer: num_messages&gt;   The maximum number of messages to      </span><br><span class="line">                                           consume before exiting. If not set,  </span><br><span class="line">                                           consumption is continual.            </span><br><span class="line">--metrics-dir &lt;String: metrics           If csv-reporter-enable is set, and     </span><br><span class="line"><span class="meta">  directory&gt;</span><span class="bash">                               this parameter isset, the csv</span>        </span><br><span class="line">                                           metrics will be output here          </span><br><span class="line">--new-consumer                           Use the new consumer implementation.   </span><br><span class="line">                                           This is the default.                 </span><br><span class="line">--offset &lt;String: consume offset&gt;        The offset id to consume from (a non-  </span><br><span class="line">                                           negative number), or &#x27;earliest&#x27;      </span><br><span class="line">                                           which means from beginning, or       </span><br><span class="line">                                           &#x27;latest&#x27; which means from end        </span><br><span class="line">                                           (default: latest)                    </span><br><span class="line">--partition &lt;Integer: partition&gt;         The partition to consume from.         </span><br><span class="line">                                           Consumption starts from the end of   </span><br><span class="line">                                           the partition unless &#x27;--offset&#x27; is   </span><br><span class="line">                                           specified.                           </span><br><span class="line">--property &lt;String: prop&gt;                The properties to initialize the       </span><br><span class="line">                                           message formatter.                   </span><br><span class="line">--skip-message-on-error                  If there is an error when processing a </span><br><span class="line">                                           message, skip it instead of halt.    </span><br><span class="line">--timeout-ms &lt;Integer: timeout_ms&gt;       If specified, exit if no message is    </span><br><span class="line">                                           available for consumption for the    </span><br><span class="line">                                           specified interval.                  </span><br><span class="line">--topic &lt;String: topic&gt;                  The topic id to consume on.            </span><br><span class="line">--value-deserializer &lt;String:                                                   </span><br><span class="line">  deserializer for values&gt;                                                      </span><br><span class="line">--whitelist &lt;String: whitelist&gt;          Whitelist of topics to include for     </span><br><span class="line">                                           consumption.                         </span><br><span class="line">--zookeeper &lt;String: urls&gt;               REQUIRED (only when using old          </span><br><span class="line">                                           consumer): The connection string for </span><br><span class="line">                                           the zookeeper connection in the form </span><br><span class="line">                                           host:port. Multiple URLS can be      </span><br><span class="line">                                           given to allow fail-over.</span><br></pre></td></tr></table></figure>
+
+<h4 id="消费数据"><a href="#消费数据" class="headerlink" title="消费数据"></a>消费数据</h4><ul>
+<li>启动消费者，消费数据</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-consumer.sh --bootstrap-server hadoop102:9092 --topic hello</span><br></pre></td></tr></table></figure>
+
+<p>消费数据顺序的说明</p>
+<p><img src="/2021/12/23/Kafka/image-20211225112547076.png" alt="image-20211225112547076"></p>
+<p>消费者消费数据时，如果不指定offest，默认是从每个分区的最后一个位置开始消费。【不能消费之前的数据】</p>
+<ul>
+<li>设置从头开始消费，设置offset参数，此时需要指定分区参数</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-consumer.sh --bootstrap-server hadoop102:9092 --topic hello --offset earliest</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2021/12/23/Kafka/image-20211225113555593.png" alt="image-20211225113555593"></p>
+<ul>
+<li>如果是新的客户端，开始消费，可以使用–from beginning参数【从所有的分区消费】</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211225113707556.png" alt="image-20211225113707556"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kafka-console-consumer.sh --bootstrap-server hadoop102:9092 --topic hello --from-beginning</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>–from-beginning参数消费数据是以分区为单位的。【消费者消费数据时，只能保证分区内有序，与生产数据的顺序无关（如果希望数据整体有序，那么一个主题只能有一个分区）】</li>
+</ul>
+<p><img src="/2021/12/23/Kafka/image-20211225114500911.png" alt="image-20211225114500911"></p>
+<p><img src="/2021/12/23/Kafka/image-20211225114531659.png" alt="image-20211225114531659"></p>
+<p><img src="/2021/12/23/Kafka/image-20211225114702406.png" alt="image-20211225114702406"></p>
+<h1 id="分区策略"><a href="#分区策略" class="headerlink" title="分区策略"></a>分区策略</h1><h5 id="分区的原因"><a href="#分区的原因" class="headerlink" title="分区的原因"></a><strong>分区的原因</strong></h5><ul>
+<li><strong>方便在集群中扩展</strong>，每个Partition可以通过调整以适应它所在的机器，而一个topic又可以有多个Partition组成，因此整个集群就可以适应任意大小的数据了；</li>
+<li><strong>可以提高并发</strong>，因为可以以Partition为单位读写了。</li>
+</ul>
+<h5 id="分区的原则"><a href="#分区的原则" class="headerlink" title="分区的原则"></a><strong>分区的原则</strong></h5><p>我们需要将producer发送的数据封装成一个<strong>ProducerRecord</strong>对象。</p>
+<p><img src="/2021/12/23/Kafka/image-20211225111629287.png" alt="image-20211225111629287"></p>
+<ul>
+<li>指明 partition 的情况下，直接将指明的值直接作为 partiton 值；</li>
+<li>没有指明 partition 值但有 key 的情况下，将 key 的 hash 值与 topic 的 partition 数进行取余得到 partition 值；</li>
+<li>既没有 partition 值又没有 key 值的情况下，第一次调用时随机生成一个整数（后面每次调用在这个整数上自增），将这个值与 topic 可用的 partition 总数取余得到 partition 值，也就是常说的 round-robin 算法。</li>
+</ul>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2021/12/23/Kafka/" data-id="cl3u9wg1y00249wvoe4u50ne4" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Wumeng"
+        },
+        "headline": "Kafka",
+        "image": "http://example.com/2021/12/23/Kafka/image-20211223211122345.png",
+        "keywords": "消息队列",
+        "genre": "中间件",
+        "datePublished": "2021-12-23",
+        "dateCreated": "2021-12-23",
+        "dateModified": "2022-05-31",
+        "url": "http://example.com/2021/12/23/Kafka/",
+        "description": "
+Kafka的特点
+类似于消息队列和商业消息系统，Kafka提供对流式数据的发布和订阅
+Kafka提供一种持久的容错方式存储流式数据
+Kafka拥有良好的性能，可以及时处理流式数据
+
+核心概念Broker：
+一台kafka服务器就是一个broker。一个集群由多个broker组成。
+Topic：
+Topic 就是数据主题，kafka建议根据业务系统将不同的数据存放在不同的topic中！Kafka中",
+        "wordCount": 12426
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2021/12/25/Hbase/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            Hbase
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2021/12/21/Flume/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Flume</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/image-20220525174639740.png)" alt="极客时间Django项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="title">极客时间Django项目</a></p>
+                            <p class="item-date"><time datetime="2022-05-25T08:11:16.000Z" itemprop="datePublished">2022-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/04/26/Django%E5%85%A5%E9%97%A8/image-20220426215758670.png)" alt="Django入门" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="title">Django入门</a></p>
+                            <p class="item-date"><time datetime="2022-04-26T13:14:15.000Z" itemprop="datePublished">2022-04-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></p>
+                            <p class="item-title"><a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="title">vscode配置python开发环境</a></p>
+                            <p class="item-date"><time datetime="2022-04-22T02:58:28.000Z" itemprop="datePublished">2022-04-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220426165118551.png)" alt="实时项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></p>
+                            <p class="item-title"><a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="title">实时项目</a></p>
+                            <p class="item-date"><time datetime="2022-02-28T01:49:46.000Z" itemprop="datePublished">2022-02-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/01/11/elasticsearch/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/01/11/elasticsearch/" class="title">elasticsearch</a></p>
+                            <p class="item-date"><time datetime="2022-01-11T13:47:23.000Z" itemprop="datePublished">2022-01-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Django/" style="font-size: 15px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 15px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 20px;">大数据</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Wumeng</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="parent">
+                <div class="child">
+                  <span id="busuanzi_container_site_pv">
+                    访问量<span id="busuanzi_value_site_pv"></span>次
+                  </span>
+                  <span class="post-meta-divider">|</span>
+                  <span id="busuanzi_container_site_uv" style='display:none'>
+                    访客数<span id="busuanzi_value_site_uv"></span>人
+                  </span>
+                  <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                </div>
+              </div>              
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <style>
+        .parent {
+          position: relative;
+        }
+        .child {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      </style>
+      
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://example.com/2021/12/23/Kafka/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>

@@ -1,0 +1,1121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>spark实时项目 | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="项目" />
+    
+    <meta name="description" content="IDEA中项目框架的搭建 项目启动配置 需要启用kafka 12345xcall &#x2F;opt&#x2F;module&#x2F;zookeeper-3.4.10&#x2F;bin&#x2F;zkServer.sh start	#启动zk集群xcall &#x2F;opt&#x2F;module&#x2F;kafka&#x2F;bin&#x2F;kafka-server-start.sh -daemon &#x2F;opt&#x2F;module&#x2F;kafka&#x2F;config&#x2F;server.properties">
+<meta property="og:type" content="article">
+<meta property="og:title" content="spark实时项目">
+<meta property="og:url" content="http://example.com/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="IDEA中项目框架的搭建 项目启动配置 需要启用kafka 12345xcall &#x2F;opt&#x2F;module&#x2F;zookeeper-3.4.10&#x2F;bin&#x2F;zkServer.sh start	#启动zk集群xcall &#x2F;opt&#x2F;module&#x2F;kafka&#x2F;bin&#x2F;kafka-server-start.sh -daemon &#x2F;opt&#x2F;module&#x2F;kafka&#x2F;config&#x2F;server.properties">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220111110418815.png">
+<meta property="article:published_time" content="2022-01-08T13:36:42.000Z">
+<meta property="article:modified_time" content="2022-05-31T02:08:35.788Z">
+<meta property="article:author" content="Wumeng">
+<meta property="article:tag" content="项目">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220111110418815.png">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-spark实时项目" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        spark实时项目
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="article-date">
+       <time datetime="2022-01-08T13:36:42.000Z" itemprop="datePublished">2022-01-08</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="article-date">
+     <time datetime="2022-05-31T02:08:35.788Z" itemprop="dateModified">2022-05-31</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <p>IDEA中项目框架的搭建</p>
+<p>项目启动配置</p>
+<p>需要启用kafka</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">xcall /opt/module/zookeeper-3.4.10/bin/zkServer.sh start	#启动zk集群</span><br><span class="line">xcall /opt/module/kafka/bin/kafka-server-start.sh -daemon /opt/module/kafka/config/server.properties	#启动kafka集群</span><br><span class="line"><span class="meta">#</span><span class="bash">启动两个消费者，消费数据</span></span><br><span class="line">bin/kafka-console-consumer.sh --bootstrap-server hadoop102:9092 --topic gmall_startup	</span><br><span class="line">bin/kafka-console-consumer.sh --bootstrap-server hadoop102:9092 --topic gmall_event</span><br></pre></td></tr></table></figure>
+
+<p>将接受模块gmall-logger部署到linux服务器上，</p>
+<p>配置部署nginx，使用root用户在/usr/local/webserver/nginx，目录下执行sbin/nginx，命令进行启动。</p>
+<p>分发，日志数据模块，到3台机器上，同时启动；启动数据产生模块，产生数据，看能否正常接受数据</p>
+<p>在/usr/local/redis/bin下执行redis-server ../etc/redis.conf，启动redis</p>
+<p>使用phoenix向hbase中写入数据</p>
+<p>启动phoeni需要启动hadoop, zookeeper, HBase；</p>
+<p><strong>hadoop启动</strong></p>
+<p>hadoop102执行start-dfs.sh</p>
+<p>hadoop103执行start-yarn.sh</p>
+<p><strong>hbase启动</strong></p>
+<p>hadoop102执行start-hbase.sh，在浏览器访问<a href="http://hadoop102:16010判断hbase是否启动成功。再使用hbase">http://hadoop102:16010判断hbase是否启动成功。再使用hbase</a> shell启动一个客户端（使用exit命令退出），停止hbase，使用stop-hbase.sh</p>
+<p>启动phoenix的客户端</p>
+<p>[bigdata@hadoop102 phoenix]$  bin/sqlline.py hadoop102,hadoop103,hadoop104:2181</p>
+<p>测试el，需要启动zk.kafka,日志服务器，nginx,启动AlterApp，模拟数据</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220111110418815.png" alt="image-20220111110418815"></p>
+<p>[bigdata@hadoop103 canal]$ bin/startup.sh 启动canal</p>
+<p>————————————————-&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;———————————————–</p>
+<p>日志输出：</p>
+<ul>
+<li>当执行一个命令时，如果此条命令有输出，可以使用&gt;符号，将输出定向到某个文件中，此时标注的输出就不想屏幕输出了</li>
+<li>Linux中的IO设备<ul>
+<li>在Linux中，有3个常用的IO设备<ul>
+<li>0：代表标准输入。类似于Java中的Systen.in,scan</li>
+<li>1：代表标准输出。类似于java中的System.out.print()：接受程序的标准输出（正常输出</li>
+<li>2：代表错误输出。类似于java中的System.err.print()：接受程序的报错是的输出（）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>命令 &gt;文件：执行命令，将命令的标准输出，定向到文件中</li>
+</ul>
+<p>shell中传入的参数中有空格，如何处理：</p>
+<ul>
+<li>如果参数有空格，需要加上引号，将整个参数连同空格作为整体。<ul>
+<li>双引号，可以识别$等特殊符号</li>
+<li>单引号。无法识别$等特殊符号</li>
+<li>嵌套：<ul>
+<li>最外层是单引号，嵌套双引号</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="实时项目："><a href="#实时项目：" class="headerlink" title="实时项目："></a>实时项目：</h2><h2 id="离线数仓："><a href="#离线数仓：" class="headerlink" title="离线数仓："></a>离线数仓：</h2><p>集群中服务规划的原则：</p>
+<ul>
+<li>重要进程分散规划</li>
+</ul>
+<p>举例：NN，RN</p>
+<ul>
+<li>新能消耗相同的进程尽量错开规划</li>
+</ul>
+<p>举例：NN，RS</p>
+<ul>
+<li>特殊进程需要在同一台机器上配置</li>
+</ul>
+<p>举例：如果使用了HBASE，那么RS的进程和DN的进程一般位于同一节点，实现数据读写的本地化，节省网络IO</p>
+<h4 id="数据生产模块"><a href="#数据生产模块" class="headerlink" title="数据生产模块"></a>数据生产模块</h4><p>日志数据生成模块，打成jar包上传到指定的目录运行</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220113161759828.png" alt="image-20220113161759828"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -cp log-collector-1.0-SNAPSHOT-jar-with-dependencies.jar com.wu.appclient.AppMain 1000 5 &gt; /dev/null 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>参数1：1000，表示延时1秒，参数2：5，表示打印5条</li>
+</ul>
+<p>日志输出路径</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220113162236605.png" alt="image-20220113162236605"></p>
+<p>同时将，日志模块分发到Hadoop103的机器上，</p>
+<p>日志模块启动脚本（同时在Hadoop102和Hadoop103机器上运行，日志生成模块）</p>
+<p>hadoop集群的启动停止脚本Hadoop103上。</p>
+<h4 id="Hadoop安装LZO压缩"><a href="#Hadoop安装LZO压缩" class="headerlink" title="Hadoop安装LZO压缩"></a>Hadoop安装LZO压缩</h4><p>上传到software目录下，并复制到指定文件夹</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp hadoop-lzo-0.4.20.jar /opt/module/hadoop-2.7.2/share/hadoop/common/</span><br></pre></td></tr></table></figure>
+
+<p>分发到所有的机器上</p>
+<p>修改配置文件mapred-site.xml，增加以下配</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">name</span>&gt;</span>io.compression.codecs<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">value</span>&gt;</span></span><br><span class="line">org.apache.hadoop.io.compress.GzipCodec,</span><br><span class="line">org.apache.hadoop.io.compress.DefaultCodec,</span><br><span class="line">org.apache.hadoop.io.compress.BZip2Codec,</span><br><span class="line">org.apache.hadoop.io.compress.SnappyCodec,</span><br><span class="line">com.hadoop.compression.lzo.LzoCodec,</span><br><span class="line">com.hadoop.compression.lzo.LzopCodec</span><br><span class="line"><span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">property</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">name</span>&gt;</span>io.compression.codec.lzo.class<span class="tag">&lt;/<span class="name">name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">value</span>&gt;</span>com.hadoop.compression.lzo.LzoCodec<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>测试</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220113203913296.png" alt="image-20220113203913296"></p>
+<p>测试</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop103 mapreduce]$ hadoop jar hadoop-mapreduce-examples-2.7.2.jar wordcount -Dmapreduce.output.fileoutputformat.compress=true -Dmapreduce.output.fileoutputformat.compress.codec=com.hadoop.compression.lzo.LzopCodec /input /output</span><br></pre></td></tr></table></figure>
+
+<p>已经执行压缩</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220113205815950.png" alt="image-20220113205815950"></p>
+<p>为输出的文件创建索引</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop103 common]$ hadoop jar hadoop-lzo-0.4.20.jar com.hadoop.compression.lzo.DistributedLzoIndexer /output</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220113210040234.png" alt="image-20220113210040234"></p>
+<p>HDFS性能测试程序</p>
+<p>读</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop103 common]$ hadoop jar /opt/module/hadoop-2.7.2/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.7.2-tests.jar TestDFSIO -write -nrFiles 10 -fileSize 128MB</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220113211229690.png" alt="image-20220113211229690"></p>
+<p>写</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop103 common]$ hadoop jar /opt/module/hadoop-2.7.2/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.7.2-tests.jar TestDFSIO -read -nrFiles 10 -fileSize 128MB</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220113211303664.png" alt="image-20220113211303664"></p>
+<p>清楚测试数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop103 common]$ hadoop jar /opt/module/hadoop-2.7.2/share/hadoop/mapreduce/hadoop-mapreduce-client-jobclient-2.7.2-tests.jar TestDFSIO -clean</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220113211353704.png" alt="image-20220113211353704">ZK集群的启动脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">ZK集群的启动，关闭和状态查询脚本，要求在环境变量中，配置ZK的路径</span></span><br><span class="line"><span class="meta">if(($</span><span class="bash"><span class="comment">#!=1))</span></span></span><br><span class="line">then</span><br><span class="line">        echo &#x27;请输入start或stop或status!&#x27;</span><br><span class="line">        exit;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ $1 = start ] || [ $1 = stop ] || [ $1 = status ]</span><br><span class="line">then</span><br><span class="line">        xcall zkServer.sh $1</span><br><span class="line">else</span><br><span class="line">        echo &#x27;请输入正确的参数start或stop或status!&#x27;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">! /bin/bash</span></span><br><span class="line"></span><br><span class="line">case $1 in</span><br><span class="line">&quot;start&quot;)&#123;</span><br><span class="line">	for i in hadoop102 hadoop103 hadoop104</span><br><span class="line">	do</span><br><span class="line">		ssh $i &quot;/opt/module/zookeeper-3.4.10/bin/zkServer.sh start&quot;</span><br><span class="line">	done</span><br><span class="line">&#125;;;</span><br><span class="line">&quot;stop&quot;)&#123;</span><br><span class="line">	for i in hadoop102 hadoop103 hadoop104</span><br><span class="line">	do</span><br><span class="line">		ssh $i &quot;/opt/module/zookeeper-3.4.10/bin/zkServer.sh stop&quot;</span><br><span class="line">	done</span><br><span class="line">&#125;;;</span><br><span class="line">&quot;status&quot;)&#123;</span><br><span class="line">	for i in hadoop102 hadoop103 hadoop104</span><br><span class="line">	do</span><br><span class="line">		ssh $i &quot;/opt/module/zookeeper-3.4.10/bin/zkServer.sh status&quot;</span><br><span class="line">	done</span><br><span class="line">&#125;;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<h4 id="kafka工具"><a href="#kafka工具" class="headerlink" title="kafka工具"></a>kafka工具</h4><p>安装kafka-manager，管理页面，在hadoop104机器上，启动命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop104 kafka-manager-1.3.3.22]$ bin/kafka-manager</span><br></pre></td></tr></table></figure>
+
+<p>不输出日志，在后台启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop104 kafka-manager-1.3.3.22]$ bin/kafka-manager &gt; start.log 2&gt;&amp;1 &amp;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220114172934888.png" alt="image-20220114172934888"></p>
+<p>访问页面</p>
+<p>hadoop104:9000</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220114173905553.png" alt="image-20220114173905553"></p>
+<h4 id="数据采集"><a href="#数据采集" class="headerlink" title="数据采集"></a>数据采集</h4><p>将采集到的日志，分为start和event，保存到kafka中</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop103 flume-1.7.0]$ flume-ng agent -c conf/ -n a1 -f myagents/f1.conf -Dflume.root.logger=DEBUG,console</span><br></pre></td></tr></table></figure>
+
+<p><strong>第一层采集通道，需要启动zk.hadoop,kafka,产生日志的脚本log</strong>,然后再启动执行f1脚本。在hadoop102或者hadoop103的机器上</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220115100546807.png" alt="image-20220115100546807"></p>
+<h4 id="Kafka集群中的数据到HDFS中"><a href="#Kafka集群中的数据到HDFS中" class="headerlink" title="Kafka集群中的数据到HDFS中"></a>Kafka集群中的数据到HDFS中</h4><p>将已经存储在Kafka集群中的数据，使用flume上床到HDFS中；</p>
+<p>数据源在Kafka，因此需要使用一个对接Kafka的source，即kafkaSource；目的地在hdfs上，使用hdfssink；为了，安全起见，选择fileChannel</p>
+<p>配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">配置文件编写</span></span><br><span class="line">a1.sources = r1 r2</span><br><span class="line">a1.sinks = k1 k2</span><br><span class="line">a1.channels = c1 c2</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">配置<span class="built_in">source</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">配置<span class="built_in">source</span></span></span><br><span class="line">a1.sources.r1.type=org.apache.flume.source.kafka.KafkaSource</span><br><span class="line">a1.sources.r1.kafka.bootstrap.servers=hadoop102:9092,hadoop103:9092,hadoop104:9092</span><br><span class="line">a1.sources.r1.kafka.topics=topic_start</span><br><span class="line">a1.sources.r1.kafka.consumer.auto.offset.reset=earliest</span><br><span class="line">a1.sources.r1.kafka.consumer.group.id=CG_Start</span><br><span class="line"></span><br><span class="line">a1.sources.r2.type=org.apache.flume.source.kafka.KafkaSource</span><br><span class="line">a1.sources.r2.kafka.bootstrap.servers=hadoop102:9092,hadoop103:9092,hadoop104:9092</span><br><span class="line">a1.sources.r2.kafka.topics=topic_event</span><br><span class="line">a1.sources.r2.kafka.consumer.auto.offset.reset=earliest</span><br><span class="line">a1.sources.r2.kafka.consumer.group.id=CG_Event</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">配置channel</span></span><br><span class="line">a1.channels.c1.type=file</span><br><span class="line">a1.channels.c1.checkpointDir=/opt/module/flume-1.7.0/c1/checkpoint</span><br><span class="line"><span class="meta">#</span><span class="bash">启动备用checkpoint</span></span><br><span class="line">a1.channels.c1.useDualCheckpoints=true</span><br><span class="line">a1.channels.c1.backupCheckpointDir=/opt/module/flume-1.7.0/c1/backupcheckpoint</span><br><span class="line"><span class="meta">#</span><span class="bash">event存储的目录，必须的配置，代表数据会存储在哪里</span></span><br><span class="line">a1.channels.c1.dataDirs=/opt/module/flume-1.7.0/c1/datas</span><br><span class="line"></span><br><span class="line">a1.channels.c2.type=file</span><br><span class="line">a1.channels.c2.checkpointDir=/opt/module/flume/c2/checkpoint</span><br><span class="line">a1.channels.c2.useDualCheckpoints=true</span><br><span class="line">a1.channels.c2.backupCheckpointDir=/opt/module/flume/c2/backupcheckpoint</span><br><span class="line">a1.channels.c2.dataDirs=/opt/module/flume/c2/datas</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">sink</span></span><br><span class="line">a1.sinks.k1.type = hdfs</span><br><span class="line"><span class="meta">#</span><span class="bash">一旦路径中含有基于时间的转义序列，要求event的header中必须有timestamp=时间戳，如果没有需要使用本地</span></span><br><span class="line">a1.sinks.k1.hdfs.path = hdfs://hadoop102:9000/origin_data/gmall/log/topic_start/%Y-%m-%d</span><br><span class="line">a1.sinks.k1.hdfs.filePrefix = logstart-</span><br><span class="line">a1.sinks.k1.hdfs.batchSize = 1000</span><br><span class="line"><span class="meta">#</span><span class="bash">是否使用本地时间戳</span></span><br><span class="line"><span class="meta">#</span><span class="bash">a1.sinks.k1.hdfs.useLocalTimeStamp = <span class="literal">true</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">a1.sinks.k1.hdfs.batchSize = 1000</span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">文件滚动</span></span><br><span class="line"><span class="meta">#</span><span class="bash">每30秒生成一个新的文件</span></span><br><span class="line">a1.sinks.k1.hdfs.rollInterval = 30</span><br><span class="line"><span class="meta">#</span><span class="bash">设置每个文件到128M时滚动</span></span><br><span class="line">a1.sinks.k1.hdfs.rollSize = 134217700</span><br><span class="line"><span class="meta">#</span><span class="bash">禁用基于event数量的文件滚动策略</span></span><br><span class="line">a1.sinks.k1.hdfs.rollCount = 0</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">以不压缩的文本形式保存数据</span></span><br><span class="line"><span class="meta">#</span><span class="bash">a1.sinks.k1.hdfs.fileType = DataStream</span> </span><br><span class="line"><span class="meta">#</span><span class="bash">指定文件使用LZO压缩格式</span></span><br><span class="line">a1.sinks.k1.hdfs.fileType = CompressedStream </span><br><span class="line">a1.sinks.k1.hdfs.codeC = lzop</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">k2</span></span><br><span class="line"><span class="meta">#</span><span class="bash">sink</span></span><br><span class="line">a1.sinks.k2.type = hdfs</span><br><span class="line"><span class="meta">#</span><span class="bash">一旦路径中含有基于时间的转义序列，要求event的header中必须有timestamp=时间戳，如果没有需要使用本地</span></span><br><span class="line">a1.sinks.k2.hdfs.path = hdfs://hadoop102:9000/origin_data/gmall/log/topic_event/%Y-%m-%d</span><br><span class="line">a1.sinks.k2.hdfs.filePrefix = logevent-</span><br><span class="line">a1.sinks.k2.hdfs.batchSize = 1000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a1.sinks.k2.hdfs.rollInterval = 30</span><br><span class="line">a1.sinks.k2.hdfs.rollSize = 134217700</span><br><span class="line">a1.sinks.k2.hdfs.rollCount = 0</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">a1.sinks.k2.hdfs.fileType = CompressedStream </span><br><span class="line">a1.sinks.k2.hdfs.codeC = lzop</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">连接组件</span></span><br><span class="line">a1.sources.r1.channels=c1</span><br><span class="line">a1.sources.r2.channels=c2</span><br><span class="line">a1.sinks.k1.channel=c1</span><br><span class="line">a1.sinks.k2.channel=c2</span><br></pre></td></tr></table></figure>
+
+<h4 id="第二层收集启动在hadoop104上"><a href="#第二层收集启动在hadoop104上" class="headerlink" title="第二层收集启动在hadoop104上"></a>第二层收集启动在hadoop104上</h4><p>。（均衡负载的目的）</p>
+<p>需要启动zk.kafka,hdfs，然后使用以下命令执行采集</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[bigdata@hadoop104 flume-1.7.0]$ flume-ng agent -c conf/ -n a1 -f myagents/f2.conf -Dflume.root.logger=DEBUG,console</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220114234130925.png" alt="image-20220114234130925"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220114234455948.png" alt="image-20220114234455948"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220114234540385.png" alt="image-20220114234540385"></p>
+<p>如果需要修改分区位置，重新开始读取，可以进行如下操作。</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220115110932756.png" alt="image-20220115110932756"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220115112105874.png" alt="image-20220115112105874"></p>
+<p>数据在kafka中，使用kafkaSource来读取数据（kafka通过启动一个消费者来读取数据，来启动一个kafkaConsumner对象来消费数据，kafkaConcumer每次消费的是一个ConsumerRecord对象）；</p>
+<p>Flume中的基本对象是event，需要将ConsumerRecord封装成一个event对象，然后放到channel中，然后HDFSSink从channel中拉取数据</p>
+<p>收集数据的时间，取决于执行采集的时间与数据在kafka中的事件戳无关</p>
+<p>生产其他日期的数据</p>
+<p>数据的日期，取决于kafkaSource所运行机器的时间！</p>
+<ul>
+<li>使用dt脚本设置系统时间，（可以使用dtNow脚本，将时间更新为最新）</li>
+</ul>
+<p>如果想要造2019-1-1，2019-1-20，2019-2-11，2019-2-22的数据，此时从以上时间中选取最小的时间2019-1-1，执行修改时间的脚本dt（dt 2019-1-1），将所有集群的时间同步为2019-1-1，再启动集群hdfs，zk，kafka</p>
+<ul>
+<li>启动log脚本造日志（默认的时间间隔为10毫秒，生产1000数据，可以执行【log a b】，其中a表示产生数据的时间间隔，b表示，产生多少条数据）</li>
+</ul>
+<p>log  —- &gt;/tmp/logs/app-2019-1-1.log</p>
+<ul>
+<li>启动f1（在Hadoop103机器上）f2（在hadoop104机器上）</li>
+</ul>
+<p>注意，造数据的时间要按照顺序进行，不能先造2019-1-2的数据，再造2019-1-1的数据（因为2019-1-2启动了kafka集群，此时集群会有一个时间戳2019-1-2。如果没有重启kafka集群，此时生产者发运行，f1的时间为2019-1-1，而kafka集群的时间依然是2019-1-2，此时生成数据，就会生成超时）</p>
+<h4 id="数仓搭建"><a href="#数仓搭建" class="headerlink" title="数仓搭建"></a>数仓搭建</h4><p>安装MySQL（在hadoop103和Hadoop104机器上安装MySQL5.6，在Hadoop102上安装的是5.7版本的MySQL）</p>
+<h5 id="MySQL的高可用架构（MySQL的HA）"><a href="#MySQL的高可用架构（MySQL的HA）" class="headerlink" title="MySQL的高可用架构（MySQL的HA）"></a>MySQL的高可用架构（MySQL的HA）</h5><p>hadoop103（从）和Hadoop104 （主）</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220115202449788.png" alt="image-20220115202449788"></p>
+<p>先配置互为主从的MySQL，在/etc/my.cnf文件中新增如下内容</p>
+<p>1、</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">server_id=104</span><br><span class="line">log-bin=mysql-bin</span><br><span class="line">binlog_format=mixed</span><br><span class="line">relay_log=mysql-relay</span><br></pre></td></tr></table></figure>
+
+<p>修改完毕后，重启MySQL服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart mysqld.service</span><br></pre></td></tr></table></figure>
+
+<p>2、在主机上使用root@localhost登录，授权从机可以使用那个用户进行登录</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[root@hadoop104 ~]# mysql -uroot -proot</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GRANT replication slave ON *.* TO &#x27;slave&#x27;@&#x27;%&#x27; IDENTIFIED BY &#x27;123456&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220115205623838.png" alt="image-20220115205623838"></p>
+<p>将103配置为104的从机</p>
+<p>查看主机目前，最新的binlog的位置</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220115211111810.png" alt="image-20220115211111810"></p>
+<p>在从机上执行以下语句</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CHANGE MASTER TO </span><br><span class="line">MASTER_HOST=&#x27;192.168.10.104&#x27;,</span><br><span class="line">MASTER_USER=&#x27;slave&#x27;,</span><br><span class="line">MASTER_PASSWORD=&#x27;123456&#x27;,</span><br><span class="line">MASTER_LOG_FILE=&#x27;mysql-bin.000001&#x27;,</span><br><span class="line">MASTER_LOG_POS=319;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220115211339738.png" alt="image-20220115211339738"></p>
+<p>在从机（hadoop103）上上开启同步线程</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start slave;</span><br></pre></td></tr></table></figure>
+
+<p>查看从机的状态【\G表示列式显示】</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show slave status \G;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220115214504932.png" alt="image-20220115214504932"></p>
+<p>将104配置为103的从机</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220115214201699.png" alt="image-20220115214201699"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">CHANGE MASTER TO </span><br><span class="line">MASTER_HOST=&#x27;192.168.10.103&#x27;,</span><br><span class="line">MASTER_USER=&#x27;slave&#x27;,</span><br><span class="line">MASTER_PASSWORD=&#x27;123456&#x27;,</span><br><span class="line">MASTER_LOG_FILE=&#x27;mysql-bin.000012&#x27;,</span><br><span class="line">MASTER_LOG_POS=120;</span><br></pre></td></tr></table></figure>
+
+<p>开启同步进程</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start slave;</span><br></pre></td></tr></table></figure>
+
+<p>查看状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show slave status \G;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220115214942185.png" alt="image-20220115214942185"></p>
+<p>完成上述工作后，在hadoop103和Hadoop104上安装keepAlive软件</p>
+<p>使用yum的方式进行安装</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y keepalived</span><br></pre></td></tr></table></figure>
+
+<p>修改keepalived的配置</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo vim /etc/keepalived/keepalived.conf</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">! Configuration File for keepalived</span><br><span class="line">global_defs &#123;</span><br><span class="line">    router_id MySQL-ha</span><br><span class="line">&#125;</span><br><span class="line">vrrp_instance VI_1 &#123;</span><br><span class="line">    state master #初始状态</span><br><span class="line">    interface ens33 #网卡,这里要改的和你自己的网卡一样</span><br><span class="line">    virtual_router_id 51 #虚拟路由id</span><br><span class="line">    priority 100 #优先级</span><br><span class="line">    advert_int 1 #Keepalived心跳间隔</span><br><span class="line">    nopreempt #只在高优先级配置，原master恢复之后不重新上位</span><br><span class="line">    authentication &#123;</span><br><span class="line">        auth_type PASS #认证相关</span><br><span class="line">        auth_pass 1111</span><br><span class="line">    &#125;</span><br><span class="line">    virtual_ipaddress &#123;</span><br><span class="line">        192.168.1.100 #虚拟ip</span><br><span class="line">    &#125;</span><br><span class="line">&#125; </span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">声明虚拟服务器</span></span><br><span class="line">virtual_server 192.168.1.100 3306 &#123;</span><br><span class="line">    delay_loop 6</span><br><span class="line">    persistence_timeout 30</span><br><span class="line">    protocol TCP</span><br><span class="line">    #声明真实服务器</span><br><span class="line">    real_server 192.168.1.103 3306 &#123;</span><br><span class="line">        notify_down /var/lib/mysql/killkeepalived.sh #真实服务故障后调用脚本</span><br><span class="line">        TCP_CHECK &#123;</span><br><span class="line">            connect_timeout 3 #超时时间</span><br><span class="line">            nb_get_retry 1 #重试次数</span><br><span class="line">            delay_before_retry 1 #重试时间间隔</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>增加配置文件/var/lib/mysql/killkeepalived.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">结束当前机器的keepalived进程</span></span><br><span class="line">sudo service keepalived stop</span><br></pre></td></tr></table></figure>
+
+<p>分配权限</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chmod +x /var/lib/mysql/killkeepalived.sh</span><br></pre></td></tr></table></figure>
+
+<p>设置开机自启</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo chkconfig keepalived on</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220115231550432.png" alt="image-20220115231550432"></p>
+<p>启动服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service keepalived start	#启动</span><br><span class="line">sudo service keepalived status	#查看状态</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220116155240318.png" alt="image-20220116155240318"></p>
+<p>查看当前机器是否，抢到了虚拟IP</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ip a</span><br></pre></td></tr></table></figure>
+
+<h4 id="安装hive"><a href="#安装hive" class="headerlink" title="安装hive"></a>安装hive</h4><p>在Hadoop103上</p>
+<p>解压到安装文件夹，配置环境变量，保证，环境变量中有JAVA_HOME，HADOOP_HOME,HIVE_HOME即可</p>
+<p>配置hive的元数据保存在MySQL中（修改hi）</p>
+<ul>
+<li>先将MySQL的驱动包，拷贝到hive的lib目录下（/opt/module/hive/lib）</li>
+<li>编辑hive-site.xml文件，配置元数据的存储位置</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot;?&gt;</span><br><span class="line">&lt;?xml-stylesheet type=&quot;text/xsl&quot; href=&quot;configuration.xsl&quot;?&gt;</span><br><span class="line">&lt;configuration&gt;</span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionURL&lt;/name&gt;</span><br><span class="line">	  将ip地址修改成高可用配置的虚拟IP</span><br><span class="line">	  &lt;value&gt;jdbc:mysql://192.168.10.100:3306/metastore?createDatabaseIfNotExist=true&lt;/value&gt;</span><br><span class="line">	  &lt;description&gt;JDBC connect string for a JDBC metastore&lt;/description&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionDriverName&lt;/name&gt;</span><br><span class="line">	  &lt;value&gt;com.mysql.jdbc.Driver&lt;/value&gt;</span><br><span class="line">	  &lt;description&gt;Driver class name for a JDBC metastore&lt;/description&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionUserName&lt;/name&gt;</span><br><span class="line">	  &lt;value&gt;root&lt;/value&gt;</span><br><span class="line">	  &lt;description&gt;username to use against metastore database&lt;/description&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line"></span><br><span class="line">	&lt;property&gt;</span><br><span class="line">	  &lt;name&gt;javax.jdo.option.ConnectionPassword&lt;/name&gt;</span><br><span class="line">	  &lt;value&gt;000000&lt;/value&gt;</span><br><span class="line">	  &lt;description&gt;password to use against metastore database&lt;/description&gt;</span><br><span class="line">	&lt;/property&gt;</span><br><span class="line">&lt;/configuration&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>同时，连接MySQL客户端，创建一个metastore数据库，编码格式选择latin1</p>
+<p>使用hive，必须启动hadoop集群。</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220116173126426.png" alt="image-20220116173126426"></p>
+<h4 id="Hive安装Tez计算引擎"><a href="#Hive安装Tez计算引擎" class="headerlink" title="Hive安装Tez计算引擎"></a>Hive安装Tez计算引擎</h4><p>安装配置见参考文件</p>
+<p>DBeraver工具，使用的是JDBC的方式进行连接，所以需要开启hiveserver2（在hadoop103机器上）</p>
+<p>数据仓库的搭建，分层搭建。</p>
+<h4 id="创建启动日志表ods-start-log"><a href="#创建启动日志表ods-start-log" class="headerlink" title="创建启动日志表ods_start_log"></a>创建启动日志表ods_start_log</h4><p>建表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists ods_start_log;</span><br><span class="line">CREATE EXTERNAL TABLE ods_start_log (`line` string)</span><br><span class="line">PARTITIONED BY (`dt` string)</span><br><span class="line">STORED AS</span><br><span class="line">  INPUTFORMAT &#x27;com.hadoop.mapred.DeprecatedLzoTextInputFormat&#x27;</span><br><span class="line">  OUTPUTFORMAT &#x27;org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat&#x27;</span><br><span class="line">LOCATION &#x27;/warehouse/gmall/ods/ods_start_log&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>加载数据时，使用load进行加载，注意修改当前时间。（记载的数据的日期，要在HDFS中保存的有）</p>
+<p>上传数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data inpath &#x27;/origin_data/gmall/log/topic_start/2022-01-12&#x27; into table gmall.ods_start_log partition(dt=&#x27;2022-01-12&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220117103129537.png" alt="image-20220117103129537"></p>
+<p>查看上传的结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from ods_start_log limit 2;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220117103817777.png" alt="image-20220117103817777"></p>
+<p>为数据创建索引</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar /opt/module/hadoop-2.7.2/share/hadoop/common/hadoop-lzo-0.4.20.jar com.hadoop.compression.lzo.DistributedLzoIndexer /warehouse/gmall/ods/ods_start_log/dt=2022-01-12</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220117104221740.png" alt="image-20220117104221740"></p>
+<h4 id="创建事件日志表ods-event-log"><a href="#创建事件日志表ods-event-log" class="headerlink" title="创建事件日志表ods_event_log"></a>创建事件日志表ods_event_log</h4><p>建表语句</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists ods_event_log;</span><br><span class="line">CREATE EXTERNAL TABLE ods_event_log(`line` string)</span><br><span class="line">PARTITIONED BY (`dt` string)</span><br><span class="line">STORED AS</span><br><span class="line">  INPUTFORMAT &#x27;com.hadoop.mapred.DeprecatedLzoTextInputFormat&#x27;</span><br><span class="line">  OUTPUTFORMAT &#x27;org.apache.hadoop.hive.ql.io.HiveIgnoreKeyTextOutputFormat&#x27;</span><br><span class="line">LOCATION &#x27;/warehouse/gmall/ods/ods_event_log&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>加载数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">load data inpath &#x27;/origin_data/gmall/log/topic_event/2022-01-12&#x27; into table gmall.ods_event_log partition(dt=&#x27;2022-01-12&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>查询结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">select * from ods_event_log limit 2;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220117104631114.png" alt="image-20220117104631114"></p>
+<p>创建索引</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hadoop jar /opt/module/hadoop-2.7.2/share/hadoop/common/hadoop-lzo-0.4.20.jar com.hadoop.compression.lzo.DistributedLzoIndexer /warehouse/gmall/ods/ods_event_log/dt=2022-01-12</span><br></pre></td></tr></table></figure>
+
+<p>查看上传数据和创建索引的结果</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220117104936283.png" alt="image-20220117104936283"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220117105000167.png" alt="image-20220117105000167"></p>
+<p>创建自动导入数据的脚本【向ods中导数据的脚本】</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">向ods层的两个表ods_start_log和ods_event_log来导入每天的数据，并且创建LZO索引</span></span><br><span class="line"><span class="meta">#</span><span class="bash">接受要导入数据的日期参数</span></span><br><span class="line"><span class="meta">#</span><span class="bash">通过-n参数判断后面的参数是否赋值，如果赋值，返回<span class="literal">true</span>,否则返回<span class="literal">false</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">注意载使用时，一定要为判断的变量添加双引号</span></span><br><span class="line">if [ -n &quot;$1&quot; ]</span><br><span class="line">then</span><br><span class="line">        #传了日期参数，就使用传递过来的日期</span><br><span class="line">        do_date=$1</span><br><span class="line">else</span><br><span class="line">        #默认导入数据的日期是昨天，没有传日期参数</span><br><span class="line">        do_date=$(date -d yesterday +%F)</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;导入的日志日期为：===*=*= $do_date =*=*===&quot;</span><br><span class="line"></span><br><span class="line">APP=gmall</span><br><span class="line">sql=&quot;</span><br><span class="line">load data inpath &#x27;/origin_data/gmall/log/topic_start/$do_date&#x27; into table $APP.ods_start_log partition(dt=&#x27;$do_date&#x27;);</span><br><span class="line"></span><br><span class="line">load data inpath &#x27;/origin_data/gmall/log/topic_event/$do_date&#x27; into table $APP.ods_event_log partition(dt=&#x27;$do_date&#x27;);</span><br><span class="line">&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">执行sql</span></span><br><span class="line">hive -e &quot;$sql&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">添加索引</span></span><br><span class="line">hadoop jar /opt/module/hadoop-2.7.2/share/hadoop/common/hadoop-lzo-0.4.20.jar com.hadoop.compression.lzo.DistributedLzoIndexer /warehouse/gmall/ods/ods_start_log/dt=$do_date</span><br><span class="line"></span><br><span class="line">hadoop jar /opt/module/hadoop-2.7.2/share/hadoop/common/hadoop-lzo-0.4.20.jar com.hadoop.compression.lzo.DistributedLzoIndexer /warehouse/gmall/ods/ods_event_log/dt=$do_date</span><br></pre></td></tr></table></figure>
+
+<h4 id="DWD层"><a href="#DWD层" class="headerlink" title="DWD层"></a>DWD层</h4><h5 id="导入启动日志"><a href="#导入启动日志" class="headerlink" title="导入启动日志"></a>导入启动日志</h5><p>创建启动日志表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dwd_start_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_start_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string, </span><br><span class="line">`version_code` string, </span><br><span class="line">`version_name` string, </span><br><span class="line">`lang` string, </span><br><span class="line">`source` string, </span><br><span class="line">`os` string, </span><br><span class="line">`area` string, </span><br><span class="line">`model` string,</span><br><span class="line">`brand` string, </span><br><span class="line">`sdk_version` string, </span><br><span class="line">`gmail` string, </span><br><span class="line">`height_width` string,  </span><br><span class="line">`app_time` string,</span><br><span class="line">`network` string, </span><br><span class="line">`lng` string, </span><br><span class="line">`lat` string, </span><br><span class="line">`entry` string, </span><br><span class="line">`open_ad_type` string, </span><br><span class="line">`action` string, </span><br><span class="line">`loading_time` string, </span><br><span class="line">`detail` string, </span><br><span class="line">`extend1` string</span><br><span class="line">)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_start_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>导入数据（导入数据的日期要遭ODS层中存在）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite table dwd_start_log</span><br><span class="line">PARTITION (dt=&#x27;2022-01-12&#x27;)</span><br><span class="line">select </span><br><span class="line">    get_json_object(line,&#x27;$.mid&#x27;) mid_id,</span><br><span class="line">    get_json_object(line,&#x27;$.uid&#x27;) user_id,</span><br><span class="line">    get_json_object(line,&#x27;$.vc&#x27;) version_code,</span><br><span class="line">    get_json_object(line,&#x27;$.vn&#x27;) version_name,</span><br><span class="line">    get_json_object(line,&#x27;$.l&#x27;) lang,</span><br><span class="line">    get_json_object(line,&#x27;$.sr&#x27;) source,</span><br><span class="line">    get_json_object(line,&#x27;$.os&#x27;) os,</span><br><span class="line">    get_json_object(line,&#x27;$.ar&#x27;) area,</span><br><span class="line">    get_json_object(line,&#x27;$.md&#x27;) model,</span><br><span class="line">    get_json_object(line,&#x27;$.ba&#x27;) brand,</span><br><span class="line">    get_json_object(line,&#x27;$.sv&#x27;) sdk_version,</span><br><span class="line">    get_json_object(line,&#x27;$.g&#x27;) gmail,</span><br><span class="line">    get_json_object(line,&#x27;$.hw&#x27;) height_width,</span><br><span class="line">    get_json_object(line,&#x27;$.t&#x27;) app_time,</span><br><span class="line">    get_json_object(line,&#x27;$.nw&#x27;) network,</span><br><span class="line">    get_json_object(line,&#x27;$.ln&#x27;) lng,</span><br><span class="line">    get_json_object(line,&#x27;$.la&#x27;) lat,</span><br><span class="line">    get_json_object(line,&#x27;$.entry&#x27;) entry,</span><br><span class="line">    get_json_object(line,&#x27;$.open_ad_type&#x27;) open_ad_type,</span><br><span class="line">    get_json_object(line,&#x27;$.action&#x27;) action,</span><br><span class="line">    get_json_object(line,&#x27;$.loading_time&#x27;) loading_time,</span><br><span class="line">    get_json_object(line,&#x27;$.detail&#x27;) detail,</span><br><span class="line">    get_json_object(line,&#x27;$.extend1&#x27;) extend1</span><br><span class="line">from ods_start_log </span><br><span class="line">where dt=&#x27;2022-01-12&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>get_json_object：从一个json对象中抽取指定的内容，指定json的路径，会返回一个</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">get_json_object(json_txt, path) - Extract a json object from path </span><br><span class="line">Extract json object from a json string based on json path specified, and return json string of the extracted json object. It will return null if the input json string is invalid.</span><br><span class="line">需要指定要抽取的内容的path路径</span><br><span class="line">如果函数传入的数据不是json，此时会返回null</span><br><span class="line">A limited version of JSONPath supported:</span><br><span class="line"><span class="meta">  $</span><span class="bash">   : Root object		代表整个json对象</span></span><br><span class="line">  .   : Child operator	代表获取json对象中子元素（属性）的操作符</span><br><span class="line">  []  : Subscript operator for array	获取jsonArray中的某个元素</span><br><span class="line">  *   : Wildcard for []</span><br><span class="line">Syntax not supported that&#x27;s worth noticing:</span><br><span class="line">  &#x27;&#x27;  : Zero length string as key</span><br><span class="line">  ..  : Recursive descent</span><br><span class="line">  &amp;amp;#064;   : Current object/element</span><br><span class="line">  ()  : Script expression</span><br><span class="line">  ?() : Filter (script) expression.</span><br><span class="line">  [,] : Union operator</span><br><span class="line">  [start:end:step] : array slice operator</span><br></pre></td></tr></table></figure>
+
+<p>数据同步脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line">if [ -n &quot;$1&quot; ]</span><br><span class="line">then</span><br><span class="line">        #传了日期参数，就使用传递过来的日期</span><br><span class="line">        do_date=$1</span><br><span class="line">else</span><br><span class="line">        #默认导入数据的日期是昨天，没有传日期参数</span><br><span class="line">        do_date=$(date -d yesterday +%F)</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;导入的日志日期为：===*=*= $do_date =*=*===&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">sql=&quot;</span><br><span class="line">insert overwrite table gmall.dwd_start_log</span><br><span class="line">PARTITION (dt=$do_date)</span><br><span class="line">select </span><br><span class="line">    get_json_object(line,&#x27;$.mid&#x27;) mid_id,</span><br><span class="line">    get_json_object(line,&#x27;$.uid&#x27;) user_id,</span><br><span class="line">    get_json_object(line,&#x27;$.vc&#x27;) version_code,</span><br><span class="line">    get_json_object(line,&#x27;$.vn&#x27;) version_name,</span><br><span class="line">    get_json_object(line,&#x27;$.l&#x27;) lang,</span><br><span class="line">    get_json_object(line,&#x27;$.sr&#x27;) source,</span><br><span class="line">    get_json_object(line,&#x27;$.os&#x27;) os,</span><br><span class="line">    get_json_object(line,&#x27;$.ar&#x27;) area,</span><br><span class="line">    get_json_object(line,&#x27;$.md&#x27;) model,</span><br><span class="line">    get_json_object(line,&#x27;$.ba&#x27;) brand,</span><br><span class="line">    get_json_object(line,&#x27;$.sv&#x27;) sdk_version,</span><br><span class="line">    get_json_object(line,&#x27;$.g&#x27;) gmail,</span><br><span class="line">    get_json_object(line,&#x27;$.hw&#x27;) height_width,</span><br><span class="line">    get_json_object(line,&#x27;$.t&#x27;) app_time,</span><br><span class="line">    get_json_object(line,&#x27;$.nw&#x27;) network,</span><br><span class="line">    get_json_object(line,&#x27;$.ln&#x27;) lng,</span><br><span class="line">    get_json_object(line,&#x27;$.la&#x27;) lat,</span><br><span class="line">    get_json_object(line,&#x27;$.entry&#x27;) entry,</span><br><span class="line">    get_json_object(line,&#x27;$.open_ad_type&#x27;) open_ad_type,</span><br><span class="line">    get_json_object(line,&#x27;$.action&#x27;) action,</span><br><span class="line">    get_json_object(line,&#x27;$.loading_time&#x27;) loading_time,</span><br><span class="line">    get_json_object(line,&#x27;$.detail&#x27;) detail,</span><br><span class="line">    get_json_object(line,&#x27;$.extend1&#x27;) extend1</span><br><span class="line">from ods_start_log </span><br><span class="line">where dt=$do_date;</span><br><span class="line">&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">执行sql</span></span><br><span class="line">hive -e &quot;$sql&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h5 id="导入事件日志"><a href="#导入事件日志" class="headerlink" title="导入事件日志"></a>导入事件日志</h5><p>需要编写UDF和UDTF对数据进行处理，之后将jar包上传到/opt/module/hive/auxlib目录下</p>
+<p>测试</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220117203644647.png" alt="image-20220117203644647"></p>
+<p>直接在bin目录下，创建yhivetest文件，写入一条测试数据（可以从tmp/logs目录下获取，测试数据）。然后使用-d参数启动hive。</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220117204017782.png" alt="image-20220117204017782"></p>
+<p>创建两个函数：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">create function base_analizer as &#x27;com.wu.udf.MyUDF&#x27;;</span><br><span class="line">create function flat_analizer as &#x27;com.wu.udf.MyUDTF&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220117205230221.png" alt="image-20220117205230221"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220117220156773.png" alt="image-20220117220156773"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220117224358083.png" alt="image-20220117224358083"></p>
+<p>执行事件日志数据的插入</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite table dwd_base_event_log partition(dt=&#x27;2022-01-22&#x27;)</span><br><span class="line">SELECT</span><br><span class="line">base_analizer(line,&#x27;mid&#x27;) mid_id, </span><br><span class="line">base_analizer(line,&#x27;uid&#x27;) user_id, </span><br><span class="line">base_analizer(line,&#x27;vc&#x27;) version_code,</span><br><span class="line">base_analizer(line,&#x27;vn&#x27;) version_name,</span><br><span class="line">base_analizer(line,&#x27;l&#x27;) lang,</span><br><span class="line">base_analizer(line,&#x27;sR&#x27;) source,</span><br><span class="line">base_analizer(line,&#x27;os&#x27;) os,</span><br><span class="line">base_analizer(line,&#x27;ar&#x27;) area,</span><br><span class="line">base_analizer(line,&#x27;md&#x27;) model,</span><br><span class="line">base_analizer(line,&#x27;ba&#x27;) brand,</span><br><span class="line">base_analizer(line,&#x27;sv&#x27;) sdk_version, </span><br><span class="line">base_analizer(line,&#x27;g&#x27;) gmail,</span><br><span class="line">base_analizer(line,&#x27;hw&#x27;) height_width, </span><br><span class="line">base_analizer(line,&#x27;t&#x27;) app_time,</span><br><span class="line">base_analizer(line,&#x27;nw&#x27;) network,</span><br><span class="line">base_analizer(line,&#x27;ln&#x27;) lng,</span><br><span class="line">base_analizer(line,&#x27;la&#x27;) lat,</span><br><span class="line">event_name event_name,</span><br><span class="line">event_json event_json,</span><br><span class="line">base_analizer(line,&#x27;ts&#x27;) server_time</span><br><span class="line">FROM gmall.ods_event_log</span><br><span class="line">LATERAL VIEW flat_analizer(base_analizer(line,&#x27;et&#x27;)) tmp as event_name,event_json</span><br><span class="line">WHERE dt = &#x27;2022-01-12&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>加载数据的脚本dwd_base_log.sh</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">接受要导入数据的日期参数</span></span><br><span class="line"><span class="meta">#</span><span class="bash">通过-n参数判断后面的参数是否赋值，如果赋值，返回<span class="literal">true</span>,否则返回<span class="literal">false</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">注意载使用时，一定要为判断的变量添加双引号</span></span><br><span class="line">if [ -n &quot;$1&quot; ]</span><br><span class="line">then</span><br><span class="line">        #传了日期参数，就使用传递过来的日期</span><br><span class="line">        do_date=$1</span><br><span class="line">else</span><br><span class="line">        #默认导入数据的日期是昨天，没有传日期参数</span><br><span class="line">        do_date=$(date -d yesterday +%F)</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">echo &quot;导入的日志日期为：===*=*= $do_date =*=*===&quot;</span><br><span class="line"></span><br><span class="line">sql=&quot;</span><br><span class="line">use gmall;</span><br><span class="line">insert overwrite table dwd_base_event_log partition(dt=&#x27;$do_date&#x27;)</span><br><span class="line">SELECT</span><br><span class="line">base_analizer(line,&#x27;mid&#x27;) mid_id, </span><br><span class="line">base_analizer(line,&#x27;uid&#x27;) user_id, </span><br><span class="line">base_analizer(line,&#x27;vc&#x27;) version_code,</span><br><span class="line">base_analizer(line,&#x27;vn&#x27;) version_name,</span><br><span class="line">base_analizer(line,&#x27;l&#x27;) lang,</span><br><span class="line">base_analizer(line,&#x27;sR&#x27;) source,</span><br><span class="line">base_analizer(line,&#x27;os&#x27;) os,</span><br><span class="line">base_analizer(line,&#x27;ar&#x27;) area,</span><br><span class="line">base_analizer(line,&#x27;md&#x27;) model,</span><br><span class="line">base_analizer(line,&#x27;ba&#x27;) brand,</span><br><span class="line">base_analizer(line,&#x27;sv&#x27;) sdk_version, </span><br><span class="line">base_analizer(line,&#x27;g&#x27;) gmail,</span><br><span class="line">base_analizer(line,&#x27;hw&#x27;) height_width, </span><br><span class="line">base_analizer(line,&#x27;t&#x27;) app_time,</span><br><span class="line">base_analizer(line,&#x27;nw&#x27;) network,</span><br><span class="line">base_analizer(line,&#x27;ln&#x27;) lng,</span><br><span class="line">base_analizer(line,&#x27;la&#x27;) lat,</span><br><span class="line">event_name event_name,</span><br><span class="line">event_json event_json,</span><br><span class="line">base_analizer(line,&#x27;ts&#x27;) server_time</span><br><span class="line">FROM gmall.ods_event_log</span><br><span class="line">LATERAL VIEW flat_analizer(base_analizer(line,&#x27;et&#x27;)) tmp as event_name,event_json</span><br><span class="line">WHERE dt = &#x27;$do_date&#x27;</span><br><span class="line">&quot;</span><br><span class="line"></span><br><span class="line">hive -e &quot;$sql&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>分析DWD层表的数据</p>
+<p>建立商品点击表，从dwd_base_event_log表中查询数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">hive (gmall)&gt; </span><br><span class="line">drop table if exists dwd_display_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_display_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string,</span><br><span class="line">`version_code` string,</span><br><span class="line">`version_name` string,</span><br><span class="line">`lang` string,</span><br><span class="line">`source` string,</span><br><span class="line">`os` string,</span><br><span class="line">`area` string,</span><br><span class="line">`model` string,</span><br><span class="line">`brand` string,</span><br><span class="line">`sdk_version` string,</span><br><span class="line">`gmail` string,</span><br><span class="line">`height_width` string,</span><br><span class="line">`app_time` string,</span><br><span class="line">`network` string,</span><br><span class="line">`lng` string,</span><br><span class="line">`lat` string,</span><br><span class="line">`action` string,</span><br><span class="line">`goodsid` string,</span><br><span class="line">`place` string,</span><br><span class="line">`extend1` string,</span><br><span class="line">`category` string,</span><br><span class="line">`server_time` string</span><br><span class="line">)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_display_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">set hive.exec.dynamic.partition.mode=nonstrict;</span><br><span class="line"></span><br><span class="line">insert overwrite table dwd_display_log</span><br><span class="line">PARTITION (dt=&#x27;2022-01-12&#x27;)</span><br><span class="line">select </span><br><span class="line">mid_id,</span><br><span class="line">user_id,</span><br><span class="line">version_code,</span><br><span class="line">version_name,</span><br><span class="line">lang,</span><br><span class="line">source,</span><br><span class="line">os,</span><br><span class="line">area,</span><br><span class="line">model,</span><br><span class="line">brand,</span><br><span class="line">sdk_version,</span><br><span class="line">gmail,</span><br><span class="line">height_width,</span><br><span class="line">app_time,</span><br><span class="line">network,</span><br><span class="line">lng,</span><br><span class="line">lat,</span><br><span class="line">get_json_object(event_json,&#x27;$.kv.action&#x27;) action,</span><br><span class="line">get_json_object(event_json,&#x27;$.kv.goodsid&#x27;) goodsid,</span><br><span class="line">get_json_object(event_json,&#x27;$.kv.place&#x27;) place,</span><br><span class="line">get_json_object(event_json,&#x27;$.kv.extend1&#x27;) extend1,</span><br><span class="line">get_json_object(event_json,&#x27;$.kv.category&#x27;) category,</span><br><span class="line">server_time</span><br><span class="line">from dwd_base_event_log </span><br><span class="line">where dt=&#x27;2022-01-12&#x27; and event_name=&#x27;display&#x27;;</span><br></pre></td></tr></table></figure>
+
+<p>商品详情页表</p>
+<p>（建表）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dwd_newsdetail_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_newsdetail_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string, </span><br><span class="line">`version_code` string, </span><br><span class="line">`version_name` string, </span><br><span class="line">`lang` string, </span><br><span class="line">`source` string, </span><br><span class="line">`os` string, </span><br><span class="line">`area` string, </span><br><span class="line">`model` string,</span><br><span class="line">`brand` string, </span><br><span class="line">`sdk_version` string, </span><br><span class="line">`gmail` string, </span><br><span class="line">`height_width` string, </span><br><span class="line">`app_time` string,  </span><br><span class="line">`network` string, </span><br><span class="line">`lng` string, </span><br><span class="line">`lat` string, </span><br><span class="line">`entry` string,</span><br><span class="line">`action` string,</span><br><span class="line">`goodsid` string,</span><br><span class="line">`showtype` string,</span><br><span class="line">`news_staytime` string,</span><br><span class="line">`loading_time` string,</span><br><span class="line">`type1` string,</span><br><span class="line">`category` string,</span><br><span class="line">`server_time` string)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_newsdetail_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>商品列表页</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dwd_loading_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_loading_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string, </span><br><span class="line">`version_code` string, </span><br><span class="line">`version_name` string, </span><br><span class="line">`lang` string, </span><br><span class="line">`source` string, </span><br><span class="line">`os` string, </span><br><span class="line">`area` string, </span><br><span class="line">`model` string,</span><br><span class="line">`brand` string, </span><br><span class="line">`sdk_version` string, </span><br><span class="line">`gmail` string,</span><br><span class="line">`height_width` string,  </span><br><span class="line">`app_time` string,</span><br><span class="line">`network` string, </span><br><span class="line">`lng` string, </span><br><span class="line">`lat` string, </span><br><span class="line">`action` string,</span><br><span class="line">`loading_time` string,</span><br><span class="line">`loading_way` string,</span><br><span class="line">`extend1` string,</span><br><span class="line">`extend2` string,</span><br><span class="line">`type` string,</span><br><span class="line">`type1` string,</span><br><span class="line">`server_time` string)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_loading_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>广告表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dwd_ad_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_ad_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string, </span><br><span class="line">`version_code` string, </span><br><span class="line">`version_name` string, </span><br><span class="line">`lang` string, </span><br><span class="line">`source` string, </span><br><span class="line">`os` string, </span><br><span class="line">`area` string, </span><br><span class="line">`model` string,</span><br><span class="line">`brand` string, </span><br><span class="line">`sdk_version` string, </span><br><span class="line">`gmail` string, </span><br><span class="line">`height_width` string,  </span><br><span class="line">`app_time` string,</span><br><span class="line">`network` string, </span><br><span class="line">`lng` string, </span><br><span class="line">`lat` string, </span><br><span class="line">`entry` string,</span><br><span class="line">`action` string,</span><br><span class="line">`content` string,</span><br><span class="line">`detail` string,</span><br><span class="line">`ad_source` string,</span><br><span class="line">`behavior` string,</span><br><span class="line">`newstype` string,</span><br><span class="line">`show_style` string,</span><br><span class="line">`server_time` string)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_ad_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>消息通知表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dwd_notification_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_notification_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string, </span><br><span class="line">`version_code` string, </span><br><span class="line">`version_name` string, </span><br><span class="line">`lang` string,</span><br><span class="line">`source` string, </span><br><span class="line">`os` string, </span><br><span class="line">`area` string, </span><br><span class="line">`model` string,</span><br><span class="line">`brand` string, </span><br><span class="line">`sdk_version` string, </span><br><span class="line">`gmail` string, </span><br><span class="line">`height_width` string,  </span><br><span class="line">`app_time` string,</span><br><span class="line">`network` string, </span><br><span class="line">`lng` string, </span><br><span class="line">`lat` string, </span><br><span class="line">`action` string,</span><br><span class="line">`noti_type` string,</span><br><span class="line">`ap_time` string,</span><br><span class="line">`content` string,</span><br><span class="line">`server_time` string</span><br><span class="line">)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_notification_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>用户前台活跃表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dwd_active_foreground_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_active_foreground_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string,</span><br><span class="line">`version_code` string,</span><br><span class="line">`version_name` string,</span><br><span class="line">`lang` string,</span><br><span class="line">`source` string,</span><br><span class="line">`os` string,</span><br><span class="line">`area` string,</span><br><span class="line">`model` string,</span><br><span class="line">`brand` string,</span><br><span class="line">`sdk_version` string,</span><br><span class="line">`gmail` string,</span><br><span class="line">`height_width` string,</span><br><span class="line">`app_time` string,</span><br><span class="line">`network` string,</span><br><span class="line">`lng` string,</span><br><span class="line">`lat` string,</span><br><span class="line">`push_id` string,</span><br><span class="line">`access` string,</span><br><span class="line">`server_time` string)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_foreground_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>用户后台活跃表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dwd_active_background_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_active_background_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string,</span><br><span class="line">`version_code` string,</span><br><span class="line">`version_name` string,</span><br><span class="line">`lang` string,</span><br><span class="line">`source` string,</span><br><span class="line">`os` string,</span><br><span class="line">`area` string,</span><br><span class="line">`model` string,</span><br><span class="line">`brand` string,</span><br><span class="line">`sdk_version` string,</span><br><span class="line">`gmail` string,</span><br><span class="line"> `height_width` string,</span><br><span class="line">`app_time` string,</span><br><span class="line">`network` string,</span><br><span class="line">`lng` string,</span><br><span class="line">`lat` string,</span><br><span class="line">`active_source` string,</span><br><span class="line">`server_time` string</span><br><span class="line">)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_background_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>评论表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dwd_comment_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_comment_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string,</span><br><span class="line">`version_code` string,</span><br><span class="line">`version_name` string,</span><br><span class="line">`lang` string,</span><br><span class="line">`source` string,</span><br><span class="line">`os` string,</span><br><span class="line">`area` string,</span><br><span class="line">`model` string,</span><br><span class="line">`brand` string,</span><br><span class="line">`sdk_version` string,</span><br><span class="line">`gmail` string,</span><br><span class="line">`height_width` string,</span><br><span class="line">`app_time` string,</span><br><span class="line">`network` string,</span><br><span class="line">`lng` string,</span><br><span class="line">`lat` string,</span><br><span class="line">`comment_id` int,</span><br><span class="line">`userid` int,</span><br><span class="line">`p_comment_id` int, </span><br><span class="line">`content` string,</span><br><span class="line">`addtime` string,</span><br><span class="line">`other_id` int,</span><br><span class="line">`praise_count` int,</span><br><span class="line">`reply_count` int,</span><br><span class="line">`server_time` string</span><br><span class="line">)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_comment_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>收藏表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dwd_favorites_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_favorites_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string, </span><br><span class="line">`version_code` string, </span><br><span class="line">`version_name` string, </span><br><span class="line">`lang` string, </span><br><span class="line">`source` string, </span><br><span class="line">`os` string, </span><br><span class="line">`area` string, </span><br><span class="line">`model` string,</span><br><span class="line">`brand` string, </span><br><span class="line">`sdk_version` string, </span><br><span class="line">`gmail` string, </span><br><span class="line">`height_width` string,  </span><br><span class="line">`app_time` string,</span><br><span class="line">`network` string, </span><br><span class="line">`lng` string, </span><br><span class="line">`lat` string, </span><br><span class="line">`id` int, </span><br><span class="line">`course_id` int, </span><br><span class="line">`userid` int,</span><br><span class="line">`add_time` string,</span><br><span class="line">`server_time` string</span><br><span class="line">)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_favorites_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>点赞表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dwd_praise_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_praise_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string, </span><br><span class="line">`version_code` string, </span><br><span class="line">`version_name` string, </span><br><span class="line">`lang` string, </span><br><span class="line">`source` string, </span><br><span class="line">`os` string, </span><br><span class="line">`area` string, </span><br><span class="line">`model` string,</span><br><span class="line">`brand` string, </span><br><span class="line">`sdk_version` string, </span><br><span class="line">`gmail` string, </span><br><span class="line">`height_width` string,  </span><br><span class="line">`app_time` string,</span><br><span class="line">`network` string, </span><br><span class="line">`lng` string, </span><br><span class="line">`lat` string, </span><br><span class="line">`id` string, </span><br><span class="line">`userid` string, </span><br><span class="line">`target_id` string,</span><br><span class="line">`type` string,</span><br><span class="line">`add_time` string,</span><br><span class="line">`server_time` string</span><br><span class="line">)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_praise_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p>错误日志表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dwd_error_log;</span><br><span class="line">CREATE EXTERNAL TABLE dwd_error_log(</span><br><span class="line">`mid_id` string,</span><br><span class="line">`user_id` string, </span><br><span class="line">`version_code` string, </span><br><span class="line">`version_name` string, </span><br><span class="line">`lang` string, </span><br><span class="line">`source` string, </span><br><span class="line">`os` string, </span><br><span class="line">`area` string, </span><br><span class="line">`model` string,</span><br><span class="line">`brand` string, </span><br><span class="line">`sdk_version` string, </span><br><span class="line">`gmail` string, </span><br><span class="line">`height_width` string,  </span><br><span class="line">`app_time` string,</span><br><span class="line">`network` string, </span><br><span class="line">`lng` string, </span><br><span class="line">`lat` string, </span><br><span class="line">`errorBrief` string, </span><br><span class="line">`errorDetail` string, </span><br><span class="line">`server_time` string)</span><br><span class="line">PARTITIONED BY (dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dwd/dwd_error_log/&#x27;</span><br><span class="line">TBLPROPERTIES(&#x27;parquet.compression&#x27;=&#x27;lzo&#x27;);</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220118103113647.png" alt="image-20220118103113647"></p>
+<p>替换脚本文件的内容，将”$APP”替换为空格，:%S/（被替换的内容）./（替换后的内容）/g；参数g表示全局替换。</p>
+<h4 id="ods层分析"><a href="#ods层分析" class="headerlink" title="ods层分析"></a>ods层分析</h4><p>建表</p>
+<p>日活跃</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dws_uv_detail_day;</span><br><span class="line">create external table dws_uv_detail_day</span><br><span class="line">(</span><br><span class="line">    `mid_id` string COMMENT &#x27;设备唯一标识&#x27;,</span><br><span class="line">    `user_id` string COMMENT &#x27;用户标识&#x27;, </span><br><span class="line">    `version_code` string COMMENT &#x27;程序版本号&#x27;, </span><br><span class="line">    `version_name` string COMMENT &#x27;程序版本名&#x27;, </span><br><span class="line">    `lang` string COMMENT &#x27;系统语言&#x27;, </span><br><span class="line">    `source` string COMMENT &#x27;渠道号&#x27;, </span><br><span class="line">    `os` string COMMENT &#x27;安卓系统版本&#x27;, </span><br><span class="line">    `area` string COMMENT &#x27;区域&#x27;, </span><br><span class="line">    `model` string COMMENT &#x27;手机型号&#x27;, </span><br><span class="line">    `brand` string COMMENT &#x27;手机品牌&#x27;, </span><br><span class="line">    `sdk_version` string COMMENT &#x27;sdkVersion&#x27;, </span><br><span class="line">    `gmail` string COMMENT &#x27;gmail&#x27;, </span><br><span class="line">    `height_width` string COMMENT &#x27;屏幕宽高&#x27;,</span><br><span class="line">    `app_time` string COMMENT &#x27;客户端日志产生时的时间&#x27;,</span><br><span class="line">    `network` string COMMENT &#x27;网络模式&#x27;,</span><br><span class="line">    `lng` string COMMENT &#x27;经度&#x27;,</span><br><span class="line">    `lat` string COMMENT &#x27;纬度&#x27;</span><br><span class="line">)</span><br><span class="line">partitioned by(dt string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dws/dws_uv_detail_day&#x27;;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>插入数据</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite table dws_uv_detail_day </span><br><span class="line">partition(dt=&#x27;2022-01-12&#x27;)</span><br><span class="line">select  </span><br><span class="line">    mid_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(user_id)) user_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_code)) version_code,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_name)) version_name,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lang))lang,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(source)) source,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(os)) os,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(area)) area, </span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(model)) model,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(brand)) brand,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(sdk_version)) sdk_version,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(gmail)) gmail,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(height_width)) height_width,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(app_time)) app_time,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(network)) network,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lng)) lng,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lat)) lat</span><br><span class="line">from dwd_start_log</span><br><span class="line">where dt=&#x27;2022-01-12&#x27;</span><br><span class="line">group by mid_id;</span><br></pre></td></tr></table></figure>
+
+<p>周活跃（从日活表中获取）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dws_uv_detail_wk;</span><br><span class="line">create external table dws_uv_detail_wk( </span><br><span class="line">    `mid_id` string COMMENT &#x27;设备唯一标识&#x27;,</span><br><span class="line">    `user_id` string COMMENT &#x27;用户标识&#x27;, </span><br><span class="line">    `version_code` string COMMENT &#x27;程序版本号&#x27;, </span><br><span class="line">    `version_name` string COMMENT &#x27;程序版本名&#x27;, </span><br><span class="line">    `lang` string COMMENT &#x27;系统语言&#x27;, </span><br><span class="line">    `source` string COMMENT &#x27;渠道号&#x27;, </span><br><span class="line">    `os` string COMMENT &#x27;安卓系统版本&#x27;, </span><br><span class="line">    `area` string COMMENT &#x27;区域&#x27;, </span><br><span class="line">    `model` string COMMENT &#x27;手机型号&#x27;, </span><br><span class="line">    `brand` string COMMENT &#x27;手机品牌&#x27;, </span><br><span class="line">    `sdk_version` string COMMENT &#x27;sdkVersion&#x27;, </span><br><span class="line">    `gmail` string COMMENT &#x27;gmail&#x27;, </span><br><span class="line">    `height_width` string COMMENT &#x27;屏幕宽高&#x27;,</span><br><span class="line">    `app_time` string COMMENT &#x27;客户端日志产生时的时间&#x27;,</span><br><span class="line">    `network` string COMMENT &#x27;网络模式&#x27;,</span><br><span class="line">    `lng` string COMMENT &#x27;经度&#x27;,</span><br><span class="line">    `lat` string COMMENT &#x27;纬度&#x27;,</span><br><span class="line">    `monday_date` string COMMENT &#x27;周一日期&#x27;,</span><br><span class="line">    `sunday_date` string COMMENT  &#x27;周日日期&#x27; </span><br><span class="line">) COMMENT &#x27;活跃用户按周明细&#x27;</span><br><span class="line">PARTITIONED BY (`wk_dt` string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dws/dws_uv_detail_wk/&#x27;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">周活插入的时候需要进行动态分区</span></span><br><span class="line"></span><br><span class="line">set hive.exec.dynamic.partition.mode=nonstrict;</span><br><span class="line">insert overwrite table dws_uv_detail_wk partition(wk_dt)</span><br><span class="line">select  </span><br><span class="line">    mid_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(user_id)) user_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_code)) version_code,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_name)) version_name,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lang)) lang,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(source)) source,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(os)) os,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(area)) area, </span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(model)) model,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(brand)) brand,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(sdk_version)) sdk_version,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(gmail)) gmail,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(height_width)) height_width,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(app_time)) app_time,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(network)) network,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lng)) lng,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lat)) lat,</span><br><span class="line">    date_sub(next_day(&#x27;2022-01-12&#x27;,&#x27;mo&#x27;),7) monday_day,</span><br><span class="line">    date_sub(next_day(&#x27;2022-01-12&#x27;,&#x27;mo&#x27;),1) sunday_date,</span><br><span class="line">    concat(date_sub( next_day(&#x27;2022-01-12&#x27;,&#x27;MO&#x27;),-7), &#x27;_&#x27; , date_sub(next_day(&#x27;2022-01-12&#x27;,&#x27;MO&#x27;),-1) </span><br><span class="line">from dws_uv_detail_day </span><br><span class="line">where dt BETWEEN date_sub(next_day(&#x27;2022-01-12&#x27;,&#x27;mo&#x27;),7) and date_sub(next_day(&#x27;2022-01-12&#x27;,&#x27;mo&#x27;),1)</span><br><span class="line">group by mid_id;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">###################################</span></span></span><br><span class="line">date_sub(next_day(&#x27;2022-01-12&#x27;,&#x27;mo&#x27;),7)#获取2022-01-12所在周的周一是几号</span><br><span class="line">date_sub(next_day(&#x27;2022-01-12&#x27;,&#x27;mo&#x27;),1)#获取2022-01-12所在周的周日是几号</span><br></pre></td></tr></table></figure>
+
+<p>月活（从日活表中获取）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dws_uv_detail_mn;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">create external table dws_uv_detail_mn( </span><br><span class="line">    `mid_id` string COMMENT &#x27;设备唯一标识&#x27;,</span><br><span class="line">    `user_id` string COMMENT &#x27;用户标识&#x27;, </span><br><span class="line">    `version_code` string COMMENT &#x27;程序版本号&#x27;, </span><br><span class="line">    `version_name` string COMMENT &#x27;程序版本名&#x27;, </span><br><span class="line">    `lang` string COMMENT &#x27;系统语言&#x27;, </span><br><span class="line">    `source` string COMMENT &#x27;渠道号&#x27;, </span><br><span class="line">    `os` string COMMENT &#x27;安卓系统版本&#x27;, </span><br><span class="line">    `area` string COMMENT &#x27;区域&#x27;, </span><br><span class="line">    `model` string COMMENT &#x27;手机型号&#x27;, </span><br><span class="line">    `brand` string COMMENT &#x27;手机品牌&#x27;, </span><br><span class="line">    `sdk_version` string COMMENT &#x27;sdkVersion&#x27;, </span><br><span class="line">    `gmail` string COMMENT &#x27;gmail&#x27;, </span><br><span class="line">    `height_width` string COMMENT &#x27;屏幕宽高&#x27;,</span><br><span class="line">    `app_time` string COMMENT &#x27;客户端日志产生时的时间&#x27;,</span><br><span class="line">    `network` string COMMENT &#x27;网络模式&#x27;,</span><br><span class="line">    `lng` string COMMENT &#x27;经度&#x27;,</span><br><span class="line">    `lat` string COMMENT &#x27;纬度&#x27;</span><br><span class="line">) COMMENT &#x27;活跃用户按月明细&#x27;</span><br><span class="line">PARTITIONED BY (`mn` string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dws/dws_uv_detail_mn/&#x27;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">###这里的mn分区，不能写成动态的，所以补充写在最后一行</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">动态分区需要开启，这个分页模式，才能写</span></span><br><span class="line">set hive.exec.dynamic.partition.mode=nonstrict;</span><br><span class="line"></span><br><span class="line">insert overwrite table dws_uv_detail_mn partition(mn)</span><br><span class="line">select  </span><br><span class="line">    mid_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(user_id)) user_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_code)) version_code,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_name)) version_name,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lang)) lang,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(source)) source,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(os)) os,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(area)) area, </span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(model)) model,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(brand)) brand,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(sdk_version)) sdk_version,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(gmail)) gmail,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(height_width)) height_width,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(app_time)) app_time,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(network)) network,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lng)) lng,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lat)) lat</span><br><span class="line">    date_format(&#x27;2022-01-12&#x27;,&#x27;yyyy-MM&#x27;)</span><br><span class="line">from dws_uv_detail_day</span><br><span class="line">where date_format(dt,&#x27;yyyy-MM&#x27;) = date_format(&#x27;2022-01-12&#x27;,&#x27;yyyy-MM&#x27;)</span><br><span class="line">group by mid_id;</span><br></pre></td></tr></table></figure>
+
+<p>活跃数据导入脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">接受要导入数据的日期参数</span></span><br><span class="line"><span class="meta">#</span><span class="bash">通过-n参数判断后面的参数是否赋值，如果赋值，返回<span class="literal">true</span>,否则返回<span class="literal">false</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">注意载使用时，一定要为判断的变量添加双引号</span></span><br><span class="line">if [ -n &quot;$1&quot; ]</span><br><span class="line">then</span><br><span class="line">        #传了日期参数，就使用传递过来的日期</span><br><span class="line">        do_date=$1</span><br><span class="line">else</span><br><span class="line">        #默认导入数据的日期是昨天，没有传日期参数</span><br><span class="line">        do_date=$(date -d yesterday +%F)</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;导入的日志日期为：===*=*= $do_date =*=*===&quot;</span><br><span class="line"></span><br><span class="line">sql=&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">开启动态分区</span></span><br><span class="line">set hive.exec.dynamic.partition.mode=nonstrict;</span><br><span class="line"><span class="meta">#</span><span class="bash">使用gmall库</span></span><br><span class="line">use gmall;</span><br><span class="line"><span class="meta">#</span><span class="bash">日活数据</span></span><br><span class="line">insert overwrite table dws_uv_detail_day partition(dt=&#x27;$do_date&#x27;)</span><br><span class="line">select  </span><br><span class="line">    mid_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(user_id)) user_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_code)) version_code,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_name)) version_name,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lang))lang,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(source)) source,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(os)) os,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(area)) area, </span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(model)) model,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(brand)) brand,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(sdk_version)) sdk_version,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(gmail)) gmail,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(height_width)) height_width,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(app_time)) app_time,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(network)) network,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lng)) lng,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lat)) lat</span><br><span class="line">from dwd_start_log</span><br><span class="line">where dt=&#x27;$do_date&#x27;</span><br><span class="line">group by mid_id;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">周活数据</span></span><br><span class="line">insert overwrite table dws_uv_detail_wk partition(wk_dt)</span><br><span class="line">select  </span><br><span class="line">    mid_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(user_id)) user_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_code)) version_code,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_name)) version_name,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lang)) lang,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(source)) source,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(os)) os,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(area)) area, </span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(model)) model,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(brand)) brand,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(sdk_version)) sdk_version,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(gmail)) gmail,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(height_width)) height_width,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(app_time)) app_time,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(network)) network,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lng)) lng,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lat)) lat,</span><br><span class="line">    date_sub(next_day(&#x27;$do_date&#x27;,&#x27;mo&#x27;),7) monday_day,</span><br><span class="line">    date_sub(next_day(&#x27;$do_date&#x27;,&#x27;mo&#x27;),1) sunday_date,</span><br><span class="line">    concat(date_sub(next_day(&#x27;$do_date&#x27;,&#x27;mo&#x27;),7), &#x27;_&#x27; , date_sub(next_day(&#x27;$do_date&#x27;,&#x27;mo&#x27;),1) </span><br><span class="line">from dws_uv_detail_day </span><br><span class="line">where dt BETWEEN date_sub(next_day(&#x27;$do_date&#x27;,&#x27;mo&#x27;),7) and date_sub(next_day(&#x27;$do_date&#x27;,&#x27;mo&#x27;),1)</span><br><span class="line">group by mid_id;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">月活数据</span></span><br><span class="line">insert overwrite table dws_uv_detail_mn partition(mn)</span><br><span class="line">select  </span><br><span class="line">    mid_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(user_id)) user_id,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_code)) version_code,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(version_name)) version_name,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lang)) lang,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(source)) source,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(os)) os,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(area)) area, </span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(model)) model,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(brand)) brand,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(sdk_version)) sdk_version,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(gmail)) gmail,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(height_width)) height_width,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(app_time)) app_time,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(network)) network,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lng)) lng,</span><br><span class="line">    concat_ws(&#x27;|&#x27;, collect_set(lat)) lat,</span><br><span class="line">    date_format(&#x27;2022-01-12&#x27;,&#x27;yyyy-MM&#x27;)</span><br><span class="line">from dws_uv_detail_day</span><br><span class="line">where date_format(dt,&#x27;yyyy-MM&#x27;) = date_format(&#x27;2022-01-12&#x27;,&#x27;yyyy-MM&#x27;)</span><br><span class="line">group by mid_id;</span><br><span class="line"></span><br><span class="line">&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">执行</span></span><br><span class="line">hive -e &quot;$sql&quot;</span><br></pre></td></tr></table></figure>
+
+<p>ads层，统计当日，当周，当月活跃设备数【dws_uv_detail_day，dws_uv_detail_wk，dws_uv_detail_mn】</p>
+<p>dws_uv_detail_day：使用count(mid)统计 日活跃设备数</p>
+<p>dws_uv_detail_wk：使用count(mid)统计 周活跃设备数</p>
+<p>dws_uv_detail_mn：使用count(mid)统计 月活跃设备数</p>
+<p>is_weeked：是否是一周的·1最后一天<br>is_monthend：是否是一月的最后一天</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">建表</span></span><br><span class="line">drop table if exists ads_uv_count;</span><br><span class="line">create external table ads_uv_count( </span><br><span class="line">    `dt` string COMMENT &#x27;统计日期&#x27;,</span><br><span class="line">    `day_count` bigint COMMENT &#x27;当日用户数量&#x27;,</span><br><span class="line">    `wk_count`  bigint COMMENT &#x27;当周用户数量&#x27;,</span><br><span class="line">    `mn_count`  bigint COMMENT &#x27;当月用户数量&#x27;,</span><br><span class="line">    `is_weekend` string COMMENT &#x27;Y,N是否是周末,用于得到本周最终结果&#x27;,</span><br><span class="line">    `is_monthend` string COMMENT &#x27;Y,N是否是月末,用于得到本月最终结果&#x27; </span><br><span class="line">) COMMENT &#x27;活跃设备数&#x27;</span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;</span><br><span class="line">location &#x27;/warehouse/gmall/ads/ads_uv_count/&#x27;;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">导入数据</span></span><br><span class="line">insert into table ads_uv_count</span><br><span class="line"></span><br><span class="line">select</span><br><span class="line">&#x27;2022-01-12&#x27; dt,</span><br><span class="line">day_count,</span><br><span class="line">wk_count,</span><br><span class="line">mn_count,</span><br><span class="line">if(date_sub(next_day(&#x27;2022-01-12&#x27;,&#x27;mo&#x27;),1)=&#x27;2022-01-12&#x27;,&#x27;Y&#x27;,&#x27;N&#x27;) is_weeked, </span><br><span class="line">if(last_day(&#x27;2022-01-12&#x27;)=&#x27;2022-02-12&#x27;,&#x27;Y&#x27;,&#x27;N&#x27;) is_monthend</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">from</span><br><span class="line">(select count(mid_id) day_count from gmall.dws_uv_detail_day where dt=&#x27;2022-01-12&#x27;) t1</span><br><span class="line">join</span><br><span class="line">(select count(mid_id) wk_count from gmall.dws_uv_detail_wk </span><br><span class="line">where wk_dt=concat(date_sub( next_day(&#x27;2022-01-12&#x27;,&#x27;MO&#x27;),7), &#x27;_&#x27; , date_sub(next_day(&#x27;2022-01-12&#x27;,&#x27;MO&#x27;),1))) t2</span><br><span class="line">join</span><br><span class="line">(select count(mid_id) mn_count from gmall.dws_uv_detail_mn where mn=date_format(&#x27;2022-01-12&#x27;,&#x27;yyyy-MM&#x27;)) t3</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>脚本</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">接受要导入数据的日期参数</span></span><br><span class="line"><span class="meta">#</span><span class="bash">通过-n参数判断后面的参数是否赋值，如果赋值，返回<span class="literal">true</span>,否则返回<span class="literal">false</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">注意载使用时，一定要为判断的变量添加双引号</span></span><br><span class="line">if [ -n &quot;$1&quot; ]</span><br><span class="line">then</span><br><span class="line">        #传了日期参数，就使用传递过来的日期</span><br><span class="line">        do_date=$1</span><br><span class="line">else</span><br><span class="line">        #默认导入数据的日期是昨天，没有传日期参数</span><br><span class="line">        do_date=$(date -d yesterday +%F)</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;导入的日志日期为：===*=*= $do_date =*=*===&quot;</span><br><span class="line"></span><br><span class="line">sql=&quot;</span><br><span class="line">use gmall;</span><br><span class="line"></span><br><span class="line">insert into table ads_uv_count</span><br><span class="line"></span><br><span class="line">select</span><br><span class="line"></span><br><span class="line">&#x27;$do_date&#x27; dt,</span><br><span class="line">day_count,</span><br><span class="line">wk_count,</span><br><span class="line">mn_count,</span><br><span class="line">if(date_sub(next_day(&#x27;$do_date&#x27;,&#x27;mo&#x27;),1)=&#x27;$do_date&#x27;,&#x27;Y&#x27;,&#x27;N&#x27;) is_weeked, </span><br><span class="line">if(last_day(&#x27;$do_date&#x27;)=&#x27;$do_date&#x27;,&#x27;Y&#x27;,&#x27;N&#x27;) is_monthend</span><br><span class="line"></span><br><span class="line">from</span><br><span class="line">(select count(mid_id) day_count from gmall.dws_uv_detail_day where dt=&#x27;$do_date&#x27;) t1</span><br><span class="line">join</span><br><span class="line">(select count(mid_id) wk_count from gmall.dws_uv_detail_wk </span><br><span class="line">where wk_dt=concat(date_sub( next_day(&#x27;$do_date&#x27;,&#x27;MO&#x27;),7), &#x27;_&#x27; , date_sub(next_day(&#x27;$do_date&#x27;,&#x27;MO&#x27;),1))) t2</span><br><span class="line">join</span><br><span class="line">(select count(mid_id) mn_count from gmall.dws_uv_detail_mn where mn=date_format(&#x27;$do_date&#x27;,&#x27;yyyy-MM&#x27;)) t3</span><br><span class="line"></span><br><span class="line">&quot;</span><br><span class="line"><span class="meta">#</span><span class="bash">执行</span></span><br><span class="line">hive -e &quot;$sql&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>求每日新增设备明细</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">建表</span></span><br><span class="line">drop table if exists dws_new_mid_day;</span><br><span class="line">create external table dws_new_mid_day</span><br><span class="line">(</span><br><span class="line">    `mid_id` string COMMENT &#x27;设备唯一标识&#x27;,</span><br><span class="line">    `user_id` string COMMENT &#x27;用户标识&#x27;, </span><br><span class="line">    `version_code` string COMMENT &#x27;程序版本号&#x27;, </span><br><span class="line">    `version_name` string COMMENT &#x27;程序版本名&#x27;, </span><br><span class="line">    `lang` string COMMENT &#x27;系统语言&#x27;, </span><br><span class="line">    `source` string COMMENT &#x27;渠道号&#x27;, </span><br><span class="line">    `os` string COMMENT &#x27;安卓系统版本&#x27;, </span><br><span class="line">    `area` string COMMENT &#x27;区域&#x27;, </span><br><span class="line">    `model` string COMMENT &#x27;手机型号&#x27;, </span><br><span class="line">    `brand` string COMMENT &#x27;手机品牌&#x27;, </span><br><span class="line">    `sdk_version` string COMMENT &#x27;sdkVersion&#x27;, </span><br><span class="line">    `gmail` string COMMENT &#x27;gmail&#x27;, </span><br><span class="line">    `height_width` string COMMENT &#x27;屏幕宽高&#x27;,</span><br><span class="line">    `app_time` string COMMENT &#x27;客户端日志产生时的时间&#x27;,</span><br><span class="line">    `network` string COMMENT &#x27;网络模式&#x27;,</span><br><span class="line">    `lng` string COMMENT &#x27;经度&#x27;,</span><br><span class="line">    `lat` string COMMENT &#x27;纬度&#x27;,</span><br><span class="line">    `create_date`  string  comment &#x27;创建时间&#x27; </span><br><span class="line">)  COMMENT &#x27;每日新增设备信息&#x27;</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dws/dws_new_mid_day/&#x27;;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">##导入数据</span></span></span><br><span class="line"></span><br><span class="line">insert into table gmall.dws_new_mid_day</span><br><span class="line">select </span><br><span class="line">t1.*</span><br><span class="line">from</span><br><span class="line">(select * from dws_uv_detail_day where dt=&#x27;2022-01-12&#x27;) t1</span><br><span class="line">left join gmall.dws_new_mid_day nm</span><br><span class="line">on t1.mid_id=nm.mid_id</span><br><span class="line">where nm.mid_id is null;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">##创建执行脚本 --- dws_new_log.sh</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">接受要导入数据的日期参数</span></span><br><span class="line"><span class="meta">#</span><span class="bash">通过-n参数判断后面的参数是否赋值，如果赋值，返回<span class="literal">true</span>,否则返回<span class="literal">false</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">注意载使用时，一定要为判断的变量添加双引号</span></span><br><span class="line"><span class="meta">#</span><span class="bash">将每日新增设备数据导入到gmall.dws_new_mid_day</span></span><br><span class="line">if [ -n &quot;$1&quot; ]</span><br><span class="line">then</span><br><span class="line">        #传了日期参数，就使用传递过来的日期</span><br><span class="line">        do_date=$1</span><br><span class="line">else</span><br><span class="line">        #默认导入数据的日期是昨天，没有传日期参数</span><br><span class="line">        do_date=$(date -d yesterday +%F)</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;导入的日志日期为：===*=*= $do_date =*=*===&quot;</span><br><span class="line"></span><br><span class="line">sql=&quot;</span><br><span class="line">use gmall;</span><br><span class="line">insert into table gmall.dws_new_mid_day</span><br><span class="line">select </span><br><span class="line">t1.*</span><br><span class="line">from</span><br><span class="line">(select * from dws_uv_detail_day where dt=&#x27;$do_date&#x27;) t1</span><br><span class="line">left join gmall.dws_new_mid_day nm</span><br><span class="line">on t1.mid_id=nm.mid_id</span><br><span class="line">where nm.mid_id is null;</span><br><span class="line">&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">执行</span></span><br><span class="line">hive -e &quot;$sql&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>每日新增设备表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">###建表</span></span></span><br><span class="line">drop table if exists ads_new_mid_count;</span><br><span class="line">create external table ads_new_mid_count</span><br><span class="line">(</span><br><span class="line">    `create_date`     string comment &#x27;创建时间&#x27; ,</span><br><span class="line">    `new_mid_count`   BIGINT comment &#x27;新增设备数量&#x27; </span><br><span class="line">)  COMMENT &#x27;每日新增设备信息数量&#x27;</span><br><span class="line">row format delimited fields terminated by &#x27;\t&#x27;</span><br><span class="line">location &#x27;/warehouse/gmall/ads/ads_new_mid_count/&#x27;;</span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">##导入数据</span></span></span><br><span class="line">insert into table ads_new_mid_count </span><br><span class="line">select</span><br><span class="line">create_date,</span><br><span class="line">count(*)</span><br><span class="line">from dws_new_mid_day</span><br><span class="line">where create_date=&#x27;2022-01-12&#x27;</span><br><span class="line">group by create_date;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">##脚本 ads_new_log.sh</span></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash">统计每日新增设备数</span></span><br><span class="line"><span class="meta">#</span><span class="bash">接受要导入数据的日期参数</span></span><br><span class="line"><span class="meta">#</span><span class="bash">通过-n参数判断后面的参数是否赋值，如果赋值，返回<span class="literal">true</span>,否则返回<span class="literal">false</span></span></span><br><span class="line"><span class="meta">#</span><span class="bash">注意载使用时，一定要为判断的变量添加双引号</span></span><br><span class="line"><span class="meta">#</span><span class="bash">将每日新增设备数据导入到gmall.dws_new_mid_day</span></span><br><span class="line">if [ -n &quot;$1&quot; ]</span><br><span class="line">then</span><br><span class="line">        #传了日期参数，就使用传递过来的日期</span><br><span class="line">        do_date=$1</span><br><span class="line">else</span><br><span class="line">        #默认导入数据的日期是昨天，没有传日期参数</span><br><span class="line">        do_date=$(date -d yesterday +%F)</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">echo &quot;导入的日志日期为：===*=*= $do_date =*=*===&quot;</span><br><span class="line"></span><br><span class="line">sql=&quot;</span><br><span class="line">use gmall;</span><br><span class="line"></span><br><span class="line">insert into table ads_new_mid_count </span><br><span class="line">select</span><br><span class="line">create_date,</span><br><span class="line">count(*)</span><br><span class="line">from dws_new_mid_day</span><br><span class="line">where create_date=&#x27;$do_date&#x27;</span><br><span class="line">group by create_date;</span><br><span class="line">&quot;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash">执行</span></span><br><span class="line">hive -e &quot;$sql&quot;</span><br></pre></td></tr></table></figure>
+
+<p>DWS层（每日留存用户明细表）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line">drop table if exists dws_user_retention_day;</span><br><span class="line">create external table dws_user_retention_day </span><br><span class="line">(</span><br><span class="line">    `mid_id` string COMMENT &#x27;设备唯一标识&#x27;,</span><br><span class="line">    `user_id` string COMMENT &#x27;用户标识&#x27;, </span><br><span class="line">    `version_code` string COMMENT &#x27;程序版本号&#x27;, </span><br><span class="line">    `version_name` string COMMENT &#x27;程序版本名&#x27;, </span><br><span class="line">    `lang` string COMMENT &#x27;系统语言&#x27;, </span><br><span class="line">    `source` string COMMENT &#x27;渠道号&#x27;, </span><br><span class="line">    `os` string COMMENT &#x27;安卓系统版本&#x27;, </span><br><span class="line">    `area` string COMMENT &#x27;区域&#x27;, </span><br><span class="line">    `model` string COMMENT &#x27;手机型号&#x27;, </span><br><span class="line">    `brand` string COMMENT &#x27;手机品牌&#x27;, </span><br><span class="line">    `sdk_version` string COMMENT &#x27;sdkVersion&#x27;, </span><br><span class="line">    `gmail` string COMMENT &#x27;gmail&#x27;, </span><br><span class="line">    `height_width` string COMMENT &#x27;屏幕宽高&#x27;,</span><br><span class="line">    `app_time` string COMMENT &#x27;客户端日志产生时的时间&#x27;,</span><br><span class="line">    `network` string COMMENT &#x27;网络模式&#x27;,</span><br><span class="line">    `lng` string COMMENT &#x27;经度&#x27;,</span><br><span class="line">    `lat` string COMMENT &#x27;纬度&#x27;,</span><br><span class="line">   `create_date`    string  comment &#x27;设备新增时间&#x27;,</span><br><span class="line">   `retention_day`  int comment &#x27;截止当前日期留存天数&#x27;</span><br><span class="line">)  COMMENT &#x27;每日用户留存情况&#x27;</span><br><span class="line">PARTITIONED BY (`dt` string)</span><br><span class="line">stored as parquet</span><br><span class="line">location &#x27;/warehouse/gmall/dws/dws_user_retention_day/&#x27;;</span><br><span class="line"><span class="meta"></span></span><br><span class="line"><span class="meta">#</span><span class="bash"><span class="comment">##导入数据</span></span></span><br><span class="line">insert overwrite table dws_user_retention_day</span><br><span class="line">partition(dt=&quot;2022-01-12&quot;)</span><br><span class="line">select  </span><br><span class="line">    nm.mid_id,</span><br><span class="line">    nm.user_id , </span><br><span class="line">    nm.version_code , </span><br><span class="line">    nm.version_name , </span><br><span class="line">    nm.lang , </span><br><span class="line">    nm.source, </span><br><span class="line">    nm.os, </span><br><span class="line">    nm.area, </span><br><span class="line">    nm.model, </span><br><span class="line">    nm.brand, </span><br><span class="line">    nm.sdk_version, </span><br><span class="line">    nm.gmail, </span><br><span class="line">    nm.height_width,</span><br><span class="line">    nm.app_time,</span><br><span class="line">    nm.network,</span><br><span class="line">    nm.lng,</span><br><span class="line">    nm.lat,</span><br><span class="line">nm.create_date,</span><br><span class="line">1 retention_day </span><br><span class="line">from dws_uv_detail_day ud join dws_new_mid_day nm   on ud.mid_id =nm.mid_id </span><br><span class="line">where ud.dt=&#x27;2022-01-12&#x27; and nm.create_date=date_add(&#x27;2022-01-12&#x27;,-1);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>1,2,3,n天留存用户明细表</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">insert overwrite table dws_user_retention_day</span><br><span class="line">partition(dt=&quot;2022-01-12&quot;)</span><br><span class="line">select</span><br><span class="line">    nm.mid_id,</span><br><span class="line">    nm.user_id,</span><br><span class="line">    nm.version_code,</span><br><span class="line">    nm.version_name,</span><br><span class="line">    nm.lang,</span><br><span class="line">    nm.source,</span><br><span class="line">    nm.os,</span><br><span class="line">    nm.area,</span><br><span class="line">    nm.model,</span><br><span class="line">    nm.brand,</span><br><span class="line">    nm.sdk_version,</span><br><span class="line">    nm.gmail,</span><br><span class="line">    nm.height_width,</span><br><span class="line">    nm.app_time,</span><br><span class="line">    nm.network,</span><br><span class="line">    nm.lng,</span><br><span class="line">    nm.lat,</span><br><span class="line">    nm.create_date,</span><br><span class="line">    1 retention_day </span><br><span class="line">from dws_uv_detail_day ud join dws_new_mid_day nm  on ud.mid_id =nm.mid_id </span><br><span class="line">where ud.dt=&#x27;2022-01-12&#x27; and nm.create_date=date_add(&#x27;2022-01-12&#x27;,-1)</span><br><span class="line"></span><br><span class="line">union all</span><br><span class="line">select  </span><br><span class="line">    nm.mid_id,</span><br><span class="line">    nm.user_id , </span><br><span class="line">    nm.version_code , </span><br><span class="line">    nm.version_name , </span><br><span class="line">    nm.lang , </span><br><span class="line">    nm.source, </span><br><span class="line">    nm.os, </span><br><span class="line">    nm.area, </span><br><span class="line">    nm.model, </span><br><span class="line">    nm.brand, </span><br><span class="line">    nm.sdk_version, </span><br><span class="line">    nm.gmail, </span><br><span class="line">    nm.height_width,</span><br><span class="line">    nm.app_time,</span><br><span class="line">    nm.network,</span><br><span class="line">    nm.lng,</span><br><span class="line">    nm.lat,</span><br><span class="line">    nm.create_date,</span><br><span class="line">    2 retention_day </span><br><span class="line">from  dws_uv_detail_day ud join dws_new_mid_day nm   on ud.mid_id =nm.mid_id </span><br><span class="line">where ud.dt=&#x27;2022-01-12&#x27; and nm.create_date=date_add(&#x27;2022-01-12&#x27;,-2)</span><br><span class="line"></span><br><span class="line">union all</span><br><span class="line">select  </span><br><span class="line">    nm.mid_id,</span><br><span class="line">    nm.user_id,</span><br><span class="line">    nm.version_code,</span><br><span class="line">    nm.version_name,</span><br><span class="line">    nm.lang, </span><br><span class="line">    nm.source, </span><br><span class="line">    nm.os, </span><br><span class="line">    nm.area, </span><br><span class="line">    nm.model, </span><br><span class="line">    nm.brand, </span><br><span class="line">    nm.sdk_version, </span><br><span class="line">    nm.gmail, </span><br><span class="line">    nm.height_width,</span><br><span class="line">    nm.app_time,</span><br><span class="line">    nm.network,</span><br><span class="line">    nm.lng,</span><br><span class="line">    nm.lat,</span><br><span class="line">    nm.create_date,</span><br><span class="line">    3 retention_day </span><br><span class="line">from  dws_uv_detail_day ud join dws_new_mid_day nm   on ud.mid_id =nm.mid_id </span><br><span class="line">where ud.dt=&#x27;2022-01-12&#x27; and nm.create_date=date_add(&#x27;2022-01-12&#x27;,-3);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<p>目标表是分区表，在插入数据时，一般使用insert overwrite，防止程序中断，造成数据重复</p>
+<p>dws层和dwd层和ods层，都创建分区表</p>
+<p>如果目标表不是分区表，通常在插入数据时，一般使用insert into，每次只是追加内容</p>
+<p>ads层数据比较少，并且直接对接应用层，直接创建非分区表</p>
+<p>Kibnan数据可视化</p>
+<p>1、设置数据源</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220304165629413.png" alt="image-20220304165629413"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220304170001928.png" alt="image-20220304170001928"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220304170136883.png" alt="image-20220304170136883"></p>
+<p>只分析当天的数据，完成后点创建；以上操作完成后，开始做可视化的视图</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220304170355108.png" alt="image-20220304170355108"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220304170457354.png" alt="image-20220304170457354"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220304170519860.png" alt="image-20220304170519860"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220304170605064.png" alt="image-20220304170605064"></p>
+<p>纵轴，表示聚合的结果</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220304170736057.png" alt="image-20220304170736057"></p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220304170940576.png" alt="image-20220304170940576"></p>
+<p>自动刷新</p>
+<p><img src="/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220304171424823.png" alt="image-20220304171424823"></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" data-id="cl3u9wg27002b9wvo9rd7ahov" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Wumeng"
+        },
+        "headline": "spark实时项目",
+        "image": "http://example.com/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220111110418815.png",
+        "keywords": "项目",
+        "genre": "大数据",
+        "datePublished": "2022-01-08",
+        "dateCreated": "2022-01-08",
+        "dateModified": "2022-05-31",
+        "url": "http://example.com/2022/01/08/spark实时项目/",
+        "description": "IDEA中项目框架的搭建
+项目启动配置
+需要启用kafka
+12345xcall /opt/module/zookeeper-3.4.10/bin/zkServer.sh start	#启动zk集群xcall /opt/module/kafka/bin/kafka-server-start.sh -daemon /opt/module/kafka/config/server.properties	",
+        "wordCount": 7700
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2022/01/11/elasticsearch/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            elasticsearch
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2022/01/03/Spark/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">Spark</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/image-20220525174639740.png)" alt="极客时间Django项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/05/25/%E6%9E%81%E5%AE%A2%E6%97%B6%E9%97%B4Django%E9%A1%B9%E7%9B%AE/" class="title">极客时间Django项目</a></p>
+                            <p class="item-date"><time datetime="2022-05-25T08:11:16.000Z" itemprop="datePublished">2022-05-25</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/04/26/Django%E5%85%A5%E9%97%A8/image-20220426215758670.png)" alt="Django入门" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/04/26/Django%E5%85%A5%E9%97%A8/" class="title">Django入门</a></p>
+                            <p class="item-date"><time datetime="2022-04-26T13:14:15.000Z" itemprop="datePublished">2022-04-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a></p>
+                            <p class="item-title"><a href="/2022/04/22/vscode%E9%85%8D%E7%BD%AEpython%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" class="title">vscode配置python开发环境</a></p>
+                            <p class="item-date"><time datetime="2022-04-22T02:58:28.000Z" itemprop="datePublished">2022-04-22</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/image-20220426165118551.png)" alt="实时项目" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></p>
+                            <p class="item-title"><a href="/2022/02/28/%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/" class="title">实时项目</a></p>
+                            <p class="item-date"><time datetime="2022-02-28T01:49:46.000Z" itemprop="datePublished">2022-02-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/01/11/elasticsearch/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/01/11/elasticsearch/" class="title">elasticsearch</a></p>
+                            <p class="item-date"><time datetime="2022-01-11T13:47:23.000Z" itemprop="datePublished">2022-01-11</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/">操作系统</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/">环境搭建</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/05/">五月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">4</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Centos/" rel="tag">Centos</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/" rel="tag">Python</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Centos/" style="font-size: 10px;">Centos</a> <a href="/tags/Django/" style="font-size: 15px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 15px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 20px;">大数据</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2022 Wumeng</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="parent">
+                <div class="child">
+                  <span id="busuanzi_container_site_pv">
+                    访问量<span id="busuanzi_value_site_pv"></span>次
+                  </span>
+                  <span class="post-meta-divider">|</span>
+                  <span id="busuanzi_container_site_uv" style='display:none'>
+                    访客数<span id="busuanzi_value_site_uv"></span>人
+                  </span>
+                  <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                </div>
+              </div>              
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <style>
+        .parent {
+          position: relative;
+        }
+        .child {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      </style>
+      
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://example.com/2022/01/08/spark%E5%AE%9E%E6%97%B6%E9%A1%B9%E7%9B%AE/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>
