@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+
+    
+
+    
+    <title>celery | Hexo</title>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="keywords" content="python" />
+    
+    <meta name="description" content="介绍简介组成celery的组成主要包括一下部分：tasks，broker，worker，result_backend，beat  tasks：这个任务就是我们前面举的例子的异步任务或者是定时任务，即为 task，我们可以定义这些任务，然后发送到 broker broker：broker 可以理解成消息中间件，用于获取异步或者定时任务，形成一个或多个消息队列，然后发送给 worker 处理这些消息">
+<meta property="og:type" content="article">
+<meta property="og:title" content="celery">
+<meta property="og:url" content="http://example.com/2022/10/16/celery/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="介绍简介组成celery的组成主要包括一下部分：tasks，broker，worker，result_backend，beat  tasks：这个任务就是我们前面举的例子的异步任务或者是定时任务，即为 task，我们可以定义这些任务，然后发送到 broker broker：broker 可以理解成消息中间件，用于获取异步或者定时任务，形成一个或多个消息队列，然后发送给 worker 处理这些消息">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/2022/10/16/celery/image-20221017001220952.png">
+<meta property="article:published_time" content="2022-10-15T16:00:51.000Z">
+<meta property="article:modified_time" content="2023-01-15T12:25:51.626Z">
+<meta property="article:author" content="Wumeng">
+<meta property="article:tag" content="python">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2022/10/16/celery/image-20221017001220952.png">
+    
+
+    
+        <link rel="alternate" href="/" title="Hexo" type="application/atom+xml" />
+    
+
+    
+
+    
+<link rel="stylesheet" href="/libs/font-awesome/css/font-awesome.min.css">
+
+    
+<link rel="stylesheet" href="/libs/titillium-web/styles.css">
+
+    
+<link rel="stylesheet" href="/libs/source-code-pro/styles.css">
+
+
+    
+<link rel="stylesheet" href="/css/style.css">
+
+
+    
+<script src="/libs/jquery/3.5.0/jquery.min.js"></script>
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/lightgallery/css/lightgallery.min.css">
+
+    
+    
+        
+<link rel="stylesheet" href="/libs/justified-gallery/justifiedGallery.min.css">
+
+    
+    
+    
+    
+
+
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+    <div id="wrap">
+        <header id="header">
+    <div id="header-outer" class="outer">
+        <div class="container">
+            <div class="container-inner">
+                <div id="header-title">
+                    <h1 class="logo-wrap">
+                        <a href="/" class="logo"></a>
+                    </h1>
+                    
+                </div>
+                <div id="header-inner" class="nav-container">
+                    <a id="main-nav-toggle" class="nav-icon fa fa-bars"></a>
+                    <div class="nav-container-inner">
+                        <ul id="main-nav">
+                            
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/">主页</a>
+                                </li>
+                            
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
+                                
+                                <li class="main-nav-list-item" >
+                                    <a class="main-nav-list-link" href="/about/index.html">关于</a>
+                                </li>
+                            
+                        </ul>
+                        <nav id="sub-nav">
+                            <div id="search-form-wrap">
+
+    <form class="search-form">
+        <input type="text" class="ins-search-input search-form-input" placeholder="搜索" />
+        <button type="submit" class="search-form-submit"></button>
+    </form>
+    <div class="ins-search">
+    <div class="ins-search-mask"></div>
+    <div class="ins-search-container">
+        <div class="ins-input-wrapper">
+            <input type="text" class="ins-search-input" placeholder="想要查找什么..." />
+            <span class="ins-close ins-selectable"><i class="fa fa-times-circle"></i></span>
+        </div>
+        <div class="ins-section-wrapper">
+            <div class="ins-section-container"></div>
+        </div>
+    </div>
+</div>
+<script>
+(function (window) {
+    var INSIGHT_CONFIG = {
+        TRANSLATION: {
+            POSTS: '文章',
+            PAGES: '页面',
+            CATEGORIES: '分类',
+            TAGS: '标签',
+            UNTITLED: '(未命名)',
+        },
+        ROOT_URL: '/',
+        CONTENT_URL: '/content.json',
+    };
+    window.INSIGHT_CONFIG = INSIGHT_CONFIG;
+})(window);
+</script>
+
+<script src="/js/insight.js"></script>
+
+
+</div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+        <div class="container">
+            <div class="main-body container-inner">
+                <div class="main-body-inner">
+                    <section id="main">
+                        <div class="main-body-header">
+    <h1 class="header">
+    
+    <a class="page-title-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a>
+    </h1>
+</div>
+
+                        <div class="main-body-content">
+                            <article id="post-celery" class="article article-single article-type-post" itemscope itemprop="blogPost">
+    <div class="article-inner">
+        
+            <header class="article-header">
+                
+    
+        <h1 class="article-title" itemprop="name">
+        celery
+        </h1>
+    
+
+            </header>
+        
+        
+            <div class="article-meta">
+                <span id="busuanzi_container_page_pv" style='display:none' class="article-date">
+  <i class="icon-smile icon"></i> 阅读数：<span id="busuanzi_value_page_pv"></span>次
+</span>
+
+  <div class="article-date">
+    <i class="fa fa-calendar"></i>
+    <a href="/2022/10/16/celery/" class="article-date">
+       <time datetime="2022-10-15T16:00:51.000Z" itemprop="datePublished">2022-10-16</time>
+    </a>
+  </div>
+
+
+<div class="article-date">
+  <i class="fa fa-calendar-plus-o"></i>
+  <a href="/2022/10/16/celery/" class="article-date">
+     <time datetime="2023-01-15T12:25:51.626Z" itemprop="dateModified">2023-01-15</time>
+  </a>
+</div>
+
+
+                
+
+                
+    <div class="article-tag">
+        <i class="fa fa-tag"></i>
+        <a class="tag-link-link" href="/tags/python/" rel="tag">python</a>
+    </div>
+
+                
+
+                
+
+            </div>
+        
+        
+        <div class="article-entry" itemprop="articleBody">
+            
+
+            
+
+            
+
+            <h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><h2 id="组成"><a href="#组成" class="headerlink" title="组成"></a>组成</h2><p>celery的组成主要包括一下部分：<strong>tasks</strong>，<strong>broker</strong>，<strong>worker</strong>，<strong>result_backend</strong>，<strong>beat</strong></p>
+<ul>
+<li><strong>tasks</strong>：这个任务就是我们前面举的例子的异步任务或者是定时任务，即为 task，我们可以定义这些任务，然后发送到 broker</li>
+<li><strong>broker</strong>：broker 可以理解成消息中间件，用于获取异步或者定时任务，形成一个或多个消息队列，然后发送给 worker 处理这些消息<ul>
+<li>broker 的形式可以是 Redis，RabbitMQ 或者其他，这里我们使用 Redis 作为消息中间件</li>
+</ul>
+</li>
+<li><strong>worker</strong>：worker 是处理消息的程序，获取 broker 中的消息，然后在 worker 中执行，然后根据配置决定将处理结果发送到 backend</li>
+<li><strong>result_backend</strong>：在 worker 处理完消息之后会有 return 或者没有返回结果，都会根据配置将结果发送出来，可以配置成发送到 redis 中，也可以将之存储到 database 中</li>
+<li><strong>beat</strong>：主要用于调用定时任务，根据设定好的定时任务，比如每天晚上十点执行某个函数，beat 则会在相应的时间将这个 task 发送给 broker，然后 worker 获取任务进行处理<ul>
+<li>定时任务除了说的每天晚上十点这种周期任务，也可以是间隔任务，比如说每隔多少秒，多少分钟执行一次</li>
+<li>所有的定时任务都由 beat 发出，这种情况下，你必须确保在同一个时间点只有一个 beat 任务调度器在运行，假设有两个 beat 同时在运行，那么在检测定时任务的时候，系统的任务就可能会被重复发起、调用、执行</li>
+</ul>
+</li>
+</ul>
+<p><strong>注意</strong>：异步任务的发送是不经过 beat 处理，直接发送给 broker 的</p>
+<p>broker 需要将相应的服务比如 redis 运行起来，而 worker 和 beat 需要在手动用程序运行，而且每次更改了定时策略之后需要重新启动 beat 和 worker 才能生效。</p>
+<h2 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h2><p>celery大致有两中应用场景：一种是定时任务，一种是异步任务</p>
+<h2 id="小例子，简单异步任务的实现"><a href="#小例子，简单异步任务的实现" class="headerlink" title="小例子，简单异步任务的实现"></a>小例子，简单异步任务的实现</h2><p><strong>使用redis作为消息中间件</strong></p>
+<p>使用celery，必须先安装celery和redis的依赖</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">pip3 install celery==<span class="number">5.1</span><span class="number">.2</span> -i https://mirrors.aliyun.com/pypi/simple/</span><br><span class="line">pip3 install redis==<span class="number">3.5</span><span class="number">.3</span> -i https://mirrors.aliyun.com/pypi/simple/</span><br></pre></td></tr></table></figure>
+
+<p>Redis可以使用docker进行安装</p>
+<p>实例化celery，并简单执行异步任务</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line"></span><br><span class="line"><span class="comment"># redis未设置密码的写法</span></span><br><span class="line">app = Celery(<span class="string">&#x27;tasks&#x27;</span>, broker=<span class="string">&#x27;redis://127.0.0.1/0&#x27;</span>, backend=<span class="string">&#x27;redis://127.0.0.1/1&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 当redis设置密码后的写法</span></span><br><span class="line"><span class="comment"># app = Celery(&#x27;tasks&#x27;, broker=&#x27;redis://:gs123456@localhost/0&#x27;,</span></span><br><span class="line"><span class="comment">#              backend=&#x27;redis://:gs123456@localhost/1&#x27;)</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.task</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">add</span>(<span class="params">x, y</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x + y</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.task</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">div</span>(<span class="params">x, y</span>):</span></span><br><span class="line">    <span class="keyword">return</span> x / y</span><br></pre></td></tr></table></figure>
+
+<p>启动：celery -A tasks worker -l INFO -P eventlet</p>
+<p><img src="/2022/10/16/celery/image-20221017001220952.png" alt="image-20221017001220952"></p>
+<p>启动成功：</p>
+<p><img src="/2022/10/16/celery/image-20221017001258206.png" alt="image-20221017001258206"></p>
+<h1 id="celery的配置方式"><a href="#celery的配置方式" class="headerlink" title="celery的配置方式"></a>celery的配置方式</h1><ul>
+<li>可以在实例化的完成一部分配置，另一部分再通过app.config.update()的方式写入</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># celery.py</span></span><br><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line"></span><br><span class="line">app = Celery(<span class="string">&#x27;proj&#x27;</span>,</span><br><span class="line">             broker=<span class="string">&#x27;redis://localhost/0&#x27;</span>,</span><br><span class="line">             backend=<span class="string">&#x27;redis://localhost/1&#x27;</span>,</span><br><span class="line">             include=[<span class="string">&#x27;proj.tasks1&#x27;</span>, <span class="string">&#x27;proj.tasks2&#x27;</span>])</span><br><span class="line"></span><br><span class="line">app.conf.update(</span><br><span class="line">    result_expires=<span class="number">60</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过类的方式进行写入</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># celery.py</span></span><br><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line"></span><br><span class="line">app = Celery()</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Config</span>:</span></span><br><span class="line">    include = [<span class="string">&#x27;proj.tasks1&#x27;</span>, <span class="string">&#x27;proj.tasks2&#x27;</span>]</span><br><span class="line">    broker_url = <span class="string">&#x27;redis://localhost:6379/0&#x27;</span></span><br><span class="line">    result_backend = <span class="string">&#x27;redis://localhost:6379/1&#x27;</span></span><br><span class="line">    </span><br><span class="line">app.config_from_object(Config)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>通过文件的方式写入</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># celeryconfig.py</span></span><br><span class="line">broker_url = <span class="string">&#x27;redis://localhost/0&#x27;</span></span><br><span class="line">result_backend = <span class="string">&#x27;redis://localhost/1&#x27;</span></span><br><span class="line">include = [<span class="string">&#x27;proj.tasks1&#x27;</span>, <span class="string">&#x27;proj.tasks2&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>通过配置文件写入和配置类写入都需要使用config_from_object()来引入相关配置内容。</p>
+<p><strong>注意</strong>：只要运行了 config_from_object() 函数，在此之前的变量都会被覆盖失效，如果我们要新增 celeryconfig 之外的配置，则需要在调用 config_from_object() 函数之后调用，比如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">app = Celery()</span><br><span class="line"></span><br><span class="line">app.conf.update(result_expires=<span class="number">60</span>) <span class="comment"># 在 config_from_config() 之前调用，会失效</span></span><br><span class="line"></span><br><span class="line">app.config_from_object(celeryconfig)</span><br><span class="line"></span><br><span class="line">app.conf.update(result_expires=<span class="number">30</span>)  <span class="comment"># 这个配置会生效</span></span><br></pre></td></tr></table></figure>
+
+<p>celery的其他配置：</p>
+<p><strong>设置时区</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.conf.update(</span><br><span class="line">    enable_utc=<span class="literal">False</span>,</span><br><span class="line">    timezone=<span class="string">&#x27;Asia/Shanghai&#x27;</span>,</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>broker 和 result_backend 设置</strong></p>
+<p>设置 broker 和 result_backend 的地址：</p>
+<ul>
+<li>redis无密码配置</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.conf.update(</span><br><span class="line">    broker_url = <span class="string">&#x27;redis://localhost:6379/0&#x27;</span></span><br><span class="line">    result_backend = <span class="string">&#x27;redis://localhost:6379/1&#x27;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>redis含密码配置</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">app.conf.update(</span><br><span class="line">    broker_url = <span class="string">&#x27;redis://:123456@localhost:6380/0&#x27;</span></span><br><span class="line">    result_backend = <span class="string">&#x27;redis://:123456@localhost:6380/1&#x27;</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h1 id="task和task的调用"><a href="#task和task的调用" class="headerlink" title="task和task的调用"></a>task和task的调用</h1><p>简单的定义方式，使用@app.task作为装饰器</p>
+<p>在Django中使用celery，需要定义一个异步任务或者周期定时任务，可以使用@shared_task装饰器</p>
+<p>如果存在celery的任务和其他的装饰器一起联用，要将celery的装饰器放在最后，也就是列表的最前面</p>
+<h2 id="task名称的定义"><a href="#task名称的定义" class="headerlink" title="task名称的定义"></a>task名称的定义</h2><p>每个task的名称都是唯一的，如果我们在定义的时候，没有进行指定，系统会默认的给出一个名称，</p>
+<h2 id="日志记录方式"><a href="#日志记录方式" class="headerlink" title="日志记录方式"></a>日志记录方式</h2><ul>
+<li>在启动worker的时候指定日志的输出</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">celery -A proj worker -l INFO --logfile=path/celery.log</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在tasks中定义可以使用celery提供的日志记录方式</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> celery.utils.log <span class="keyword">import</span> get_task_logger</span><br><span class="line"></span><br><span class="line">logger = get_task_logger(__name__)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>直接使用logging模块</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> logging</span><br><span class="line"></span><br><span class="line">logger1 = logging.getLogger(__name__)</span><br></pre></td></tr></table></figure>
+
+<h2 id="任务重试-使用retry参数"><a href="#任务重试-使用retry参数" class="headerlink" title="任务重试-使用retry参数"></a>任务重试-使用retry参数</h2><ul>
+<li><p>对于一个task，可以设置retry参数，来指定其在任务执行失败后会重试几次，以及每次重试间隔的时长。任务重试的参数，可以在@app.task这个装饰器中定义</p>
+</li>
+<li><p>参数的含义：</p>
+<ul>
+<li><p>autoretry_for 表示的是某种报错情况下重试，使用 Exception 表示任何错误都重试，如果设置其他exception的情况下重试，设置为对应的exception即可</p>
+</li>
+<li><p>default_retry_delay 表示重试间隔时长，默认值是 3 * 60s，即三分钟，是以秒为单位</p>
+</li>
+<li><p>retry_kwargs 是一个 dict，可以通过其中的max_retries 参数，设置最大重试次数</p>
+</li>
+<li><p>countdown：指定延时的时间，</p>
+</li>
+<li><p>eta：指定任务开始的时间。</p>
+</li>
+<li><p>expires：设置过期参数。</p>
+</li>
+<li><p>其他参数：<strong>retry_backoff 和 retry_backoff_max</strong></p>
+<ul>
+<li>应用场景：你的task依赖其他的service服务，例如调用其他系统的api，使用这两个参数可以避免请求占用过多的服务。</li>
+<li>参数含义：<ul>
+<li>retry_backoff：参数值如果设置为True，则task重试的时间间隔成倍增长，第一次重试是 1 s后 第二次是 2s 后 第三次是 4s 后 第四次是 8s 后 ；如果设置为数字，则每次重试的时间间隔则以数字的倍数增长，例如设置为3：第一次重试 3s 后 第二次是 6s 后 第三次是 12s 后 第四次是 24s 后</li>
+<li>retry_backoff_max 是重试的最大的间隔时间，默认600s，比如重试次数设置的很大，retry_backoff 的间隔时间重复达到了这个值之后就不再增大了</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>注意：直接运行delay方法，得出的时间间隔是不一定的，实在0到最大值之间的一个随机值。</p>
+<ul>
+<li><p>原因：因为还有一个 retry_jitter 参数，这个参数默认是 True，所以时间间隔会是一个随机值。</p>
+<p>如果需要任务延时的间隔值是按照 retry_backoff 和 retry_backoff_max 两个设定值来运行，那么则需要将 retry_jitter 值设为 False</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="忽略任务的执行结果"><a href="#忽略任务的执行结果" class="headerlink" title="忽略任务的执行结果"></a>忽略任务的执行结果</h2><p>不想保存任务执行的结果，但是又设置了result_backend 参数，可以使用一下几种方式：</p>
+<ul>
+<li>在使用@app.task装饰器时设置ignore_result参数为True，从而达到不保存任务结果的目的</li>
+<li>使用app.conf的配置中禁用task运行结果的保存,app.conf.update中设置task_ignore_result参数为True</li>
+<li>在执行单个任务是禁用</li>
+</ul>
+<h2 id="tasks的调用方法"><a href="#tasks的调用方法" class="headerlink" title="tasks的调用方法"></a>tasks的调用方法</h2><p> **delay()**，纯粹的异步任务，不能携带celery的运行参数，只能携带异步任务调用的函数执行时需要的方法</p>
+<p><strong>apply_async()<strong>，带参数的执行方式，出调用函数时需要使用的参数，还可以携带celery执行时使用的参数，指定任务执行时的延时时长：</strong>apply_async()</strong></p>
+<h2 id="task运行结果的查看"><a href="#task运行结果的查看" class="headerlink" title="task运行结果的查看"></a>task运行结果的查看</h2><p>task运行的结果可以保存在redis中和数据库中。</p>
+<p>在Redis中查看task的运行结果：</p>
+<p>setting配置（无密码形式）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELERY_RESULT_BACKEND = <span class="string">&quot;redis://localhost/1&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>是将 task 的运行结果保存在 redis 的第二个数据库</p>
+<p><img src="/2022/10/16/celery/image-20221016235845215.png" alt="image-20221016235845215"></p>
+<p>所有 task 运行的结果都会被冠以 <code>celery-task-meta-</code> 前缀，后面加上的是 task_id。</p>
+<h1 id="worker相关"><a href="#worker相关" class="headerlink" title="worker相关"></a>worker相关</h1><h2 id="启动方式"><a href="#启动方式" class="headerlink" title="启动方式"></a>启动方式</h2><p>命令启动，在celery配置文件的上遗迹目录执行一下命令：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">celery -A test worker -l INFO</span><br></pre></td></tr></table></figure>
+
+<p>其中，-l表示输出日志的等级，相当于 –loglevel=INFO</p>
+<p>其他可以指定的参数：</p>
+<ul>
+<li>使用-n指定worker的hostname，三个参数值：%h 表示主机名，包含域名在内，%n 表示仅包含主机名，%d 表示仅包含域名</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>变量</th>
+<th>示例</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>%h</td>
+<td>worker1@%h</td>
+<td><a href="mailto:&#119;&#111;&#114;&#107;&#x65;&#x72;&#x31;&#x40;&#x63;&#x65;&#108;&#101;&#114;&#121;&#x2e;&#x65;&#x78;&#97;&#109;&#x70;&#x6c;&#101;&#46;&#x63;&#111;&#109;">&#119;&#111;&#114;&#107;&#x65;&#x72;&#x31;&#x40;&#x63;&#x65;&#108;&#101;&#114;&#121;&#x2e;&#x65;&#x78;&#97;&#109;&#x70;&#x6c;&#101;&#46;&#x63;&#111;&#109;</a></td>
+</tr>
+<tr>
+<td>%n</td>
+<td>worker1@%n</td>
+<td>worker1@celery</td>
+</tr>
+<tr>
+<td>%d</td>
+<td>worker1@%d</td>
+<td><a href="mailto:&#119;&#111;&#x72;&#x6b;&#x65;&#x72;&#x31;&#x40;&#101;&#120;&#x61;&#109;&#112;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#109;">&#119;&#111;&#x72;&#x6b;&#x65;&#x72;&#x31;&#x40;&#101;&#120;&#x61;&#109;&#112;&#x6c;&#x65;&#x2e;&#x63;&#x6f;&#109;</a></td>
+</tr>
+</tbody></table>
+<ul>
+<li>使用logfile 参数指定日志文件地址（–logfile=path/celery.log）</li>
+<li>指定worker启动时的数量，如果不指定，启动的worker进程数等于cpu的数量，可以使用 concurrency 参数来指定启动 worker 的进程数，可以将–concurrency 简为 -c:</li>
+</ul>
+<h2 id="指定worker队列"><a href="#指定worker队列" class="headerlink" title="指定worker队列"></a>指定worker队列</h2><p>可以在运行 worker 的时候指定 worker 只消费特定队列的 task，这个特定队列，可以是一个，也可以是多个，用逗号分隔开。</p>
+<h3 id="应用场景："><a href="#应用场景：" class="headerlink" title="应用场景："></a>应用场景：</h3><p>我们只有一个 worker 处理 task，每个  task 需要处理的时间很长，因为 worker 被占用，这样在我们的任务队列里就会积压很多的 task。</p>
+<p>有一些需要即时处理的任务则会被推迟处理，这样的情况下，我们理想的设计是设置多个 worker，多个 worker 分别处理指定队列的 task。</p>
+<h1 id="celery的定时任务"><a href="#celery的定时任务" class="headerlink" title="celery的定时任务"></a>celery的定时任务</h1><p>定时任务的定义是我们通过 app.conf.beat_schedule 来操作，一个任务我们定义一个 name 作为 key</p>
+<p>在每个 task 下，分别有以下选项：</p>
+<p><strong>task</strong>：指向我们定义的任务，需要定时执行的函数的路径</p>
+<p><strong>schedule</strong>：定时任务的策略，可以定义为一个整数，也可以通过crontab()函数则自由的定义到每个月，每周，每天，每时每秒</p>
+<p><strong>args</strong>：定时任务的参数，执行函数时需要传入的参数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> celery.schedules <span class="keyword">import</span> crontab</span><br><span class="line"></span><br><span class="line">app.conf.beat_schedule = &#123;</span><br><span class="line">    <span class="string">&#x27;add-every-30-seconds&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;task&#x27;</span>: <span class="string">&#x27;blog.tasks.add&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;schedule&#x27;</span>: <span class="number">30</span>,</span><br><span class="line">        <span class="string">&#x27;args&#x27;</span>: (<span class="number">16</span>, <span class="number">16</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&#x27;schedule_test_add&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;task&#x27;</span>: <span class="string">&#x27;blog.tasks.minus&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;schedule&#x27;</span>: crontab(minute=<span class="string">&quot;50&quot;</span>, hour=<span class="string">&quot;23&quot;</span>),</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>运行定时任务，需要额外启动两个服务，一个时beat，一个是worker</p>
+<p>一般来说我们会先启动 worker，再启动 beat，这样 beat 有一些立即发出的任务就可以直接被 worker 接收然后运行。</p>
+<h2 id="corntab介绍"><a href="#corntab介绍" class="headerlink" title="corntab介绍"></a>corntab介绍</h2><p>在 celery 里，crontab 函数通过 from celery.schedules import crontab 引入，在 beat_schedule 的定义里作为 schedule 的值</p>
+<p>crontab 的五个参数：</p>
+<ul>
+<li>minute 表示分钟，接收整数或者整数列表，范围在0-59，或者字符串表示配置的时间模式</li>
+<li>hour 表示小时，接收整数或者整数列表，范围在0-23，或者接收字符串表示配置的时间模式</li>
+<li>day_of_week 表示周几，接收整数或者整数列表，范围在0-6，其中周日是0，周六是6，或者接收字符串表示配置的时间模式</li>
+<li>day_of_month 表示一个月的第几天，接收整数或者整数列表，范围在1-31，或者接收字符串表示配置的时间模式</li>
+<li>month_of_year 表示一年的第几个月，接收整数或者整数列表，范围在1-12，或者接收字符串表示配置的时间模式</li>
+</ul>
+<h3 id="注意和例子"><a href="#注意和例子" class="headerlink" title="注意和例子"></a>注意和例子</h3><ul>
+<li><p>minute 和 hour 直接指向一天的某个时间点，所以，这两个参数相当于是必填，除非是某些特殊的情况，比如默认的每分钟执行一次：</p>
+<ul>
+<li><p>```python<br>crontab()</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 特定时间点执行 - 每天晚上11点11分执行</span><br><span class="line"></span><br><span class="line">  - ```python</span><br><span class="line">    crontab(minute=11, hour=23)</span><br></pre></td></tr></table></figure></li>
+<li><p>minute传入多个参数，表示在23点10分，23点20分，23点30分各执行一次</p>
+</li>
+<li><p>```python<br>crontab(minute=”10,20,30”, hour=23)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 执行时间有特殊关系的，</span><br><span class="line"></span><br><span class="line">  - 表示在23点内，每5分钟执行一次</span><br><span class="line"></span><br><span class="line">  - ```python</span><br><span class="line">    crontab(minute=&quot;*/5&quot;, hour=23)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>表示在23点30置40每分钟执行一次，</p>
+</li>
+<li><p>```python<br>crontab(minute=”30-40”, hour=23)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">- 多种组合，在23点的第5分钟，11分钟，51分钟，31-40分钟，并且每隔两分钟执行一次</span><br><span class="line"></span><br><span class="line">- ```python</span><br><span class="line">  crontab(minute=&quot;5,11,51,10-20,*/2&quot;, hour=23)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>对于分钟的这些操作，对于小时数是同样生效的</p>
+</li>
+</ul>
+</li>
+<li><p><strong>day_of_week</strong> 参数表示周几，当我们使用这个参数的时候，minute 和 hour 参数是同样生效的，当我们不指定这个参数的时候，即为每天，只有指定了这个参数的时候，定义的周几才会生效，</p>
+</li>
+<li><p><strong>day_of_month</strong>表示一个月的第几天，范围是1-31。</p>
+</li>
+<li><p><strong>month_of_year</strong>表示一年的某几个月，范围是1-12。</p>
+</li>
+</ul>
+<p>周和年，范围比较小，建议直接定义。</p>
+<h1 id="在Django中使用celery"><a href="#在Django中使用celery" class="headerlink" title="在Django中使用celery"></a>在Django中使用celery</h1><p>创建Django项目，新建celery.py引入celery的配置，并在Django的settings文件中，完善相关配置，在init.py文件中引入celery_app，</p>
+<p>基本使用模板</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># test/test/celery.py</span></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line"></span><br><span class="line"><span class="comment"># 为 celery 程序设置默认的 Django 配置</span></span><br><span class="line">os.environ.setdefault(<span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>, <span class="string">&#x27;test.settings&#x27;</span>)</span><br><span class="line"></span><br><span class="line">app = Celery(<span class="string">&#x27;test&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 表示从 Django 的配置中加载 celery 的配置，namespace=&#x27;CELERY&#x27; 表示 celery 的配置必须是以 &#x27;CELERY&#x27; 为前缀</span></span><br><span class="line">app.config_from_object(<span class="string">&#x27;django.conf:settings&#x27;</span>, namespace=<span class="string">&#x27;CELERY&#x27;</span>)</span><br><span class="line"></span><br><span class="line">app.conf.update(</span><br><span class="line">    task_ignore_result=<span class="literal">True</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 我们需要设置的定时任务 或者 延时任务都可以在对应的 application 下定义，task 的定义我们在下面介绍</span></span><br><span class="line"><span class="comment"># 然后通过下面的命令自动发现对应的任务</span></span><br><span class="line"><span class="comment"># 比如想要在 blog 下设置一个延时任务，可以创建 blog/tasks.py，然后 celery 就可以自己发现对应的任务</span></span><br><span class="line">app.autodiscover_tasks()</span><br></pre></td></tr></table></figure>
+
+<p>settings.py配置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CELERY_ENABLE_UTC = <span class="literal">False</span></span><br><span class="line">CELERY_TIMEZONE = <span class="string">&quot;Asia/Shanghai&quot;</span></span><br><span class="line">CELERY_BROKER_URL = <span class="string">&quot;redis://localhost/0&quot;</span></span><br><span class="line">CELERY_RESULT_BACKEND = <span class="string">&quot;redis://localhost/1&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>其中，所有的关于 celery 的配置都需要加上 CELERY_ 的前缀，参数值的定义和在配置文件中定义的方式一致</p>
+<p>在init.py中进行配置</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># hunter/hunter/__init__.py</span></span><br><span class="line"><span class="keyword">from</span> .celery <span class="keyword">import</span> app <span class="keyword">as</span> celery_app</span><br><span class="line"></span><br><span class="line">__all__ = (<span class="string">&#x27;celery_app&#x27;</span>,)</span><br></pre></td></tr></table></figure>
+
+<p>为了确保 celery 的 app 在 Django 运行的时候被加载，这样，每个 application 下的 tasks.py 中被 @shared_task 修饰的延时或定时任务就可以使用了。</p>
+<p>在Django中使用celery，需要使用的装饰器是：@shared_task，需要注意装饰器的使用顺序</p>
+<h1 id="使用Django数据库操作celery定时任务"><a href="#使用Django数据库操作celery定时任务" class="headerlink" title="使用Django数据库操作celery定时任务"></a>使用Django数据库操作celery定时任务</h1><p>使用django数据库操作celery定时任务，将定时任务写入数据库，通过对数据库的增删改查操作，灵活的管理定时任务。</p>
+<p>需要安装django-celery-beat，并创建相关的数据库，在此过程中注意完善settings文件的相关配置，并且在启动beat时还需要声明将数据存储在数据库中，两种方式</p>
+<ul>
+<li>在启动命令中声明</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">celery -A test beat -l INFO --scheduler django_celery_beat.schedulers:DatabaseScheduler</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>在配置文件中声明，然后直接进行启动操作。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.conf.beat_scheduler = <span class="string">&#x27;django_celery_beat.schedulers:DatabaseScheduler&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>在DJango中使用数据库，保存celery的定时任务的相关表</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">django_celery_beat_clockedschedule</span><br><span class="line">django_celery_beat_crontabschedule</span><br><span class="line">django_celery_beat_intervalschedule</span><br><span class="line">django_celery_beat_solarschedule</span><br><span class="line">django_celery_beat_periodictask</span><br><span class="line">django_celery_beat_periodictasks</span><br></pre></td></tr></table></figure>
+
+<p>简介：</p>
+<ul>
+<li><p><strong>django_celery_beat_crontabschedule</strong>：任务周期表</p>
+<ul>
+<li>执行 celery 的 beat 后，会在该表新增一条数据，表的字段就是我们设置的 crontab() 里的值，包括 minute，hour，day_of_week，day_off_month，month_of_year 和 timezone（时区）。</li>
+</ul>
+</li>
+<li><p><strong>django_celery_beat_intervalschedule</strong>：定义任务执行间隔的表</p>
+<ul>
+<li><p>该表只有 id， every 和 period 字段，every 表示的是时间的间隔，填写的数字，period 则是单位</p>
+<ul>
+<li>period的可选参数如下：</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>microseconds</td>
+<td>毫秒</td>
+</tr>
+<tr>
+<td>seconds</td>
+<td>秒</td>
+</tr>
+<tr>
+<td>minutes</td>
+<td>分钟</td>
+</tr>
+<tr>
+<td>hours</td>
+<td>小时</td>
+</tr>
+<tr>
+<td>days：</td>
+<td></td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+</li>
+<li><p><strong>django_celery_beat_intervalschedule</strong>：保存系统上一次执行定时任务的时间</p>
+</li>
+</ul>
+<h2 id="使用django数据库保存task执行的结果"><a href="#使用django数据库保存task执行的结果" class="headerlink" title="使用django数据库保存task执行的结果"></a>使用django数据库保存task执行的结果</h2><p>安装django-celery-results，并在settings中完成配置，执行migrate 命令，创建相应的表，命令执行完毕后，后会新增如下数据库</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">django_celery_results_chordcounter</span><br><span class="line">django_celery_results_groupresult</span><br><span class="line">django_celery_results_taskresult</span><br></pre></td></tr></table></figure>
+
+<p>修改settings中的配置，</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CELERY_RESULT_BACKEND = <span class="string">&#x27;django-db&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>task 的结果都会存储在 django_celery_results_taskresult 表</p>
+<h1 id="错误："><a href="#错误：" class="headerlink" title="错误："></a>错误：</h1><p>1、win10运行是错误及解决方案</p>
+<p>celery -A tasks worker -l INFO正常启动，但是执行任务报错</p>
+<p><img src="/2022/10/16/celery/image-20221016000217554.png" alt="image-20221016000217554"></p>
+<p>解决：安装eventlet</p>
+<p><img src="/2022/10/16/celery/image-20221016000256357.png" alt="image-20221016000256357"></p>
+
+        </div>
+        <footer class="article-footer">
+            
+
+
+
+    <a data-url="http://example.com/2022/10/16/celery/" data-id="clcxd01qv0027s0vo9l7ibxao" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+<script>
+    (function ($) {
+        $('body').on('click', function() {
+            $('.article-share-box.on').removeClass('on');
+        }).on('click', '.article-share-link', function(e) {
+            e.stopPropagation();
+
+            var $this = $(this),
+                url = $this.attr('data-url'),
+                encodedUrl = encodeURIComponent(url),
+                id = 'article-share-box-' + $this.attr('data-id'),
+                offset = $this.offset(),
+                box;
+
+            if ($('#' + id).length) {
+                box = $('#' + id);
+
+                if (box.hasClass('on')){
+                    box.removeClass('on');
+                    return;
+                }
+            } else {
+                var html = [
+                    '<div id="' + id + '" class="article-share-box">',
+                        '<input class="article-share-input" value="' + url + '">',
+                        '<div class="article-share-links">',
+                            '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+                            '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+                            '<a href="http://pinterest.com/pin/create/button/?url=' + encodedUrl + '" class="article-share-pinterest" target="_blank" title="Pinterest"></a>',
+                            '<a href="https://plus.google.com/share?url=' + encodedUrl + '" class="article-share-google" target="_blank" title="Google+"></a>',
+                        '</div>',
+                    '</div>'
+                ].join('');
+
+              box = $(html);
+
+              $('body').append(box);
+            }
+
+            $('.article-share-box.on').hide();
+
+            box.css({
+                top: offset.top + 25,
+                left: offset.left
+            }).addClass('on');
+
+        }).on('click', '.article-share-box', function (e) {
+            e.stopPropagation();
+        }).on('click', '.article-share-box-input', function () {
+            $(this).select();
+        }).on('click', '.article-share-box-link', function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            window.open(this.href, 'article-share-box-window-' + Date.now(), 'width=500,height=450');
+        });
+    })(jQuery);
+</script>
+
+        </footer>
+    </div>
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "author": {
+            "@type": "Person",
+            "name": "Wumeng"
+        },
+        "headline": "celery",
+        "image": "http://example.com/2022/10/16/celery/image-20221017001220952.png",
+        "keywords": "python",
+        "genre": "项目",
+        "datePublished": "2022-10-16",
+        "dateCreated": "2022-10-16",
+        "dateModified": "2023-01-15",
+        "url": "http://example.com/2022/10/16/celery/",
+        "description": "介绍简介组成celery的组成主要包括一下部分：tasks，broker，worker，result_backend，beat
+
+tasks：这个任务就是我们前面举的例子的异步任务或者是定时任务，即为 task，我们可以定义这些任务，然后发送到 broker
+broker：broker 可以理解成消息中间件，用于获取异步或者定时任务，形成一个或多个消息队列，然后发送给 worker 处理这些消息
+",
+        "wordCount": 1210
+    }
+</script>
+
+</article>
+
+    <section id="comments">
+    
+        
+    <div id="disqus_thread">
+        <noscript>Please enable JavaScript to view the <a target="_blank" rel="noopener" href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    </div>
+
+
+    
+    </section>
+
+
+
+                        </div>
+                    </section>
+                    <aside id="sidebar">
+    <a class="sidebar-toggle" title="Expand Sidebar"><i class="toggle icon"></i></a>
+    <div class="sidebar-top">
+        <p>关注我 :</p>
+        <ul class="social-links">
+            
+                
+                <li>
+                    <a class="social-tooltip" title="twitter" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-twitter"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="facebook" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-facebook"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="stack-overflow" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-stack-overflow"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="github" href="https://github.com/ppoffice/hexo-theme-hueman" target="_blank" rel="noopener">
+                        <i class="icon fa fa-github"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="weibo" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-weibo"></i>
+                    </a>
+                </li>
+                
+            
+                
+                <li>
+                    <a class="social-tooltip" title="rss" href="/" target="_blank" rel="noopener">
+                        <i class="icon fa fa-rss"></i>
+                    </a>
+                </li>
+                
+            
+        </ul>
+    </div>
+    
+        
+<nav id="article-nav">
+    
+        <a href="/2023/01/15/K8s%E5%85%A5%E9%97%A8/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            K8s入门
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
+    
+        <a href="/2022/09/28/python/" id="article-nav-older" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">上一篇</strong>
+        <p class="article-nav-title">python</p>
+        <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
+        </a>
+    
+</nav>
+
+    
+    <div class="widgets-container">
+        
+            
+                
+
+            
+                
+    <div class="widget-wrap">
+        <h3 class="widget-title">最新文章</h3>
+        <div class="widget">
+            <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/01/15/K8s%E5%85%A5%E9%97%A8/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230115191414258.png)" alt="K8s入门" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a></p>
+                            <p class="item-title"><a href="/2023/01/15/K8s%E5%85%A5%E9%97%A8/" class="title">K8s入门</a></p>
+                            <p class="item-date"><time datetime="2023-01-15T11:07:55.000Z" itemprop="datePublished">2023-01-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/10/16/celery/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/10/16/celery/image-20221017001220952.png)" alt="celery" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
+                            <p class="item-title"><a href="/2022/10/16/celery/" class="title">celery</a></p>
+                            <p class="item-date"><time datetime="2022-10-15T16:00:51.000Z" itemprop="datePublished">2022-10-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/09/28/python/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/09/28/python/image-20221006233057915.png)" alt="python" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></p>
+                            <p class="item-title"><a href="/2022/09/28/python/" class="title">python</a></p>
+                            <p class="item-date"><time datetime="2022-09-28T15:37:49.000Z" itemprop="datePublished">2022-09-28</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/09/10/linux-0/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/09/10/linux-0/image-20220913232737594.png)" alt="linux" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2022/09/10/linux-0/" class="title">linux</a></p>
+                            <p class="item-date"><time datetime="2022-09-10T14:00:20.000Z" itemprop="datePublished">2022-09-10</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2022/08/27/ubuntu/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2022/08/27/ubuntu/image-20220828204937289.png)" alt="ubuntu" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></p>
+                            <p class="item-title"><a href="/2022/08/27/ubuntu/" class="title">ubuntu</a></p>
+                            <p class="item-date"><time datetime="2022-08-27T08:14:00.000Z" itemprop="datePublished">2022-08-27</time></p>
+                        </div>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">分类</h3>
+        <div class="widget">
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">归档</h3>
+        <div class="widget">
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">标签</h3>
+        <div class="widget">
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/" rel="tag">K8s</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/" rel="tag">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag">环境搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-float">
+        <h3 class="widget-title">标签云</h3>
+        <div class="widget tagcloud">
+            <a href="/tags/Django/" style="font-size: 20px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/K8s/" style="font-size: 10px;">K8s</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 20px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 20px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" style="font-size: 10px;">环境搭建</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+        </div>
+    </div>
+
+
+            
+                
+    <div class="widget-wrap widget-list">
+        <h3 class="widget-title">链接</h3>
+        <div class="widget">
+            <ul>
+                
+                    <li>
+                        <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a>
+                    </li>
+                
+            </ul>
+        </div>
+    </div>
+
+
+            
+        
+    </div>
+</aside>
+
+                </div>
+            </div>
+        </div>
+        <footer id="footer">
+    <div class="container">
+        <div class="container-inner">
+            <a id="back-to-top" href="javascript:;"><i class="icon fa fa-angle-up"></i></a>
+            <div class="credit">
+                <h1 class="logo-wrap">
+                    <a href="/" class="logo"></a>
+                </h1>
+                <p>&copy; 2023 Wumeng</p>
+                
+                <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
+                
+            </div>
+            <div class="parent">
+                <div class="child">
+                  <span id="busuanzi_container_site_pv">
+                    访问量<span id="busuanzi_value_site_pv"></span>次
+                  </span>
+                  <span class="post-meta-divider">|</span>
+                  <span id="busuanzi_container_site_uv" style='display:none'>
+                    访客数<span id="busuanzi_value_site_uv"></span>人
+                  </span>
+                  <script async="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+                </div>
+              </div>              
+            <div class="footer-plugins">
+              
+    
+
+
+            </div>
+        </div>
+    </div>
+    <style>
+        .parent {
+          position: relative;
+        }
+        .child {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+        }
+      </style>
+      
+</footer>
+
+    </div>
+    
+    
+    <script>
+    var disqus_shortname = 'hexo-theme-hueman';
+    
+    
+    var disqus_url = 'http://example.com/2022/10/16/celery/';
+    
+    (function() {
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+    </script>
+
+
+
+
+
+    
+        
+<script src="/libs/lightgallery/js/lightgallery.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-thumbnail.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-pager.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-autoplay.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-fullscreen.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-zoom.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-hash.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-share.min.js"></script>
+
+        
+<script src="/libs/lightgallery/js/lg-video.min.js"></script>
+
+    
+    
+        
+<script src="/libs/justified-gallery/jquery.justifiedGallery.min.js"></script>
+
+    
+    
+
+    
+    
+    
+
+
+
+<!-- Custom Scripts -->
+
+<script src="/js/main.js"></script>
+
+
+</body>
+</html>
