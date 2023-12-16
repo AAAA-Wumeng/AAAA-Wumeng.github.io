@@ -21,7 +21,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230115191414258.png">
 <meta property="article:published_time" content="2023-01-15T11:07:55.000Z">
-<meta property="article:modified_time" content="2023-01-15T12:28:37.118Z">
+<meta property="article:modified_time" content="2023-09-19T14:56:17.399Z">
 <meta property="article:author" content="Wumeng">
 <meta property="article:tag" content="K8s">
 <meta name="twitter:card" content="summary">
@@ -90,7 +90,7 @@
                                     <a class="main-nav-list-link" href="/">主页</a>
                                 </li>
                             
-                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/python/">python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/">安全设备</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
                                 
                                 <li class="main-nav-list-item" >
                                     <a class="main-nav-list-link" href="/about/index.html">关于</a>
@@ -187,7 +187,7 @@
 <div class="article-date">
   <i class="fa fa-calendar-plus-o"></i>
   <a href="/2023/01/15/K8s%E5%85%A5%E9%97%A8/" class="article-date">
-     <time datetime="2023-01-15T12:28:37.118Z" itemprop="dateModified">2023-01-15</time>
+     <time datetime="2023-09-19T14:56:17.399Z" itemprop="dateModified">2023-09-19</time>
   </a>
 </div>
 
@@ -240,7 +240,297 @@
 </ul>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
 
-<h3 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h3><p>Docker的版本类型</p>
+<h3 id="docker安装"><a href="#docker安装" class="headerlink" title="docker安装"></a>docker安装</h3><p>Docker的版本类型Docker Desktop和Docker Engine，这里使用的是Docker Engine</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt install -y docker.io</span><br></pre></td></tr></table></figure>
+
+<p>启动docker服务</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo service docker start #启动docker服务</span><br><span class="line">sudo usermod -aG docker $&#123;USER&#125; #当前用户加入docker组</span><br></pre></td></tr></table></figure>
+
+<p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Y3_flybird/article/details/126696573">https://blog.csdn.net/Y3_flybird/article/details/126696573</a></p>
+<p>验证</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker version</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230115222622799.png" alt="image-20230115222622799"></p>
+<p>修改docker的镜像源</p>
+<p>参考连接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/Madness_stone/article/details/127907675">https://blog.csdn.net/Madness_stone/article/details/127907675</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cristianoxm/article/details/104923157">https://blog.csdn.net/cristianoxm/article/details/104923157</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> vi /etc/docker/daemon.json</span></span><br><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [&quot;https://docker.mirrors.ustc.edu.cn&quot;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull busybox      #拉取busybox镜像</span><br></pre></td></tr></table></figure>
+
+<p>重要概念：</p>
+<p>构建上下文（context），就是要打包进镜像的文件所在的目录，</p>
+<p>指令生成层：只有RUN、COPY、ADD会产生新的镜像层，其他指令只会产生临时层，不会影响到构建镜像的大小。</p>
+<p>Dockerfile的注释必须是单独的一行，不能在行尾</p>
+<p>镜像分层的好处：重复使用未被修改的layer，每次打包镜像，只需要重新构建被改动的部分</p>
+<p>harbor是一个镜像仓库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker save将镜像导出成压缩包</span><br><span class="line">docker load从压缩包导入Docker</span><br></pre></td></tr></table></figure>
+
+<p>docker的三种网络模式</p>
+<p>null、host、bridge</p>
+<p>null：最简单的模式，也就是没有网络，但是允许其他的网络插件来自定义网络</p>
+<p>host：直接使用宿主机的网络，相当于去掉了容器的网络隔离（其他隔离依然保留）所有的容器会共享宿主机的IP地址和网卡。优点：没有中间层，通信的效率高；缺点：缺少隔离，运行太多的容器也容易导致端口冲突【host模式，需要在docker run时使用参数，–net=host】</p>
+<p>bridge：桥接模式，类似现实世界的交换机、路由器，是由软件虚拟出来的，然后容器和宿主机再通过虚拟网卡来接入这个网桥，与host模式相比bridge多了虚拟网卡和网桥，通信的效率会低一些。【bridge模式可以使用–net=bridge模式来指定，因为Docker默认的网络模式是bridge】</p>
+<h1 id="本机搭建Kubernetes环境"><a href="#本机搭建Kubernetes环境" class="headerlink" title="本机搭建Kubernetes环境"></a>本机搭建Kubernetes环境</h1><p>两种工具：kind和minikube</p>
+<p>安装minikube的命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">curl -LO https://github.com/kubernetes/minikube/releases/download/v1.25.2/minikube-linux-amd64</span><br><span class="line"></span><br><span class="line">sudo install minikube-linux-amd64 /usr/local/bin/minikube</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">minikube start --kubernetes-version=v1.23.9 --image-mirror-country=&#x27;cn&#x27; --registry-mirror=https://twm4fpgj.mirror.aliyuncs.com</span><br></pre></td></tr></table></figure>
+
+<p>安装完成后，查看版本号信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube version</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230326162520433.png" alt="image-20230326162520433"> </p>
+<p>关机后重启集群</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube start</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230409140118015.png" alt="image-20230409140118015"></p>
+<p>查看集群状态</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230409140140502.png" alt="image-20230409140140502"></p>
+<p>Kubernetes是一个生产级别的容器编排平台和集群管理系统，能够创建、调度容器，监控管理服务器</p>
+<h1 id="Kubernetes的基本架构"><a href="#Kubernetes的基本架构" class="headerlink" title="Kubernetes的基本架构"></a>Kubernetes的基本架构</h1><p>kubernetes可以说是一个集群级别的操作系统，主要功能就是资源管理和作业调度。</p>
+<h4 id="kubernetes架构"><a href="#kubernetes架构" class="headerlink" title="kubernetes架构"></a>kubernetes架构</h4><p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230326154131029.png" alt="image-20230326154131029"></p>
+<p>架构类型：控制面/数据面（Control Plane/Data Plane）架构，集群中的计算机被称为节点，可以是实体机，也可以是虚拟机。少量的节点用作控制面来执行集群的管理维护工作，其他大部分节点都被划归数据面，用来跑业务应用。</p>
+<p>控制面的几点在Kubernetes里叫做Master Node，一般简称Master，是整个集群中最重要的部分，可以说是Kubernetes的大脑和心脏</p>
+<p>数据面的节点叫做Worker Node，一般简称Worker或者node，相当于Kubernetes的手和脚，在Master的指挥下干活</p>
+<p>Node的数量非常多，构成一个资源池，Kubeenetes就在这个池里分配资源，调度应用，因为资源被”池化”了，所以管理就变得比较简单，可以在集群中任意添加或删除节点</p>
+<p>查看节点状态的命令</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get node </span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230326164821354.png" alt="image-20230326164821354"></p>
+<p>解释：当前的minikube集群中只有一个Master，没有Node</p>
+<p>这是因为Master和Node的划分不是绝对的，当集群的规模较小，工作负载较少时，Maste节点可以承担Node的工作</p>
+<p>Kubernetes的节点内部也具有复杂的结构，是由很多的模块构成，这些模块可以分为组件（Component）和插件（Addon）两类。</p>
+<p>组件实现Kubernetes的核心功能，没有这些组件Kubernetes就无法启动，插件则是Kubernetes的一些附加功能，属于锦上添花，不安装也不会影响Kubernetes正常运行。</p>
+<h3 id="Master里的组件"><a href="#Master里的组件" class="headerlink" title="Master里的组件"></a>Master里的组件</h3><p>4个</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230326165633753.png" alt="image-20230326165633753"></p>
+<ul>
+<li>apiserver<ul>
+<li> 是 Master 节点——同时也是整个 Kubernetes 系统的唯一入口，它对外公开了一系列的 RESTful API，并且加上了验证、授权等功能，所有其他组件都只能和它直接通信，可以说是 Kubernetes 里的联络员。</li>
+</ul>
+</li>
+<li>etcd<ul>
+<li>是一个高可用的分布式 Key-Value 数据库，用来持久化存储系统里的各种资源对象和状态，相当于 Kubernetes 里的配置管理员。注意它只与 apiserver 有直接联系，也就是说任何其他组件想要读写 etcd 里的数据都必须经过 apiserver。</li>
+</ul>
+</li>
+<li>scheduler<ul>
+<li>负责容器的编排工作，检查节点的资源状态，把 Pod 调度到最适合的节点上运行，相当于部署人员。因为节点状态和 Pod 信息都存储在 etcd 里，所以 scheduler 必须通过 apiserver 才能获得。</li>
+</ul>
+</li>
+<li>controller-manager<ul>
+<li>负责维护容器和节点等资源的状态，实现故障检测、服务迁移、应用伸缩等功能，相当于监控运维人员。同样地，它也必须通过 apiserver 获得存储在 etcd 里的信息，才能够实现对资源的各种操作。</li>
+</ul>
+</li>
+</ul>
+<p>这四个组件也都被容器化了，运行在pod集群中，可以使用kubectl来查看他们的状态</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl get pod -n kube-system</span><br></pre></td></tr></table></figure>
+
+<p>-n kube-system参数，表示检查”kube-system”名称空间里的pod</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230326173649465.png" alt="image-20230326173649465"></p>
+<h3 id="Node的组件"><a href="#Node的组件" class="headerlink" title="Node的组件"></a>Node的组件</h3><p>3个</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230326174209966.png" alt="image-20230326174209966"></p>
+<ul>
+<li>kubectl<ul>
+<li>kubelet 是 Node 的代理，负责管理 Node 相关的绝大部分操作，Node 上只有它能够与 apiserver 通信，实现状态报告、命令下发、启停容器等功能，相当于是 Node 上的一个“小管家”。</li>
+</ul>
+</li>
+<li>kube-proxy<ul>
+<li>kube-proxy 的作用有点特别，它是 Node 的网络代理，只负责管理容器的网络通信，简单来说就是为 Pod 转发 TCP/UDP 数据包，相当于是专职的“小邮差”。</li>
+</ul>
+</li>
+<li>container-runtime<ul>
+<li>是容器和镜像的实际使用者，在 kubelet 的指挥下创建容器，管理 Pod 的生命周期，是真正干活的“苦力”</li>
+</ul>
+</li>
+</ul>
+<p>这三个容器只有kube-proxy被容器化了，而kubelet因为必须要管理整个节点，容器化会限制它的能力，所以必须在container-runtime之外运行</p>
+<p>kubernetes的定位是容器编排平台，所以并没有限定container-runtime必须是docker，可以替换成任何复合标准的其他容器运行时。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">minikube ssh</span><br><span class="line">docker ps | grep kube=proxy</span><br><span class="line">ps -ef | grep kubelet</span><br></pre></td></tr></table></figure>
+
+<p>kubernetes工作的大致流程</p>
+<ul>
+<li>每个Node上的kubelet会定期向apiserver上报节点状态，apiserver再将节点状态保存到etcd中</li>
+<li>每个Node的kube-proxy实现了TCP/UDP的反向代理，让容器对外提供稳定的服务</li>
+<li>scheduler通过apiserver得到当前的节点状态，调度pod，然后apiserver下发命令给某个Node的Kubelet，kubelet调用container-runtime启动容器</li>
+<li>controller-manager也通过apiserver得到实时的节点状态，监控可能的异常情况，在使用相应的手段去调节恢复</li>
+</ul>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230326175553412.png" alt="image-20230326175553412"></p>
+<h3 id="插件"><a href="#插件" class="headerlink" title="插件"></a>插件</h3><p>查看当前系统上有那些插件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minikube addons list</span><br></pre></td></tr></table></figure>
+
+<p>常用的</p>
+<p>DNS和Dashboard</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/65d38ac50b4f2f1fd4b6700d5b8e7be1.jpg" alt="img"></p>
+<p>YAML基础语法</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/d4f3d4cc27a8a4a70d4898b41efebf04.jpg" alt="img"></p>
+<p>使用yaml来声明描述对象，再使用kubectl apply去发布yaml文件来创建对象</p>
+<p>使用explain来获取Kubernetes自带的api文档</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">kubectl explain pod</span><br><span class="line">kubectl explain pod.metadata</span><br><span class="line">kubectl explain pod.spec</span><br><span class="line">kubectl explain pod.spec.containers</span><br></pre></td></tr></table></figure>
+
+<p>使用特殊参数，生成样板文档</p>
+<p> kubectl 的两个特殊参数 –dry-run=client 和 -o yaml，前者是空运行，后者是生成 YAML 格式，结合起来使用就会让 kubectl 不会有实际的创建动作，而只生成 YAML 文件。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kubectl run ngx --image=nginx:alpine --dry-run=client -o yaml</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230326182646208.png" alt="image-20230326182646208"></p>
+<h1 id="Kubernetes的核心对象Pod"><a href="#Kubernetes的核心对象Pod" class="headerlink" title="Kubernetes的核心对象Pod"></a>Kubernetes的核心对象Pod</h1><p>Pod（豌豆荚）解决了多应用联合运行的问题，同时还不破坏容器的隔离。</p>
+<p>Kubernetes让Pod去编排处理容器，然后把Pod作为应用调度部署的最小单位</p>
+<p>以Pod为中心的Kubernetes资源对象关系图</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/b5a7003788cb6f2b1c5c4f6873a8b5cf.jpg" alt="img"></p>
+<p>Kubernetes资源都直接或间接地依附在Pod上，所有Kubernetes的功能都必须通过Pod来实现，所以Pod理所当然的成为Kubernetes的核心对象</p>
+<h2 id="使用YAML描述Pod"><a href="#使用YAML描述Pod" class="headerlink" title="使用YAML描述Pod"></a>使用YAML描述Pod</h2><p>Pod也是API对象，所以也就具有apiVersion、kind、metadata、spec这四个基本的组成部分。</p>
+<ul>
+<li>apiVersion和kind这两个字段比较简单，对于Pod来说分别是固定的值v1和Pod。一般来说metadata里面还有name和labels这两个字段，</li>
+<li>metadata：一般写上name和labels就足够了</li>
+<li>spec：需要管理维护Pod这个Kubernetes的基本调度单元，里面有非常多的关键信息<ul>
+<li>containers是一个数组，里面的每一个元素又是一个container对象，也就是容器。<ul>
+<li>和Pod一样，container对象必须要有一个name表示名字，然后还必须要有一个image字段来说明它使用的镜像，这两个字段是必须拥有的，否则Kubernetes会报告数据验证错误。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>注意：使用docker创建容器时，可以不给容器起名字，但是在Kubernetes中</p>
+<h2 id="Job和CronJob"><a href="#Job和CronJob" class="headerlink" title="Job和CronJob"></a>Job和CronJob</h2><p>Kubernetes使用的是RESTful API，把集群中的各个业务抽象为HTTP资源对象</p>
+<p>在Kubernetes中Job和CronJob组合了pod实现了对离线业务的处理</p>
+<p>Kubernetes中有两大类的业务，一类是在线业务【一旦运行起来基本不会停止，也就是永远在线】、一类是离线业务【一般不直接服务于外部用户，只对内部用户有意义，不会无期限的运行下去，有必定会推出的特点，离线业务在设置时，需要考虑运行超时、状态检查、失败重试、获取运行结果等】</p>
+<ul>
+<li>离线业务也可以分为两种：一种是<strong>临时任务</strong>，执行完成后结束，下次有需求后会再次安排；另一种是<strong>定时任务</strong>，可以按时按点周期运行，不需要过多的干预。</li>
+</ul>
+<p>在Kubernetes中，<strong>临时任务</strong>就是API对象Job，<strong>定时任务</strong>就是API对象CornJob。</p>
+<h2 id="Config和Secret"><a href="#Config和Secret" class="headerlink" title="Config和Secret"></a>Config和Secret</h2><p>Config和Secret是Kubernetes中专门用来管理配置信息的两种对象。</p>
+<h1 id="Centos版本"><a href="#Centos版本" class="headerlink" title="Centos版本"></a>Centos版本</h1><h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>设置阿里云的yum源：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br></pre></td></tr></table></figure>
+
+<p>安装yum的其他组件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2 wget</span><br></pre></td></tr></table></figure>
+
+<p>设置阿里云的Docker源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo -O /etc/yum.repos.d/docker-ce.repo</span><br></pre></td></tr></table></figure>
+
+<p>查看docker ce的版本信息</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list dcoker-ce</span><br></pre></td></tr></table></figure>
+
+<p>安装docker-ce</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install docker-ce</span><br></pre></td></tr></table></figure>
+
+<p>启动Docker，并设置开机启动</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl start docker</span><br><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
+
+<p>Docker安装mysql server</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /opt/mysql</span><br><span class="line">mkdir /opt/mysql/conf.d</span><br><span class="line">mkdir /opt/mysql/data/</span><br></pre></td></tr></table></figure>
+
+<p>mysql配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">user=mysql</span><br><span class="line">character-set-server=utf8</span><br><span class="line">default_authentication_plugin=mysql_native_password</span><br><span class="line">secure_file_priv=/var/lib/mysql</span><br><span class="line">expire_logs_days=7</span><br><span class="line">sql_mode=STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION</span><br><span class="line">max_connections=1000</span><br><span class="line"></span><br><span class="line">[client]</span><br><span class="line">default-character-set=utf8</span><br><span class="line"></span><br><span class="line">[mysql]</span><br><span class="line">default-character-set=utf8</span><br></pre></td></tr></table></figure>
+
+<p>运行镜像</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name mysql57 -p 3306:3306 -v /opt/mysql/data:/var/lib/mysql -v /opt/mysql/log:/var/log/mysql -v /opt/mysql/my.cnf:/etc/mysql/my.cnf:rw -e MYSQL_ROOT_PASSWORD=password -d mysql:5.7.30 --default-authentication-plugin=mysql_native_password</span><br></pre></td></tr></table></figure>
+
+<p>安装mysql客户端</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y mysql</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mysql -h127.0.0.1 -uroot -ppassword</span><br></pre></td></tr></table></figure>
+
+<p>创建数据库</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">CREATE</span> DATABASE IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> blogDB <span class="keyword">DEFAULT</span> CHARSET utf8 <span class="keyword">COLLATE</span> utf8_general_ci;</span><br></pre></td></tr></table></figure>
+
+<p>查看数据库创建结果</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> databases;</span><br></pre></td></tr></table></figure>
+
+<p>拉取课程源代码</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull https://git.imooc.com/coding-464/kubelog.git</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name  &quot;AAAA-Wumeng&quot;  </span><br><span class="line">git config --global user.email  &quot;1579415721@qq.com&quot;</span><br><span class="line">ssh-keygen -t rsa -C &quot;1579415721@qq.com&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Kubernetes之Docker必知必会"><a href="#Kubernetes之Docker必知必会" class="headerlink" title="Kubernetes之Docker必知必会"></a>Kubernetes之Docker必知必会</h2><p>Docker通过namespace实现进程隔离</p>
+<p>unshare命令 - 进入一个新的进程空间</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">unshare --fork --pid --mount-proc bash</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230423211131087.png" alt="image-20230423211131087"></p>
+<p>Docker打包上传kubeblog</p>
+<p>本机运行kubeblog</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --name kubeblog -d -p 5000:5000 --link mysql57 kubeblog:1.0</span><br></pre></td></tr></table></figure>
+
+<p>先确保本地的mysql已经在运行，</p>
+<p>先从dockerhub上拉取镜像</p>
+<p>进入容器</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker exec -it kubeblog sh</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230504220738498.png" alt="image-20230504220738498"></p>
+<p>查看MYSQL的环境变量</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230504220829893.png" alt="image-20230504220829893"></p>
+<p>查看hosts文件（这里的修改是由–link引起的）</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230504220946534.png" alt="image-20230504220946534"></p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230504221146700.png" alt="image-20230504221146700"></p>
+<p>停掉mysql服务后再运行kubeblog</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230504221353503.png" alt="image-20230504221353503"></p>
+<p>docker使用–link实现容器间的通信</p>
+<h2 id="kubernetes集群的搭建"><a href="#kubernetes集群的搭建" class="headerlink" title="kubernetes集群的搭建"></a>kubernetes集群的搭建</h2><p>配置阿里云的源（只需要把阿里源的内容下载到本地就好了）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br></pre></td></tr></table></figure>
+
+<p>安装其他基础软件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install wget net-tools ntp -y</span><br></pre></td></tr></table></figure>
+
+<p>同步系统时间</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntpdate 0.asia.pool.ntp.org</span><br></pre></td></tr></table></figure>
+
+<p>设置Docker，，k8s的阿里源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">cat &gt;&gt;/etc/yum.repos.d/kubernetes.repo &lt;&lt;EOF</span><br><span class="line">[kubernetes]</span><br><span class="line">name=Kubernetes</span><br><span class="line">baseurl=https://mirrors.aliyun.com/kubernetes/yum/repos/kubernetes-el7-x86_64/</span><br><span class="line">enabled=1</span><br><span class="line">gpgcheck=1</span><br><span class="line">repo_gpgcheck=1</span><br><span class="line">gpgkey=https://mirrors.aliyun.com/kubernetes/yum/doc/yum-key.gpg https://mirrors.aliyun.com/kubernetes/yum/doc/rpm-package-key.gpg</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>写入之后执行yum repolist</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230514205604252.png" alt="image-20230514205604252"></p>
+<p>执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">modprobe br_netfilter</span><br></pre></td></tr></table></figure>
+
+<p>查看执行后的结果</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /proc/sys/net/bridge/bridge-nf-call-iptables</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230514210015824.png" alt="image-20230514210015824"></p>
+<p>修改配置文件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysctl.d/k8s.conf</span><br><span class="line"></span><br><span class="line">net.bridge.bridge-nf-call-ip6tables = 1</span><br><span class="line">net.bridge.bridge-nf-call-iptables = 1</span><br></pre></td></tr></table></figure>
+
+<p>关闭防火墙</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop firewalld</span><br><span class="line">systemctl disable firewalld</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>关闭selinux</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">setenforce 0</span><br><span class="line">sed -i &quot;s/SELINUX=enforcing/SELINUX=disabled/g&quot; /etc/selinux/config</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230514211800061.png" alt="image-20230514211800061"></p>
+<p>关闭swap</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">swapoff -a</span><br><span class="line">yes | cp /etc/fstab /etc/fstab_bak</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">vi /etc/fstab</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230514212442218.png" alt="image-20230514212442218"></p>
+<h3 id="master节点安装kubeadm、kubelet-and-kubectl"><a href="#master节点安装kubeadm、kubelet-and-kubectl" class="headerlink" title="master节点安装kubeadm、kubelet and kubectl"></a>master节点安装kubeadm、kubelet and kubectl</h3><p>设置docker daemon的阿里云镜像源</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">cat &gt; /etc/docker/daemon.json &lt;&lt;EOF</span><br><span class="line">&#123;</span><br><span class="line">	&quot;registry-mirrors&quot;: [&quot;https://registry.cn-hangzhou.aliyuncs.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br></pre></td></tr></table></figure>
+
+<p>安装基础软件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install -y kubeadm kubelet kubectl</span><br></pre></td></tr></table></figure>
+
+<p>执行集群的初始化操作</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">kubeadm init --kubernetes-version=1.22.0 \</span><br><span class="line">--apiserver-advertise-address=192.168.168.101 \</span><br><span class="line">--image-repository registory.aliyuncs.com/google_containers \</span><br><span class="line">--service-cidr=10.1.0.0/16 \</span><br><span class="line">--pod-network-cidr=10.244.0.0/16</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">kubeadm init --kubernetes-version=1.23.1 \</span><br><span class="line">--apiserver-advertise-address=192.168.168.101 \</span><br><span class="line">--image-repository registry.aliyuncs.com/google_containers \</span><br><span class="line">--service-cidr=10.1.0.0/16 \</span><br><span class="line">--pod-network-cidr=10.244.0.0/16</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Then you can join any number of worker nodes by running the following on each as root:</span><br><span class="line"></span><br><span class="line">kubeadm join 192.168.168.101:6443 --token 1ki6hb.9cf1wk389z0nejlr \</span><br><span class="line">	--discovery-token-ca-cert-hash sha256:0e5d57410cc1b1f5b9aef23d7d03f5185ba135922189ee3bbcc481d7ee302e4d</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	--- 这里 - - </span><br><span class="line">kubeadm join 192.168.168.101:6443 --token 4aqs87.pfk90kuzuijb06d4 \</span><br><span class="line">	--discovery-token-ca-cert-hash sha256:9800e3b4ac978b1a16a5a752b37e71ccfdb45c7f4c9bb5d59f15f0e11376a8be</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230515003943951.png" alt="image-20230515003943951"></p>
+<p>查看节点安装状态</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230515223256538.png" alt="image-20230515223256538"></p>
+<p>此时查看master节点状态</p>
+<p><img src="/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230515223352093.png" alt="image-20230515223352093"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable kubelet.service</span><br><span class="line">kubeadm join 192.168.168.101:6443 --token 1ki6hb.9cf1wk389z0nejlr \</span><br><span class="line">	--discovery-token-ca-cert-hash sha256:0e5d57410cc1b1f5b9aef23d7d03f5185ba135922189ee3bbcc481d7ee302e4d</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">	</span><br><span class="line">kubeadm reset</span><br><span class="line">systemctl stop kubelet</span><br><span class="line">systemctl stop docker</span><br><span class="line">rm -rf /var/lib/cni/</span><br><span class="line">rm -rf /var/lib/kubelet/*</span><br><span class="line">rm -rf /etc/chi/</span><br><span class="line">ifconfig cni0 down</span><br><span class="line">ifconfig flannel.1 down</span><br><span class="line">ifconfig docker0 down</span><br><span class="line">ip link delete cni0</span><br><span class="line">ip link delete flannel.1</span><br><span class="line">systemctl start docker</span><br><span class="line">systemctl start kubelet</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+<p>8DpJsUWhWckBuYRBPE</p>
 
         </div>
         <footer class="article-footer">
@@ -248,7 +538,7 @@
 
 
 
-    <a data-url="http://example.com/2023/01/15/K8s%E5%85%A5%E9%97%A8/" data-id="clcxd01q90008s0vo6c48grob" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://example.com/2023/01/15/K8s%E5%85%A5%E9%97%A8/" data-id="clq7zx0ed002i2wvod6u46ipy" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -324,7 +614,7 @@
         "genre": "容器",
         "datePublished": "2023-01-15",
         "dateCreated": "2023-01-15",
-        "dateModified": "2023-01-15",
+        "dateModified": "2023-09-19",
         "url": "http://example.com/2023/01/15/K8s入门/",
         "description": "环境搭建虚拟机配置git安装
 更新系统环境
@@ -346,7 +636,7 @@
 相关个人配置
 
 12git config --global user.name &quot;your_name&quot;git config --global us",
-        "wordCount": 71
+        "wordCount": 1055
     }
 </script>
 
@@ -427,6 +717,16 @@
         
 <nav id="article-nav">
     
+        <a href="/2023/01/15/%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/" id="article-nav-newer" class="article-nav-link-wrap">
+        <strong class="article-nav-caption">下一篇</strong>
+        <p class="article-nav-title">
+        
+            安全设备
+        
+        </p>
+        <i class="icon fa fa-chevron-right" id="icon-chevron-right"></i>
+    </a>
+    
     
         <a href="/2022/10/16/celery/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
@@ -452,70 +752,10 @@
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2023/01/15/K8s%E5%85%A5%E9%97%A8/" class="thumbnail">
+                            <a href="/2023/10/21/%E6%B3%95%E8%80%83/" class="thumbnail">
     
     
-        <span style="background-image:url(/2023/01/15/K8s%E5%85%A5%E9%97%A8/image-20230115191414258.png)" alt="K8s入门" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a></p>
-                            <p class="item-title"><a href="/2023/01/15/K8s%E5%85%A5%E9%97%A8/" class="title">K8s入门</a></p>
-                            <p class="item-date"><time datetime="2023-01-15T11:07:55.000Z" itemprop="datePublished">2023-01-15</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2022/10/16/celery/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/2022/10/16/celery/image-20221017001220952.png)" alt="celery" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></p>
-                            <p class="item-title"><a href="/2022/10/16/celery/" class="title">celery</a></p>
-                            <p class="item-date"><time datetime="2022-10-15T16:00:51.000Z" itemprop="datePublished">2022-10-16</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2022/09/28/python/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/2022/09/28/python/image-20221006233057915.png)" alt="python" class="thumbnail-image"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></p>
-                            <p class="item-title"><a href="/2022/09/28/python/" class="title">python</a></p>
-                            <p class="item-date"><time datetime="2022-09-28T15:37:49.000Z" itemprop="datePublished">2022-09-28</time></p>
-                        </div>
-                    </li>
-                
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2022/09/10/linux-0/" class="thumbnail">
-    
-    
-        <span style="background-image:url(/2022/09/10/linux-0/image-20220913232737594.png)" alt="linux" class="thumbnail-image"></span>
+        <span class="thumbnail-image thumbnail-none"></span>
     
     
 </a>
@@ -524,18 +764,18 @@
                         
                         <div class="item-inner">
                             <p class="item-category"></p>
-                            <p class="item-title"><a href="/2022/09/10/linux-0/" class="title">linux</a></p>
-                            <p class="item-date"><time datetime="2022-09-10T14:00:20.000Z" itemprop="datePublished">2022-09-10</time></p>
+                            <p class="item-title"><a href="/2023/10/21/%E6%B3%95%E8%80%83/" class="title">法考</a></p>
+                            <p class="item-date"><time datetime="2023-10-21T06:54:44.000Z" itemprop="datePublished">2023-10-21</time></p>
                         </div>
                     </li>
                 
                     <li>
                         
                         <div class="item-thumbnail">
-                            <a href="/2022/08/27/ubuntu/" class="thumbnail">
+                            <a href="/2023/09/07/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="thumbnail">
     
     
-        <span style="background-image:url(/2022/08/27/ubuntu/image-20220828204937289.png)" alt="ubuntu" class="thumbnail-image"></span>
+        <span class="thumbnail-image thumbnail-none"></span>
     
     
 </a>
@@ -543,9 +783,69 @@
                         </div>
                         
                         <div class="item-inner">
-                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></p>
-                            <p class="item-title"><a href="/2022/08/27/ubuntu/" class="title">ubuntu</a></p>
-                            <p class="item-date"><time datetime="2022-08-27T08:14:00.000Z" itemprop="datePublished">2022-08-27</time></p>
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/09/07/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="title">微信小程序</a></p>
+                            <p class="item-date"><time datetime="2023-09-07T13:10:20.000Z" itemprop="datePublished">2023-09-07</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/06/26/mooc-k8s/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2023/06/26/mooc-k8s/Kubernetes%E5%85%A5%E9%97%A8%E5%88%B0%E8%BF%9B%E9%98%B6.png)" alt="mooc_k8s" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a></p>
+                            <p class="item-title"><a href="/2023/06/26/mooc-k8s/" class="title">mooc_k8s</a></p>
+                            <p class="item-date"><time datetime="2023-06-26T13:39:45.000Z" itemprop="datePublished">2023-06-26</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/04/15/python-adv/" class="thumbnail">
+    
+    
+        <span style="background-image:url(/2023/04/15/python-adv/image-20230415150555194.png)" alt="python_adv" class="thumbnail-image"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/python/">python</a></p>
+                            <p class="item-title"><a href="/2023/04/15/python-adv/" class="title">python_adv</a></p>
+                            <p class="item-date"><time datetime="2023-04-15T05:50:34.000Z" itemprop="datePublished">2023-04-15</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/03/16/pytest/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"></p>
+                            <p class="item-title"><a href="/2023/03/16/pytest/" class="title">pytest</a></p>
+                            <p class="item-date"><time datetime="2023-03-16T14:47:20.000Z" itemprop="datePublished">2023-03-16</time></p>
                         </div>
                     </li>
                 
@@ -558,7 +858,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/">安全设备</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
         </div>
     </div>
 
@@ -568,7 +868,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/10/">十月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li></ul>
         </div>
     </div>
 
@@ -578,7 +878,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/" rel="tag">K8s</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/" rel="tag">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag">环境搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8S/" rel="tag">K8S</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/" rel="tag">K8s</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytest/" rel="tag">pytest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/" rel="tag">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag">环境搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -588,7 +888,7 @@
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Django/" style="font-size: 20px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 20px;">Hadoop</a> <a href="/tags/K8s/" style="font-size: 10px;">K8s</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 20px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 20px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" style="font-size: 10px;">环境搭建</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+            <a href="/tags/Django/" style="font-size: 15px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/K8S/" style="font-size: 10px;">K8S</a> <a href="/tags/K8s/" style="font-size: 10px;">K8s</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/pytest/" style="font-size: 10px;">pytest</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 15px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">基础</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 15px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" style="font-size: 10px;">环境搭建</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
         </div>
     </div>
 
