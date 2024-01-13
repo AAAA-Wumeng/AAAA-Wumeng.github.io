@@ -12,20 +12,20 @@
     
     <meta name="keywords" content="数据库" />
     
-    <meta name="description" content="1、安装在Docker中安装Docker搜索Docker中的mongo镜像 在Ubuntu中安装Mongo 下载linux（ubuntu）下的安装文件1wget https:&#x2F;&#x2F;fastdl.mongodb.org&#x2F;linux&#x2F;mongodb-linux-x86_64-ubuntu2004-5.0.11.tgz  解压1tar -xvf mongodb-linux-x86_64-ubuntu200">
+    <meta name="description" content="mongodb是一种存储文档的非关系型数据库 1、Docker中安装mongodb1docker pull mongo:4    使用Docker容器运行MongoDB 1docker run -p 27017:27017 --name mongo_1 -v &#x2F;d&#x2F;docker&#x2F;mongo&#x2F;data:&#x2F;data&#x2F;db -v &#x2F;d&#x2F;docker&#x2F;mongo&#x2F;conf:&#x2F;etc&#x2F;mongo -e M">
 <meta property="og:type" content="article">
 <meta property="og:title" content="mongodb">
 <meta property="og:url" content="http://example.com/2022/08/24/mongodb/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1、安装在Docker中安装Docker搜索Docker中的mongo镜像 在Ubuntu中安装Mongo 下载linux（ubuntu）下的安装文件1wget https:&#x2F;&#x2F;fastdl.mongodb.org&#x2F;linux&#x2F;mongodb-linux-x86_64-ubuntu2004-5.0.11.tgz  解压1tar -xvf mongodb-linux-x86_64-ubuntu200">
+<meta property="og:description" content="mongodb是一种存储文档的非关系型数据库 1、Docker中安装mongodb1docker pull mongo:4    使用Docker容器运行MongoDB 1docker run -p 27017:27017 --name mongo_1 -v &#x2F;d&#x2F;docker&#x2F;mongo&#x2F;data:&#x2F;data&#x2F;db -v &#x2F;d&#x2F;docker&#x2F;mongo&#x2F;conf:&#x2F;etc&#x2F;mongo -e M">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2022/08/24/mongodb/image-20220827231922377.png">
+<meta property="og:image" content="http://example.com/2022/08/24/mongodb/image-20231218163538605.png">
 <meta property="article:published_time" content="2022-08-24T13:07:32.000Z">
-<meta property="article:modified_time" content="2023-09-12T12:29:12.890Z">
+<meta property="article:modified_time" content="2024-01-03T07:00:39.919Z">
 <meta property="article:author" content="Wumeng">
 <meta property="article:tag" content="数据库">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2022/08/24/mongodb/image-20220827231922377.png">
+<meta name="twitter:image" content="http://example.com/2022/08/24/mongodb/image-20231218163538605.png">
     
 
     
@@ -90,7 +90,7 @@
                                     <a class="main-nav-list-link" href="/">主页</a>
                                 </li>
                             
-                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/python/">python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/">安全设备</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/python/">python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/">安全设备</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%BC%93%E5%AD%98/">缓存</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
                                 
                                 <li class="main-nav-list-item" >
                                     <a class="main-nav-list-link" href="/about/index.html">关于</a>
@@ -187,7 +187,7 @@
 <div class="article-date">
   <i class="fa fa-calendar-plus-o"></i>
   <a href="/2022/08/24/mongodb/" class="article-date">
-     <time datetime="2023-09-12T12:29:12.890Z" itemprop="dateModified">2023-09-12</time>
+     <time datetime="2024-01-03T07:00:39.919Z" itemprop="dateModified">2024-01-03</time>
   </a>
 </div>
 
@@ -214,7 +214,998 @@
 
             
 
-            <h1 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h1><h2 id="在Docker中安装Docker"><a href="#在Docker中安装Docker" class="headerlink" title="在Docker中安装Docker"></a>在Docker中安装Docker</h2><p>搜索Docker中的mongo镜像</p>
+            <p><img src="/2022/08/24/mongodb/image-20231218163538605.png" alt="image-20231218163538605"></p>
+<p>mongodb是一种存储文档的非关系型数据库</p>
+<h1 id="1、Docker中安装mongodb"><a href="#1、Docker中安装mongodb" class="headerlink" title="1、Docker中安装mongodb"></a>1、Docker中安装mongodb</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mongo:4</span><br></pre></td></tr></table></figure>
+
+
+
+<p>使用Docker容器运行MongoDB</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 27017:27017 --name mongo_1 -v /d/docker/mongo/data:/data/db -v /d/docker/mongo/conf:/etc/mongo -e MONGO_INITDB_ROOT_USERNAME=sa -e MONGO_INITDB_ROOT_PASSWORD=123123 -e TZ=Asia/Shanghai --restart=always -d mongo:4 --config /etc/mongo/mongod.conf</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>-p 27017:27017，设置端口映射，映射到27017端口</li>
+<li>-v /d/docker/mongo/data:/data/db，主机上的-v /d/docker/mongo/data目录映射到容器内部的/data/db目录，这样容器内的数据会持久化保存到主机上</li>
+<li>-e MONGO_INITDB_ROOT_USERNAME=sa：创建一个sa的用户</li>
+<li>-e MONGO_INITDB_ROOT_PASSWORD=123123：设置密码123123</li>
+<li>-e TZ=Asia/Shanghai：设置时区为亚洲/上海</li>
+<li>-d：将容器放入后天运行</li>
+</ul>
+<p>通过设置环境变量 “MONGO_INITDB_ROOT_USERNAME” 和 “MONGO_INITDB_ROOT_PASSWORD”，这俩个变量结合使用，创建一个新用户并设置该用户的密码。这个用户是在身份验证数据库中创建的，并被赋予root角色，这是一个“超级用户”角色。</p>
+<p>Mongo Express是一个基于网络的MongoDB数据库管理界面</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker pull mongo-express</span><br></pre></td></tr></table></figure>
+
+<p>运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --link mongo:mongo -p 8081:8081 mongo-express</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231218222206155.png" alt="image-20231218222206155"></p>
+<p>原因：mongo数据库启动时设置了验证，我们在启动mongo-express时需要连接到mongodb数据库。</p>
+ <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 8081:8081 --name mongo-express --link mongo:mongo -e ME_CONFIG_MONGODB_SERVER=mongo -e ME_CONFIG_MONGODB_PORT=27017 -e ME_CONFIG_MONGODB_ENABLE_ADMIN=true -e ME_CONFIG_MONGODB_ADMINUSERNAME=sa -e ME_CONFIG_MONGODB_ADMINPASSWORD=123123 -d mongo-express</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>mongo-express启动后默认的账户名密码是：admin/pass</li>
+</ul>
+<p>mongo shell是用来操作MongoDB的javascript客户端界面</p>
+<p>运行mongo shell</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo -u sa -p</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h1 id="2、基本操作"><a href="#2、基本操作" class="headerlink" title="2、基本操作"></a>2、基本操作</h1><p><img src="/2022/08/24/mongodb/image-20231218223119845.png" alt="image-20231218223119845"></p>
+<hr>
+<p><img src="/2022/08/24/mongodb/image-20231218223218538.png" alt="image-20231218223218538"></p>
+<hr>
+<p>如果我们在创建文档时不提供主键，mongodb会默认提供一个对象主键ObjectId，来作为文档主键</p>
+<p><img src="/2022/08/24/mongodb/image-20231218223357940.png" alt="image-20231218223357940"></p>
+<ul>
+<li>对象主键的前四个字节保存的是对象主键生成的时间，精确到秒。在大多数情况下可以认为对象主键的顺序，就代表了文档被创建的顺序。<ul>
+<li>特殊情况一：如果同时有多个文档被存储到数据中，对象主键的顺序，没有办法区分文档创建的顺序</li>
+<li>特殊情况二：对象主键的生成是在客户端驱动生成的，如果各个客户端的系统时间不同，也会出现对象主键的顺序和文档创建的顺序不匹配的情况</li>
+</ul>
+</li>
+</ul>
+<h2 id="创建文档"><a href="#创建文档" class="headerlink" title="创建文档"></a>创建文档</h2><hr>
+<p><img src="/2022/08/24/mongodb/image-20231218224039739.png" alt="image-20231218224039739"></p>
+<p>进入mongo shell切换至指定的数据库</p>
+<p><img src="/2022/08/24/mongodb/image-20231218224222561.png" alt="image-20231218224222561"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 使用<span class="built_in">test</span>数据库</span></span><br><span class="line">use test</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看当前数据库中有那些集合</span></span><br><span class="line">show collections</span><br></pre></td></tr></table></figure>
+
+
+
+<p>创建单个文档</p>
+<p><img src="/2022/08/24/mongodb/image-20231218225247376.png" alt="image-20231218225247376"></p>
+<ul>
+<li><collection> 需要被替换成文档将要写入的集合</collection></li>
+<li><document>需要被替换成将要写入的文档本身</document></li>
+<li>writeConcern参数，定义了本次文档创建操作的安全写级别<ul>
+<li>安全写级别是用来判断一次数据库写入操作是否成功，安全写级别越高，丢失数据的风险就越低，然而写入操作的延迟也可能更高，如果不提供writeConcern文档，mongoDB使用默认的安全写级别</li>
+</ul>
+</li>
+<li>insertOne命令会自动创建相应的集合</li>
+</ul>
+<p>执行一次写入操作</p>
+<p><img src="/2022/08/24/mongodb/image-20231218230134288.png" alt="image-20231218230134288"></p>
+<p><img src="/2022/08/24/mongodb/image-20231218230214329.png" alt="image-20231218230214329"></p>
+<p>使用try-catch来捕获，文档创建过程中，出现的异常信息</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">try&#123;db.accounts.insertOne(&#123;_id: <span class="string">&quot;account_1&quot;</span>,name: <span class="string">&quot;bob&quot;</span>,balance: <span class="number">55</span>&#125;)&#125;catch(e)&#123;print(e)&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20231218231654255.png" alt="image-20231218231654255"></p>
+<p>自动生成_id</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.insertOne(&#123;name: &quot;bob&quot;,balance: 55&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231218231859680.png" alt="image-20231218231859680"></p>
+<p>创建多个文档</p>
+<p><img src="/2022/08/24/mongodb/image-20231218231950551.png" alt="image-20231218231950551"></p>
+<ul>
+<li>[<document_1>,[document_2]…]将多个需要创建的文档作为一个数据传入db.collection.insertMany()</document_1></li>
+<li>ordered，决定mongoDB是否要按照顺序来写入这些文档，如果将ordered参数设置为false，monodb可以打乱文档写入的顺序，以便优化写入操作的性能，ordered参数的默认至为true</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.insertMany([&#123;name: &quot;charlie&quot;,balance: 500&#125;, &#123;name: &quot;david&quot;,balance: 200&#125;])</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20231218232530016.png" alt="image-20231218232530016"></p>
+<p>遇到错误的情况</p>
+<p>在顺序写入时遇到错误</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">try&#123;db.accounts.insertMany([&#123;_id: &quot;account_1&quot;,name: &quot;edwrad&quot;,balance: 700&#125;, &#123;name: &quot;fred&quot;,balance: 20&#125;])&#125; catch(e)&#123;print(e)&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20231218232847729.png" alt="image-20231218232847729"></p>
+<ul>
+<li>nInserted，为0，表示本次顺序写入文档的数量为0，没有写入任何文档</li>
+</ul>
+<p>乱序写入时遇到错误</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">try&#123;db.accounts.insertMany([&#123;_id: &quot;account_1&quot;,name: &quot;edwrad&quot;,balance: 700&#125;, &#123;name: &quot;fred&quot;,balance: 20&#125;], &#123;ordered: false&#125;)&#125; catch(e)&#123;print(e)&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231218233045467.png" alt="image-20231218233045467"></p>
+<ul>
+<li>nInserted，参数值为1，表示成功的写入一个文档</li>
+</ul>
+<p>在乱序写入时，即使某些文档早成了错误，剩余正确的文档仍然会被写入。</p>
+<p><img src="/2022/08/24/mongodb/image-20231219221136594.png" alt="image-20231219221136594"></p>
+<p><img src="/2022/08/24/mongodb/image-20231219221205664.png" alt="image-20231219221205664"></p>
+<p>创建单个文档或多个文档</p>
+<p><img src="/2022/08/24/mongodb/image-20231219221321102.png" alt="image-20231219221321102"></p>
+<p>insertOne、insertMany、insert的区别</p>
+<p><img src="/2022/08/24/mongodb/image-20231219221549094.png" alt="image-20231219221549094"></p>
+<p>insertMany正确的返回和insertOne的结果类似，但是会返回多个ObjectId（多个文档的对象主键）</p>
+<p><img src="/2022/08/24/mongodb/image-20231219221710035.png" alt="image-20231219221710035"></p>
+<p>除了错误本身的描述，还会有一些统计学数据的描述</p>
+<p><img src="/2022/08/24/mongodb/image-20231219221849022.png" alt="image-20231219221849022"></p>
+<p>insert正确写入单个文档</p>
+<p><img src="/2022/08/24/mongodb/image-20231220210251866.png" alt="image-20231220210251866"></p>
+<p>insert写入单个文档返回错误的结果文档</p>
+<p><img src="/2022/08/24/mongodb/image-20231220210357663.png" alt="image-20231220210357663"></p>
+<p><img src="/2022/08/24/mongodb/image-20231220210422322.png" alt="image-20231220210422322"></p>
+<p><img src="/2022/08/24/mongodb/image-20231220210508531.png" alt="image-20231220210508531"></p>
+<p><img src="/2022/08/24/mongodb/image-20231220210537311.png" alt="image-20231220210537311"></p>
+<p><img src="/2022/08/24/mongodb/image-20231220210624295.png" alt="image-20231220210624295"></p>
+<p><img src="/2022/08/24/mongodb/image-20231220210741017.png" alt="image-20231220210741017"></p>
+<p><img src="/2022/08/24/mongodb/image-20231220210753113.png" alt="image-20231220210753113"></p>
+<p>使用复合主键时，如果复合主键内部的键值对值相同，键值对的顺序不同，也可以成功的写入数据。</p>
+<h2 id="读取文档"><a href="#读取文档" class="headerlink" title="读取文档"></a>读取文档</h2><p><img src="/2022/08/24/mongodb/image-20231220212020738.png" alt="image-20231220212020738"></p>
+<p><img src="/2022/08/24/mongodb/image-20231220212139250.png" alt="image-20231220212139250"></p>
+<ul>
+<li>query：文档定义了读取操作时筛选文档的条件</li>
+<li>projection：文档定义了对读取结果进行的投射</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231220212323076.png" alt="image-20231220212323076"></p>
+<p><img src="/2022/08/24/mongodb/image-20231220212419051.png" alt="image-20231220212419051"></p>
+<p>筛选查询：</p>
+<p><img src="/2022/08/24/mongodb/image-20231220212759721.png" alt="image-20231220212759721"></p>
+<p><img src="/2022/08/24/mongodb/image-20231220213038625.png" alt="image-20231220213038625"></p>
+<p><img src="/2022/08/24/mongodb/image-20231220213640409.png" alt="image-20231220213640409"></p>
+<p><img src="/2022/08/24/mongodb/image-20231220214125395.png" alt="image-20231220214125395"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221151414945.png" alt="image-20231221151414945"></p>
+<p>旧版本只能接受bson类型的序号作为type类型操作符的参数，在新的版本建议使用具体的数据类型作为参数。</p>
+<p><img src="/2022/08/24/mongodb/image-20231221151537367.png" alt="image-20231221151537367"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221151549444.png" alt="image-20231221151549444"></p>
+<p>使用mongo shell插入以下数据：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.insert([</span><br><span class="line">&#123;</span><br><span class="line">name: <span class="string">&quot;jack&quot;</span>,</span><br><span class="line">balance: <span class="number">2000</span>,</span><br><span class="line">contact: [<span class="string">&quot;11111111&quot;</span>, <span class="string">&quot;ALabama&quot;</span>, <span class="string">&quot;US&quot;</span>]</span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">name: <span class="string">&quot;karen&quot;</span>,</span><br><span class="line">balance: <span class="number">2500</span>,</span><br><span class="line">contact: [[<span class="string">&quot;22222222&quot;</span>, <span class="string">&quot;33333333&quot;</span>], <span class="string">&quot;Beijing&quot;</span>, <span class="string">&quot;China&quot;</span>]</span><br><span class="line">&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20231221153539086.png" alt="image-20231221153539086"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221153645011.png" alt="image-20231221153645011"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221153737877.png" alt="image-20231221153737877"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221154120323.png" alt="image-20231221154120323"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221154237949.png" alt="image-20231221154237949"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221154312216.png" alt="image-20231221154312216"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221154345269.png" alt="image-20231221154345269"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221154450853.png" alt="image-20231221154450853"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221154439774.png" alt="image-20231221154439774"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221154521784.png" alt="image-20231221154521784"></p>
+<h2 id="文档游标"><a href="#文档游标" class="headerlink" title="文档游标"></a>文档游标</h2><h3 id="游标函数"><a href="#游标函数" class="headerlink" title="游标函数"></a>游标函数</h3><p><img src="/2022/08/24/mongodb/image-20231221154546985.png" alt="image-20231221154546985"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221154636091.png" alt="image-20231221154636091"></p>
+<ul>
+<li>hasNext()，如果文档游标中，还有一些文档没有游历过，结果就会返回True，否则会返回False，表示我们已经遍历过了游标中的所有结果</li>
+<li>next()，要求游标指向下一个文档集合</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231221155645736.png" alt="image-20231221155645736"></p>
+<ul>
+<li>forEach，方便的遍历整个游标中的所有文档</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231221160220275.png" alt="image-20231221160220275"></p>
+<ul>
+<li>limit，返回我们需要的文档的数量，limit的参数是0，相当于不适用limit函数，会直接返回所有复合条件的文档集合。</li>
+<li>skip，会跳过文档集合中指定数量的文档</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231221161412592.png" alt="image-20231221161412592"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221160945295.png" alt="image-20231221160945295"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221161456864.png" alt="image-20231221161456864"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221161641931.png" alt="image-20231221161641931"></p>
+<ul>
+<li>首先会返回所有的文档，然后跳过3篇，之后从第四篇文档开始截取5篇文档返回</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231221161802131.png" alt="image-20231221161802131"></p>
+<p>sort()，skip()，limit()这几个组合在一起使用时，函数的执行顺序永远是：sort()，skip()，limit()</p>
+<h3 id="投影"><a href="#投影" class="headerlink" title="投影"></a>投影</h3><p><img src="/2022/08/24/mongodb/image-20231221171432538.png" alt="image-20231221171432538"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221173832579.png" alt="image-20231221173832579"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221173859824.png" alt="image-20231221173859824"></p>
+<p><img src="/2022/08/24/mongodb/image-20231221174107228.png" alt="image-20231221174107228"></p>
+<h2 id="更新文档"><a href="#更新文档" class="headerlink" title="更新文档"></a>更新文档</h2><p><img src="/2022/08/24/mongodb/image-20231222101750666.png" alt="image-20231222101750666"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222101909385.png" alt="image-20231222101909385"></p>
+<ul>
+<li><query>，文档定义了更新操作时筛选文档的条件，这里的query文档与db.collection.find()中的query文档是相同的</query></li>
+<li><update>，文档更新的内容</update></li>
+<li><opyions>，文档更新的操作参数</opyions></li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231222114312364.png" alt="image-20231222114312364"></p>
+<ul>
+<li>文档主键_id是不可以被更改的，如果在<update>文档中包含文档主键，则文档主键的值要和被更新的文档主键的值保持一致，</update></li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231222114705236.png" alt="image-20231222114705236"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222115522208.png" alt="image-20231222115522208"></p>
+<ul>
+<li>基于以上原因，我们在使用update更新整篇文档时，不推荐在update文档时包对象主键id</li>
+<li>使用update文档替换整篇文档时，只有<strong>第一篇</strong>符合query条件文档筛选条件的文档会被更新。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231222164743022.png" alt="image-20231222164743022"></p>
+<p>更新操作符</p>
+<p><img src="/2022/08/24/mongodb/image-20231222164812025.png" alt="image-20231222164812025"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222164900204.png" alt="image-20231222164900204"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222173731951.png" alt="image-20231222173731951"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222173816820.png" alt="image-20231222173816820"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222173855470.png" alt="image-20231222173855470"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222173915824.png" alt="image-20231222173915824"></p>
+<p>删除数组中的元素，依然可以使用下标，当我们使用unset删除数组字段中的某一个值时，数组字段的长度不会改变，只是对应位置的值会变成null。</p>
+<p><img src="/2022/08/24/mongodb/image-20231222174109484.png" alt="image-20231222174109484"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222174133292.png" alt="image-20231222174133292"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222174203315.png" alt="image-20231222174203315"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222174227678.png" alt="image-20231222174227678"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222174306401.png" alt="image-20231222174306401"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222174454619.png" alt="image-20231222174454619"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222174651495.png" alt="image-20231222174651495"></p>
+<p><img src="/2022/08/24/mongodb/image-20231222174801806.png" alt="image-20231222174801806"></p>
+<p>inc和mul操作时的字段不存在时的执行结果</p>
+<p><img src="/2022/08/24/mongodb/image-20231222174842483.png" alt="image-20231222174842483"></p>
+<ul>
+<li>inc：会将待更新的字段和期望更新的值，写入到文档中</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231222174903244.png" alt="image-20231222174903244"></p>
+<ul>
+<li>mul：会将待更新的字段写入到文档中，但是对应的值是0</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231222175122583.png" alt="image-20231222175122583"></p>
+<p>min和max</p>
+<p><img src="/2022/08/24/mongodb/image-20231222175430343.png"></p>
+<h4 id="数组更新操作符"><a href="#数组更新操作符" class="headerlink" title="数组更新操作符"></a>数组更新操作符</h4><p><img src="/2022/08/24/mongodb/image-20231223133817763.png" alt="image-20231223133817763"></p>
+<h5 id="addToSet"><a href="#addToSet" class="headerlink" title="addToSet"></a>addToSet</h5><p><img src="/2022/08/24/mongodb/image-20231223165917130.png" alt="image-20231223165917130"></p>
+<ul>
+<li>addToSet<ul>
+<li>如果要插入的值，已经在数组字段中存在了，则使用$addToSet不会添加重复值</li>
+<li>注意：使用$addToSet插入数组和文档是，插入值中的字段顺序也和已有值重复时，才算作重复值被忽略</li>
+<li>注意重复的内嵌文档的定义，只有完全一样的才算重复，如果内嵌文档中值的顺序（包括字段顺序和元素顺序），不同，那么他们也会被视为不同的内嵌文档。</li>
+</ul>
+</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231223134336659.png" alt="image-20231223134336659"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223135334350.png" alt="image-20231223135334350"></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.insert(&#123;</span><br><span class="line">    name: <span class="string">&quot;karen&quot;</span>,</span><br><span class="line">    balace: <span class="number">2000</span>,</span><br><span class="line">    contact: [</span><br><span class="line">        [<span class="string">&quot;11111111&quot;</span>, <span class="string">&quot;22222222&quot;</span>],</span><br><span class="line">        <span class="string">&quot;Beijing&quot;</span>,</span><br><span class="line">        <span class="string">&quot;China&quot;</span>,</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="attr">&quot;primaryEmail&quot;</span>: <span class="string">&quot;xxx@gmail.com&quot;</span>,</span><br><span class="line">            <span class="attr">&quot;secondaryEmail&quot;</span>: <span class="string">&quot;yyy@gmail.com&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    ]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>被当作一个元素，当作内嵌数组插入的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">b.accounts.update( &#123;<span class="attr">name</span>: <span class="string">&quot;karen&quot;</span>&#125;, &#123;<span class="attr">$addToSet</span>: &#123;<span class="attr">contact</span>: [<span class="string">&quot;contact_1&quot;</span>, <span class="string">&quot;contact_2&quot;</span>]&#125;&#125; )</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231223140834452.png" alt="image-20231223140834452"></p>
+<p>当作单个元素插入</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.update( &#123;<span class="attr">name</span>: <span class="string">&quot;karen&quot;</span>&#125;, &#123;<span class="attr">$addToSet</span>: &#123;<span class="attr">contact</span>: &#123;<span class="attr">each</span>: [<span class="string">&quot;contact_1&quot;</span>, <span class="string">&quot;contact_2&quot;</span>]&#125;&#125;&#125; )</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="pop删除数组字段中的元素"><a href="#pop删除数组字段中的元素" class="headerlink" title="pop删除数组字段中的元素"></a>pop删除数组字段中的元素</h5><p><img src="/2022/08/24/mongodb/image-20231223170525940.png" alt="image-20231223170525940"></p>
+<ul>
+<li>注意1：只能删除第一个元素或者是最后一个元素</li>
+<li>注意2：只能应该用在数组字段上</li>
+<li>使用pop删除掉数组字段中的最后一个元素后，会保留一个空的数组</li>
+<li>在非数组字段上使用$pop操作会报错</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231223171244622.png" alt="image-20231223171244622"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223171308559.png" alt="image-20231223171308559"></p>
+<h5 id="pull删除数组字段中的特定元素"><a href="#pull删除数组字段中的特定元素" class="headerlink" title="pull删除数组字段中的特定元素"></a>pull删除数组字段中的特定元素</h5><p><img src="/2022/08/24/mongodb/image-20231223171351418.png" alt="image-20231223171351418"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223173008088.png" alt="image-20231223173008088"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223173334400.png" alt="image-20231223173334400"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223173301874.png" alt="image-20231223173301874"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223173911513.png" alt="image-20231223173911513"></p>
+<ul>
+<li>$pullAll命令，接受的参数是一个数组</li>
+<li>使用pull或者是pullAll命令执行删除操作时，如果想要删除的元素是一个数组，数组元素的值和排列顺序都必须和被删除的数组完全一致。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231223174056511.png" alt="image-20231223174056511"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223175537525.png" alt="image-20231223175537525"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223213910243.png" alt="image-20231223213910243"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223214205717.png" alt="image-20231223214205717"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223214343748.png" alt="image-20231223214343748"></p>
+<h4 id="更新选项"><a href="#更新选项" class="headerlink" title="更新选项"></a>更新选项<option></option></h4><p><img src="/2022/08/24/mongodb/image-20231223214610821.png" alt="image-20231223214610821"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223214839261.png" alt="image-20231223214839261"></p>
+<h2 id="删除文档"><a href="#删除文档" class="headerlink" title="删除文档"></a>删除文档</h2><p><img src="/2022/08/24/mongodb/image-20231223214919545.png" alt="image-20231223214919545"></p>
+<ul>
+<li><query>，定义删除操作时筛选文档的条件，与find()，中的查询文档是相同的。</query></li>
+<li><options>，声明了一些删除操作时使用的参数。</options></li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231223223851934.png" alt="image-20231223223851934"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223224120374.png" alt="image-20231223224120374"></p>
+<p><img src="/2022/08/24/mongodb/image-20231223224212785.png" alt="image-20231223224212785"></p>
+<h1 id="3、聚合操作"><a href="#3、聚合操作" class="headerlink" title="3、聚合操作"></a>3、聚合操作</h1><p><img src="/2022/08/24/mongodb/image-20231223224259333.png" alt="image-20231223224259333"></p>
+<ul>
+<li><pipeline>，文档定义了操作中使用的聚合管道阶段和聚合操作符</pipeline></li>
+<li><options>，声明了一些聚合操作的参数</options></li>
+</ul>
+<h3 id="聚合表达式"><a href="#聚合表达式" class="headerlink" title="聚合表达式"></a>聚合表达式</h3><p>字段路径表达式</p>
+<p><img src="/2022/08/24/mongodb/image-20231224095942271.png" alt="image-20231224095942271"></p>
+<p>系统变量表达式</p>
+<p><img src="/2022/08/24/mongodb/image-20231224100100068.png" alt="image-20231224100100068"></p>
+<ul>
+<li>$$current.<field>与$<field>是等效的、</field></field></li>
+</ul>
+<p>常量表达式</p>
+<p><img src="/2022/08/24/mongodb/image-20231224100235532.png" alt="image-20231224100235532"></p>
+<p>聚合管道操作阶段</p>
+<p><img src="/2022/08/24/mongodb/image-20231224100305866.png" alt="image-20231224100305866"></p>
+<h3 id="project"><a href="#project" class="headerlink" title="$project"></a>$project</h3><p>准备数据</p>
+<p><img src="/2022/08/24/mongodb/image-20231224110031322.png" alt="image-20231224110031322"></p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.insertMany([</span><br><span class="line">&#123;</span><br><span class="line">name:&#123;firstName:<span class="string">&quot;alice&quot;</span>,lastName:<span class="string">&quot;wong&quot;</span>&#125;,</span><br><span class="line">balance: <span class="number">50</span></span><br><span class="line">&#125;,</span><br><span class="line">&#123;</span><br><span class="line">name:&#123;firstName:<span class="string">&quot;bob&quot;</span>, lastName:<span class="string">&quot;yang&quot;</span> &#125;,</span><br><span class="line">balance: <span class="number">20</span></span><br><span class="line">&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<p>文档投影操作</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.aggregate([</span><br><span class="line">&#123;</span><br><span class="line">$project: &#123;</span><br><span class="line"> _id: <span class="number">0</span>,</span><br><span class="line">balance: <span class="number">1</span>,</span><br><span class="line">clientName: <span class="string">&quot;$name.firstName&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20231224110346164.png" alt="image-20231224110346164"></p>
+<p><img src="/2022/08/24/mongodb/image-20231224110810277.png" alt="image-20231224110810277"></p>
+<ul>
+<li>返回的是一个文档游标</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231224111038393.png" alt="image-20231224111038393"></p>
+<h3 id="match"><a href="#match" class="headerlink" title="$match"></a>$match</h3><p><img src="/2022/08/24/mongodb/image-20231224111236374.png" alt="image-20231224111236374"></p>
+<p>匹配查询的方法</p>
+<p><img src="/2022/08/24/mongodb/image-20231224111821726.png" alt="image-20231224111821726"></p>
+<p>match + project</p>
+<p><img src="/2022/08/24/mongodb/image-20231224120215518.png" alt="image-20231224120215518"></p>
+<ul>
+<li>注意，应该尽量在聚合管道的开始阶段应用$match，这样可以减少后续阶段中需要处理的文档数量，优化聚合操作的性能。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231224120630497.png" alt="image-20231224120630497"></p>
+<p><img src="/2022/08/24/mongodb/image-20231224121748657.png" alt="image-20231224121748657"></p>
+<ul>
+<li>展开文档中的数组字段</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231224121734395.png" alt="image-20231224121734395"></p>
+<p><img src="/2022/08/24/mongodb/image-20231224122032899.png" alt="image-20231224122032899"></p>
+<p><img src="/2022/08/24/mongodb/image-20231224122130079.png" alt="image-20231224122130079"></p>
+<ul>
+<li>被展开字段的数值不是一个数组类型的值，此时我们要求添加的新文档数组下标的位置，没有办法真正的取得，mongodb此时会赋一个空值。</li>
+</ul>
+<p>实操</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.insertMany([</span><br><span class="line">&#123;name: &#123;firstName: <span class="string">&quot;charlie&quot;</span>, lastName: <span class="string">&quot;gordon&quot;</span>&#125;,balance: <span class="number">100</span>&#125;,</span><br><span class="line">&#123;name: &#123;firstName: <span class="string">&quot;david&quot;</span>, lastName: <span class="string">&quot;wu&quot;</span>&#125;, balance: <span class="number">200</span>, currency: []&#125;,</span><br><span class="line">&#123;name: &#123;firstName: <span class="string">&quot;eddie&quot;</span>, lastName: <span class="string">&quot;kim&quot;</span>&#125;, balance: <span class="number">20</span>, currency: <span class="literal">null</span>&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>添加以上文档记录，其中第一条没有currency字段，第二条的currency字段是空数组，第三条currency字段的currency字段的取值。查询结果如下：</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231224200804456.png" alt="image-20231224200804456"></p>
+<p>使用unwind展开的结果如下：</p>
+<p><img src="/2022/08/24/mongodb/image-20231224200834532.png" alt="image-20231224200834532"></p>
+<ul>
+<li>当使用$unwind展开的数组字段不存在、为空数组、值为null时，对应的文档不能通过unwind的筛选操作，会被unwind操作直接剔除掉，不会再进入之后的操作</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231224201448231.png" alt="image-20231224201448231"></p>
+<h3 id="sort"><a href="#sort" class="headerlink" title="$sort"></a>$sort</h3><p><img src="/2022/08/24/mongodb/image-20231224201736920.png" alt="image-20231224201736920"></p>
+<p><img src="/2022/08/24/mongodb/image-20231224203456894.png" alt="image-20231224203456894"></p>
+<h3 id="lookup"><a href="#lookup" class="headerlink" title="$lookup"></a>$lookup</h3><p><img src="/2022/08/24/mongodb/image-20231224203514607.png" alt="image-20231224203514607"></p>
+<h4 id="单一字段值的查询"><a href="#单一字段值的查询" class="headerlink" title="单一字段值的查询"></a>单一字段值的查询</h4><ul>
+<li>from，同一个数据库中的另一个查询集合，lookup不能跨数据库使用</li>
+<li>localField，管道文档中用来进行查询的字段</li>
+<li>foreignField，查询集合中的查询字段</li>
+<li>as，写入管道文档中的查询结果数组字段</li>
+</ul>
+<p>测试</p>
+<ul>
+<li>增加数据</li>
+</ul>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.forex.insertMany([</span><br><span class="line">&#123;ccy: <span class="string">&quot;USD&quot;</span>, rate: <span class="number">6.91</span>, date: new Date(<span class="string">&quot;2018-12-21&quot;</span>)&#125;,</span><br><span class="line">&#123;ccy: <span class="string">&quot;GBP&quot;</span>, rate: <span class="number">8.72</span>, date: new Date(<span class="string">&quot;2018-08-21&quot;</span>)&#125;,</span><br><span class="line">&#123;ccy: <span class="string">&quot;CNY&quot;</span>, rate: <span class="number">1.0</span>, date: new Date(<span class="string">&quot;2018-12-21&quot;</span>)&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231224213834340.png" alt="image-20231224213834340"></p>
+<p>将查询到的外汇汇率写入银行账户文档</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.aggregate([</span><br><span class="line">&#123;<span class="attr">$lookup</span>:&#123;</span><br><span class="line"><span class="attr">from</span>: <span class="string">&quot;forex&quot;</span>,</span><br><span class="line"><span class="attr">localField</span>: <span class="string">&quot;currency&quot;</span>,</span><br><span class="line"> <span class="attr">foreignField</span>: <span class="string">&quot;ccy&quot;</span>,</span><br><span class="line"><span class="attr">as</span>: <span class="string">&quot;forexDate&quot;</span></span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231224214250383.png" alt="image-20231224214250383"></p>
+<h4 id="localField是一个数组字段"><a href="#localField是一个数组字段" class="headerlink" title="localField是一个数组字段"></a>localField是一个数组字段</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.aggregate([&#123;<span class="attr">$unwind</span>:&#123;<span class="attr">path</span>: <span class="string">&quot;$currency&quot;</span>&#125;&#125;, &#123;<span class="attr">$lookup</span>: &#123;<span class="attr">from</span>: <span class="string">&quot;forex&quot;</span>, <span class="attr">localField</span>: <span class="string">&quot;currency&quot;</span>, <span class="attr">foreignField</span>: <span class="string">&quot;ccy&quot;</span>, <span class="attr">as</span>: <span class="string">&quot;forexData&quot;</span>&#125;&#125;])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>注意$unwind操作的结果</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231224215359286.png" alt="image-20231224215359286"></p>
+<h4 id="复杂查询"><a href="#复杂查询" class="headerlink" title="复杂查询"></a>复杂查询</h4><p><img src="/2022/08/24/mongodb/image-20231224221820217.png" alt="image-20231224221820217"></p>
+<ul>
+<li>pipeline，对查询集合中的文档使用聚合阶段进行处理，如果需要参考管道文档中的字段，则必须使用let参数对字段进行声明。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231224222444885.png" alt="image-20231224222444885"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.aggregate([&#123;<span class="attr">$lookup</span>: &#123;<span class="attr">from</span>: <span class="string">&quot;forex&quot;</span>, <span class="attr">pipeline</span>: [&#123;<span class="attr">$match</span>:&#123;<span class="attr">date</span>: <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">&quot;2018-12-21&quot;</span>)&#125;&#125;], <span class="attr">as</span>: <span class="string">&quot;forexData&quot;</span>&#125;&#125;])</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231224223305672.png" alt="image-20231224223305672"></p>
+<ul>
+<li>注意：查询条件和管道文档之间，其实并没有直接的联系，这种查询被称作不相关查询</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231224224813470.png" alt="image-20231224224813470"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">db.accounts.aggregate([</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">$lookup</span>: &#123;</span><br><span class="line">            <span class="attr">from</span>: <span class="string">&quot;forex&quot;</span>,</span><br><span class="line">            <span class="attr">let</span>: &#123;<span class="attr">bal</span>: <span class="string">&quot;$balance&quot;</span>&#125;,</span><br><span class="line">            <span class="attr">pipeline</span>: [</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="attr">$match</span>: &#123;</span><br><span class="line">                        <span class="attr">$expr</span>: &#123;</span><br><span class="line">                            <span class="attr">$and</span>: [</span><br><span class="line">                                &#123;<span class="attr">$eq</span>: [<span class="string">&quot;$date&quot;</span>, <span class="keyword">new</span> <span class="built_in">Date</span>(<span class="string">&quot;2018-12-21&quot;</span>)]&#125;,</span><br><span class="line">                                &#123;<span class="attr">$gt</span>: [<span class="string">&quot;$$bal&quot;</span>, <span class="number">100</span>]&#125;</span><br><span class="line">                            ]</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            ],</span><br><span class="line">            <span class="attr">as</span>: <span class="string">&quot;forexData&quot;</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>$$相当于使用系统变量，再let中声明的变量就相当于系统变量</li>
+<li>关于expr，如果我们再let中声明了系统变量来提取原管道文档中的值，当我们使用pipeline进行匹配时，才能更好的使用这些声明的环境变量。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231224230831073.png" alt="image-20231224230831073"></p>
+<h3 id="group"><a href="#group" class="headerlink" title="$group"></a>$group</h3><ul>
+<li>定义分组操作</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231224231415058.png" alt="image-20231224231415058"></p>
+<ul>
+<li>_id参数必传</li>
+<li><field1>，使用聚合操作符来定义新的字段，例如求和，求平均值</field1></li>
+</ul>
+<p>增加测试数据</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.transactions.insertMany([</span><br><span class="line">    &#123;<span class="attr">symbol</span>: <span class="string">&quot;600519&quot;</span>, <span class="attr">qty</span>: <span class="number">100</span>, <span class="attr">price</span>: <span class="number">567.4</span>, <span class="attr">currency</span>: <span class="string">&quot;CNY&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">symbol</span>: <span class="string">&quot;AMZN&quot;</span>, <span class="attr">qty</span>: <span class="number">1</span>, <span class="attr">price</span>: <span class="number">1377.5</span>, <span class="attr">currency</span>: <span class="string">&quot;USD&quot;</span>&#125;,</span><br><span class="line">    &#123;<span class="attr">symbol</span>: <span class="string">&quot;AAPL&quot;</span>, <span class="attr">qty</span>: <span class="number">2</span>, <span class="attr">price</span>: <span class="number">150.7</span>, <span class="attr">currency</span>: <span class="string">&quot;USD&quot;</span>&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>按照交易货币来分组交易记录</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231225111823475.png" alt="image-20231225111823475"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225111923076.png" alt="image-20231225111923076"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225111955742.png" alt="image-20231225111955742"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">db.transactions.aggregate([</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">$group</span>: &#123;</span><br><span class="line">            <span class="attr">_id</span>: <span class="string">&quot;$currency&quot;</span>,</span><br><span class="line">            <span class="attr">totalQty</span>: &#123;<span class="attr">$sum</span>: <span class="string">&quot;$qty&quot;</span>&#125;,</span><br><span class="line">            <span class="attr">totalNotional</span>: &#123;<span class="attr">$sum</span>: &#123;<span class="attr">$multiply</span>: [<span class="string">&quot;$price&quot;</span>, <span class="string">&quot;$qty&quot;</span>]&#125;&#125;,</span><br><span class="line">            <span class="attr">avgPrice</span>: &#123;<span class="attr">$avg</span>: <span class="string">&quot;$price&quot;</span>&#125;,</span><br><span class="line">            <span class="attr">count</span>: &#123;<span class="attr">$sum</span>: <span class="number">1</span>&#125;,</span><br><span class="line">            <span class="attr">maxNotional</span>: &#123;<span class="attr">$max</span>: &#123;<span class="attr">$multiply</span>: [<span class="string">&quot;$price&quot;</span>, <span class="string">&quot;$qty&quot;</span>]&#125;&#125;,</span><br><span class="line">            <span class="attr">minNotional</span>: &#123;<span class="attr">$min</span>: &#123;<span class="attr">$multiply</span>: [<span class="string">&quot;$price&quot;</span>, <span class="string">&quot;$qty&quot;</span>]&#125;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225112826674.png" alt="image-20231225112826674"></p>
+<p>使用null值不分组，对整个文档进行聚合操作</p>
+<p><img src="/2022/08/24/mongodb/image-20231225113954832.png" alt="image-20231225113954832"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">db.transactions.aggregate([</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">$group</span>: &#123;</span><br><span class="line">            <span class="attr">_id</span>: <span class="literal">null</span>,</span><br><span class="line">            <span class="attr">totalQty</span>: &#123;<span class="attr">$sum</span>: <span class="string">&quot;$qty&quot;</span>&#125;,</span><br><span class="line">            <span class="attr">totalNotional</span>: &#123;<span class="attr">$sum</span>: &#123;<span class="attr">$multiply</span>: [<span class="string">&quot;$price&quot;</span>, <span class="string">&quot;$qty&quot;</span>]&#125;&#125;,</span><br><span class="line">            <span class="attr">avgPrice</span>: &#123;<span class="attr">$avg</span>: <span class="string">&quot;$price&quot;</span>&#125;,</span><br><span class="line">            <span class="attr">count</span>: &#123;<span class="attr">$sum</span>: <span class="number">1</span>&#125;,</span><br><span class="line">            <span class="attr">maxNotional</span>: &#123;<span class="attr">$max</span>: &#123;<span class="attr">$multiply</span>: [<span class="string">&quot;$price&quot;</span>, <span class="string">&quot;$qty&quot;</span>]&#125;&#125;,</span><br><span class="line">            <span class="attr">minNotional</span>: &#123;<span class="attr">$min</span>: &#123;<span class="attr">$multiply</span>: [<span class="string">&quot;$price&quot;</span>, <span class="string">&quot;$qty&quot;</span>]&#125;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225114117220.png" alt="image-20231225114117220"></p>
+<p>使用聚合操作符创建数组字段</p>
+<p><img src="/2022/08/24/mongodb/image-20231225114230140.png" alt="image-20231225114230140"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">db.transactions.aggregate([</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">$group</span>: &#123;</span><br><span class="line">            <span class="attr">_id</span>: <span class="string">&quot;$currency&quot;</span>,</span><br><span class="line">            <span class="attr">symbols</span>: &#123;<span class="attr">$push</span>: <span class="string">&quot;$symbol&quot;</span>&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225114419667.png" alt="image-20231225114419667"></p>
+<h3 id="out"><a href="#out" class="headerlink" title="$out"></a>$out</h3><p><img src="/2022/08/24/mongodb/image-20231225114530560.png" alt="image-20231225114530560"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">db.transactions.aggregate([</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">$group</span>: &#123;</span><br><span class="line">            <span class="attr">_id</span>: <span class="string">&quot;$currency&quot;</span>,</span><br><span class="line">            <span class="attr">symbols</span>: &#123;<span class="attr">$push</span>: <span class="string">&quot;$symbol&quot;</span>&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">$out</span>: <span class="string">&quot;output&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20231225114719225.png" alt="image-20231225114719225"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">db.transactions.aggregate([</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">$group</span>: &#123;</span><br><span class="line">            <span class="attr">_id</span>: <span class="string">&quot;$symbol&quot;</span>,</span><br><span class="line">            <span class="attr">totalNotional</span>: &#123;<span class="attr">$sum</span>: &#123;<span class="attr">$multiply</span>: [<span class="string">&quot;$price&quot;</span>, <span class="string">&quot;$qty&quot;</span>]&#125;&#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;<span class="attr">$out</span>: <span class="string">&quot;output&quot;</span>&#125;</span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20231225115051418.png" alt="image-20231225115051418"></p>
+<p>注意：</p>
+<ul>
+<li>如果写入的集合已经存在了，那么新写入的集合会覆盖掉原始集合中的数据。</li>
+<li>如果聚合管道操作遇到错误，管道阶段，不会创建新集合或是覆盖已存在的集合内容</li>
+</ul>
+<h3 id="操作选项"><a href="#操作选项" class="headerlink" title="操作选项"></a>操作选项</h3><p><img src="/2022/08/24/mongodb/image-20231225115905647.png" alt="image-20231225115905647"></p>
+<h3 id="聚合操作优化"><a href="#聚合操作优化" class="headerlink" title="聚合操作优化"></a>聚合操作优化</h3><ul>
+<li>在尽可能早的阶段减少管道中文档的数量</li>
+</ul>
+<h4 id="操作顺序优化"><a href="#操作顺序优化" class="headerlink" title="操作顺序优化"></a>操作顺序优化</h4><p><img src="/2022/08/24/mongodb/image-20231225120555199.png" alt="image-20231225120555199"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225120713731.png" alt="image-20231225120713731"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225120751444.png" alt="image-20231225120751444"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225120954575.png" alt="image-20231225120954575"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225121321831.png" alt="image-20231225121321831"></p>
+<h4 id="聚合阶段合并优化"><a href="#聚合阶段合并优化" class="headerlink" title="聚合阶段合并优化"></a>聚合阶段合并优化</h4><p><img src="/2022/08/24/mongodb/image-20231225121956420.png" alt="image-20231225121956420"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225122236055.png" alt="image-20231225122236055"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225122315486.png" alt="image-20231225122315486"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225122355858.png" alt="image-20231225122355858"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225122454690.png" alt="image-20231225122454690"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225122522826.png" alt="image-20231225122522826"></p>
+<h1 id="4、索引"><a href="#4、索引" class="headerlink" title="4、索引"></a>4、索引</h1><p><img src="/2022/08/24/mongodb/image-20231225132752323.png" alt="image-20231225132752323"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225134635535.png" alt="image-20231225134635535"></p>
+<p>mongodb索引的数据结构是B-Tree。</p>
+<p>复合键索引，可以对多个字段进行排序。</p>
+<p>复合键索引只能支持前缀子查询</p>
+<p><img src="/2022/08/24/mongodb/image-20231225135258887.png" alt="image-20231225135258887"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225135309884.png" alt="image-20231225135309884"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225135330445.png" alt="image-20231225135330445"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225135343884.png" alt="image-20231225135343884"></p>
+<h4 id="创建索引"><a href="#创建索引" class="headerlink" title="创建索引"></a>创建索引</h4><p><img src="/2022/08/24/mongodb/image-20231225144519657.png" alt="image-20231225144519657"></p>
+<ul>
+<li>keys，创建文档的索引字段</li>
+<li></li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">db.accountsIndex.insertMany([</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;alice&quot;</span>, <span class="attr">balance</span>: <span class="number">50</span>, <span class="attr">currency</span>: [<span class="string">&quot;GBP&quot;</span>, <span class="string">&quot;USD&quot;</span>]&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;bob&quot;</span>, <span class="attr">balance</span>: <span class="number">20</span>, <span class="attr">currency</span>: [<span class="string">&quot;AUD&quot;</span>, <span class="string">&quot;USD&quot;</span>]&#125;,</span><br><span class="line">    &#123;<span class="attr">name</span>: <span class="string">&quot;bob&quot;</span>, <span class="attr">balance</span>: <span class="number">300</span>, <span class="attr">currency</span>: [<span class="string">&quot;CNY&quot;</span>]&#125;  </span><br><span class="line">])</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225171609928.png" alt="image-20231225171609928"></p>
+<p>创建一个单键索引</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accountsIndex.createIndex(&#123;<span class="attr">name</span>: <span class="number">1</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225171748201.png" alt="image-20231225171748201"></p>
+<p>列出集合中已经存在的索引</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accountsIndex.getIndexes()</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225171923473.png" alt="image-20231225171923473"></p>
+<p>创建一个复合键索引，注意复合键，索引的顺序很重要，并且只支持前缀子查询</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accountsIndex.createIndex(&#123;<span class="attr">name</span>: <span class="number">1</span>, <span class="attr">balance</span>: -<span class="number">1</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225173025403.png" alt="image-20231225173025403"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225173040333.png" alt="image-20231225173040333"></p>
+<p>多键索引，多键索引是使用在数组字段上的</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accountsIndex.createIndex(&#123;<span class="attr">currency</span>:<span class="number">1</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>索引执行效果explain</p>
+<p><img src="/2022/08/24/mongodb/image-20231225173732074.png" alt="image-20231225173732074"></p>
+<p>使用没有创建索引的字段进行搜索操作</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accountsIndex.explain().find(&#123;<span class="attr">balance</span>: <span class="number">100</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225174228749.png" alt="image-20231225174228749"></p>
+<p>关注：queryPlanner</p>
+<ul>
+<li>winningPlan，一个查询语句，可能会有多种不同的查询方法，winningPlan指的是，数据库在这多种不同的查询方式之间选择的数据库认为性能最好、最合适的方法，其中stage，如果出现了”COLLSCAN”（collection-scan），我们需要注意。表示数据库没有任何更好的方法执行查询，所以遍历了整个集合。此时我们需要考虑是否创建索引。来避免执行这种低效的方法。</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accountsIndex.explain().find(&#123;<span class="attr">name</span>: <span class="string">&quot;alice&quot;</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20231225175052811.png" alt="image-20231225175052811"></p>
+<p>表示我们使用了创建的索引进行扫描</p>
+<p><img src="/2022/08/24/mongodb/image-20231225175242178.png" alt="image-20231225175242178"></p>
+<p>索引的执行效果</p>
+<p><img src="/2022/08/24/mongodb/image-20231225175418687.png" alt="image-20231225175418687"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&gt; db.accountsIndex.explain().find().sort(&#123;<span class="attr">name</span>: <span class="number">1</span>, <span class="attr">balance</span>: -<span class="number">1</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225212408640.png" alt="image-20231225212408640"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225212317843.png" alt="image-20231225212317843"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accountsIndex.explain().find().sort(&#123;<span class="attr">name</span>: <span class="number">1</span>, <span class="attr">balance</span>: <span class="number">1</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225212457920.png" alt="image-20231225212457920"></p>
+<ul>
+<li>winningPlan的stage出现了SORT，说明本次排序操作的执行效率不高，提示我们在执行sort操作时，可能需要创建响应的索引，来提高排序操作的效率。</li>
+</ul>
+<h4 id="删除索引"><a href="#删除索引" class="headerlink" title="删除索引"></a>删除索引</h4><p><img src="/2022/08/24/mongodb/image-20231225212901098.png" alt="image-20231225212901098"></p>
+<ul>
+<li>索引在创建后，不能进行更改操作，如果我们需要更改某些字段上已经创建的索引，必须先删除索引，再重新创建新索引。否则新索引不会包含原有文档。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231225213756071.png" alt="image-20231225213756071"></p>
+<h5 id="根据索引的名称删除索引"><a href="#根据索引的名称删除索引" class="headerlink" title="根据索引的名称删除索引"></a>根据索引的名称删除索引</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accountsIndex.dropIndex(<span class="string">&quot;currency_1&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20231225213718995.png" alt="image-20231225213718995"></p>
+<h5 id="根据索引的定义删除索引"><a href="#根据索引的定义删除索引" class="headerlink" title="根据索引的定义删除索引"></a>根据索引的定义删除索引</h5><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accountsIndex.dropIndex(&#123;<span class="attr">name</span>: <span class="number">1</span>, <span class="attr">balance</span>: -<span class="number">1</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225214007351.png" alt="image-20231225214007351"></p>
+<h4 id="创建索引定义一些索引的特性"><a href="#创建索引定义一些索引的特性" class="headerlink" title="创建索引定义一些索引的特性"></a>创建索引定义一些索引的特性</h4><p><img src="/2022/08/24/mongodb/image-20231225214135294.png" alt="image-20231225214135294"></p>
+<h5 id="唯一性"><a href="#唯一性" class="headerlink" title="唯一性"></a>唯一性</h5><p><img src="/2022/08/24/mongodb/image-20231225214211548.png" alt="image-20231225214211548"></p>
+<h6 id="创建一个唯一性索引"><a href="#创建一个唯一性索引" class="headerlink" title="创建一个唯一性索引"></a>创建一个唯一性索引</h6><p><img src="/2022/08/24/mongodb/image-20231225214319786.png" alt="image-20231225214319786"></p>
+<ul>
+<li>{unique:true}</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231225214523882.png" alt="image-20231225214523882"></p>
+<ul>
+<li>如果已有文档中的某个字段出现了重复值，就不可以在这个字段上创建唯一型索引</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231225214728387.png" alt="image-20231225214728387"></p>
+<ul>
+<li>如果新增的文档不包含唯一性索引字段，只有<strong>第一篇</strong>缺失该字段的文档可以被写入到数据库，索引中该文档的键值被默认为null。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231225223314500.png" alt="image-20231225223314500"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225223402619.png" alt="image-20231225223402619"></p>
+<h5 id="稀疏性"><a href="#稀疏性" class="headerlink" title="稀疏性"></a>稀疏性</h5><p><img src="/2022/08/24/mongodb/image-20231225223801034.png" alt="image-20231225223801034"></p>
+<ul>
+<li>如果被添加的文档的内容中不包含，创建索引的字段，那么这个文档就不会添加到索引字段中</li>
+<li>如果同一个索引既具有唯一性，又具有稀疏性，就可以保存<strong>多篇</strong>缺失索引键值的文档。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231225224458597.png" alt="image-20231225224458597"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225224544583.png" alt="image-20231225224544583"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225224700355.png" alt="image-20231225224700355"></p>
+<h4 id="索引的生存时间"><a href="#索引的生存时间" class="headerlink" title="索引的生存时间"></a>索引的生存时间</h4><p><img src="/2022/08/24/mongodb/image-20231225224807001.png" alt="image-20231225224807001"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225224907944.png" alt="image-20231225224907944"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.accountsIndex.createIndex(&#123;<span class="attr">lastAccess</span>: <span class="number">1</span>&#125;, &#123;<span class="attr">expireAfterSeconds</span>: <span class="number">20</span>&#125;)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231225225113970.png" alt="image-20231225225113970"></p>
+<p><img src="/2022/08/24/mongodb/image-20231225231537368.png" alt="image-20231225231537368"></p>
+<ul>
+<li>索引的生存时间特性只能运用在单个索引上，复合索引不具备生存时间的特性</li>
+</ul>
+<h1 id="5、一个实战操作"><a href="#5、一个实战操作" class="headerlink" title="5、一个实战操作"></a>5、一个实战操作</h1><p>内容：搭建一个支持MongoDB数据库CRUD操作的Web服务，用来进行交易仓位的管理</p>
+<p>每一条仓位记录包含以下信息：</p>
+<ul>
+<li>交易账号</li>
+<li>股票代码</li>
+<li>交易数量</li>
+<li>交易价格</li>
+</ul>
+<p>准备工作</p>
+<ul>
+<li>node.js</li>
+<li>postman工具</li>
+<li>docker容器中运行MongoDB（并绑定端口到本地）</li>
+</ul>
+<p>基本架构</p>
+<p>创建项目文件夹，执行npm init</p>
+<p><img src="/2022/08/24/mongodb/image-20231225233752150.png" alt="image-20231225233752150"></p>
+<p>安装必要的组件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save express body-parser mongoose</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>express，常见的用来搭建网络服务的nodeJS框架</li>
+<li>body-parser，和express结合起来使用的中间件，可以帮助我们解析客户端发过来的请求，</li>
+<li>mongoose，提供给nodeJS的ODM（对象数据模型），帮助我们将一个javascript对象映射到mongoDB数据库中去，减少数据层面和应用层面的依赖性，可以简化代码的开发，提升代码的可维护性</li>
+</ul>
+<p>服务基本架构</p>
+<p><img src="/2022/08/24/mongodb/image-20231225234632022.png" alt="image-20231225234632022"></p>
+<h1 id="6、MongoDB数据模型"><a href="#6、MongoDB数据模型" class="headerlink" title="6、MongoDB数据模型"></a>6、MongoDB数据模型</h1><ul>
+<li>没有固定的数据格式，不等于无需设计数据模型。</li>
+<li>文档结构 -》数据之间的关系</li>
+<li>内嵌式机构 规范式结构</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231226144604468.png" alt="image-20231226144604468"></p>
+<p><img src="/2022/08/24/mongodb/image-20231226144726987.png" alt="image-20231226144726987"></p>
+<p><img src="/2022/08/24/mongodb/image-20231226145022565.png" alt="image-20231226145022565"></p>
+<p>内嵌式</p>
+<p><img src="/2022/08/24/mongodb/image-20231226145254069.png" alt="image-20231226145254069"></p>
+<p>规范式</p>
+<p><img src="/2022/08/24/mongodb/image-20231226145426903.png" alt="image-20231226145426903"></p>
+<p><img src="/2022/08/24/mongodb/image-20231226145620207.png" alt="image-20231226145620207"></p>
+<ul>
+<li>适合常常需要返回全部相关文档的查询</li>
+<li>数组元素较多时，避免使用内嵌文档（文档尺寸大，使用索引的效率会下降，从数据库引擎的角度，进行数据的更新操作等，操作的效率也会下降）</li>
+<li>数组元素极多时，重新设计文档结构</li>
+</ul>
+<h1 id="7、数据复制"><a href="#7、数据复制" class="headerlink" title="7、数据复制"></a>7、数据复制</h1><ul>
+<li>高可用性</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231229121216164.png" alt="image-20231229121216164"></p>
+<p>多个mongo进程组成一个集群，叫做复制集，在复制集中，每一个mongoDB进程叫做一个节点。所有的写请求都是由主节点来进行处理。副节点，不停的从主节点复制备份数据（尽量的和主节点的数据保持一致性），主节点也会发生一些读取数据的请求。</p>
+<p><img src="/2022/08/24/mongodb/image-20231229123454403.png" alt="image-20231229123454403"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229123641863.png" alt="image-20231229123641863"></p>
+<ul>
+<li>复制集中，节点数量限制的原因：每一个复制集都需要向其他节点（以一定的频率）发送心跳请求，当复制集中节点的数量增加时，需要发送的心跳的数量会以平方级别增加，如果复制集中节点的数量太多，仅仅是发送心跳请求，就会消耗大量的资源，在这种情况下，复制集合，很难有效的工作，所以对数量有限制。</li>
+<li>创建复制集时，最少需要三个节点，如果少于三个，就不是一个完善的复制集</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231229124205585.png" alt="image-20231229124205585"></p>
+<ul>
+<li>term：选举计数器</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231229124758333.png" alt="image-20231229124758333"></p>
+<ul>
+<li>投票开始是，首先会给自己投一票。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231229125107469.png" alt="image-20231229125107469"></p>
+<ul>
+<li>新节点，加入复制集，未必是全新的节点，也有可能是，之前异常下线的节点重新上线。</li>
+</ul>
+<p>投票机节点，</p>
+<p><img src="/2022/08/24/mongodb/image-20231229125511798.png" alt="image-20231229125511798"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229125657911.png" alt="image-20231229125657911"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229125847186.png" alt="image-202312291258471861"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229130058236.png" alt="image-20231229130058236"></p>
+<p>使用Docker创建一个mongodb的复制集</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network create mongocopywork</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20231229130713815.png" alt="image-20231229130713815"></p>
+<p>运行3个mongodb节点</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --net mongocopywork --name mongo_1 -v /d/docker/mongo/data_1:/data/db -p 27017:27017 -d mongo:4 --replSet myset --port 27017</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231229132038385.png" alt="image-20231229132038385"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --net mongocopywork --name mongo_2 -v /d/docker/mongo/data_2:/data/db -p 27018:27018 -d mongo:4 --replSet myset --port 27018</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231229132137576.png" alt="image-20231229132137576"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --net mongocopywork --name mongo_3 -v /d/docker/mongo/data_3:/data/db -p 27019:27019 -d mongo:4 --replSet myset --port 27019</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231229132403611.png" alt="image-20231229132403611"></p>
+<ul>
+<li>注意需要使用同一个复制集的名字</li>
+<li>需要使用同一个–net mongocopywork </li>
+</ul>
+<p>手动初始化基于这三个节点的mongodb复制集</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">rs.initiate(</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">_id</span>: <span class="string">&quot;myset&quot;</span>,</span><br><span class="line">        <span class="attr">members</span>: [</span><br><span class="line">            &#123;<span class="attr">_id</span>: <span class="number">0</span>, <span class="attr">host</span>: <span class="string">&quot;mongo_1:27017&quot;</span>&#125;,</span><br><span class="line">            &#123;<span class="attr">_id</span>: <span class="number">1</span>, <span class="attr">host</span>: <span class="string">&quot;mongo_2:27018&quot;</span>&#125;,</span><br><span class="line">            &#123;<span class="attr">_id</span>: <span class="number">2</span>, <span class="attr">host</span>: <span class="string">&quot;mongo_3:27019&quot;</span>&#125;,</span><br><span class="line">        ]</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>_id: “myset”，使用–replSet声明复制集的名字</li>
+<li>members中，声明所有的节点</li>
+</ul>
+<p>运行的结果</p>
+<p><img src="/2022/08/24/mongodb/image-20231229133342684.png" alt="image-20231229133342684"></p>
+<p>查看复制集的状态</p>
+<h1 id="8、分片"><a href="#8、分片" class="headerlink" title="8、分片"></a>8、分片</h1><p><img src="/2022/08/24/mongodb/image-20231229133804543.png" alt="image-20231229133804543"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229155359797.png" alt="image-20231229155359797"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229155444376.png" alt="image-20231229155444376"></p>
+<ul>
+<li>mongoDB使用的是横向扩展的方法</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231229155854982.png" alt="image-20231229155854982"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229160011744.png" alt="image-20231229160011744"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229160122607.png" alt="image-20231229160122607"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229160516184.png" alt="image-20231229160516184"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229160729356.png" alt="image-20231229160729356"></p>
+<ul>
+<li>片键不可更改</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231229161449880.png" alt="image-20231229161449880"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229161643434.png" alt="image-20231229161643434"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229162311958.png" alt="image-20231229162311958"></p>
+<ul>
+<li>配置服务器也是用复制集进行部署，实现高可用。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231229162536699.png" alt="image-20231229162536699"></p>
+<p>分片查询。</p>
+<p><img src="/2022/08/24/mongodb/image-20231229163238350.png" alt="image-20231229163238350"></p>
+<h1 id="9、数据库安全"><a href="#9、数据库安全" class="headerlink" title="9、数据库安全"></a>9、数据库安全</h1><p><img src="/2022/08/24/mongodb/image-20231229163349151.png" alt="image-20231229163349151"></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -p 27017:27017 --name mongo_auth -v /d/docker/mongo/data_auth:/data/db -d mongo:4 mongod</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231229163726092.png" alt="image-20231229163726092"></p>
+<p>认证，创建第一个用户，创建一个具备用户管理权限的用户。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">use admin;</span><br><span class="line">db.createUser(</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="attr">user</span>: <span class="string">&quot;UserAdmin_01&quot;</span>,</span><br><span class="line">        <span class="attr">pwd</span>: <span class="string">&quot;123123&quot;</span>,</span><br><span class="line">        <span class="attr">roles</span>: [<span class="string">&quot;userAdminAnyDatabase&quot;</span>]</span><br><span class="line">    &#125;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20231229164126073.png" alt="image-20231229164126073"></p>
+<p>认证，启用身份认证</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker stop mongo_auth &amp;&amp; docker rm $_</span><br><span class="line">docker run -p 27017:27017 --name mongo_auth -v /d/docker/mongo/data_auth:/data/db -d mongo:4 mongod --auth</span><br></pre></td></tr></table></figure>
+
+<p>使用用户名和密码进行身份验证</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mongo -u &quot;UserAdmin_01&quot; -p &quot;123123&quot; --authenticationDatabase &quot;admin&quot;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>一个用户，只有一个验证数据库，但是不意味着它只能操作一个数据库。</li>
+</ul>
+<p>执行一次插入操作，结果报错，显示对应的客户无权限</p>
+<p><img src="/2022/08/24/mongodb/image-20231229165448338.png" alt="image-20231229165448338"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229165745520.png" alt="image-20231229165745520"></p>
+<p><img src="/2022/08/24/mongodb/image-20231229165703628.png" alt="image-20231229165703628"></p>
+<p><img src="/2022/08/24/mongodb/image-20231230112716954.png" alt="image-20231230112716954"></p>
+<p><img src="/2022/08/24/mongodb/image-20231230112801498.png" alt="image-20231230112801498"></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use test;</span><br><span class="line">db.createUser(&#123;</span><br><span class="line">    <span class="attr">user</span>: <span class="string">&quot;testReader&quot;</span>,</span><br><span class="line">    <span class="attr">pwd</span>: <span class="string">&quot;passwd&quot;</span>,</span><br><span class="line">    <span class="attr">roles</span>: [&#123;<span class="attr">role</span>: <span class="string">&quot;read&quot;</span>, <span class="attr">db</span>: <span class="string">&quot;test&quot;</span>&#125;]</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20231230113810804.png" alt="image-20231230113810804"></p>
+<p>创建完成后，登录mongo shell 完成验证操作：</p>
+<p><img src="/2022/08/24/mongodb/image-20231230114013428.png" alt="image-20231230114013428"></p>
+<p>执行一次写入操作</p>
+<p><img src="/2022/08/24/mongodb/image-20231230114226824.png" alt="image-20231230114226824"></p>
+<p>自定义角色实现更紧精细的权限控制</p>
+<p><img src="/2022/08/24/mongodb/image-20231230114428643.png" alt="image-20231230114428643"></p>
+<p>创建自定义的角色，赋予不同的用户。</p>
+<p><img src="/2022/08/24/mongodb/image-20231230114656181.png" alt="image-20231230114656181"></p>
+<h1 id="10、数据管理攻击"><a href="#10、数据管理攻击" class="headerlink" title="10、数据管理攻击"></a>10、数据管理攻击</h1><p>导入和导出工具</p>
+<p><img src="/2022/08/24/mongodb/image-20231230175506845.png" alt="image-20231230175506845"></p>
+<ul>
+<li>mongoexport，可以将数据导出为json或者csv格式文件</li>
+<li>需要对所需要的数据库具备读取权限。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231230182948683.png" alt="image-20231230182948683"></p>
+<p>导出时支持添加查询条件：需要加–query参数</p>
+<p>参考文献：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xibuhaohao/p/11250275.html">https://www.cnblogs.com/xibuhaohao/p/11250275.html</a></p>
+<p>mongostat命令</p>
+<p>mongodb数据库支持添加的角色，权限、操作find。。。</p>
+<p><img src="/2022/08/24/mongodb/image-20231230212654333.png" alt="image-20231230212654333"></p>
+<ul>
+<li>mongotop只会去抓取一些活跃的集合的参数，如果返回的结果，不包括你想要的集合，数据，那么说明该集合很久都没有被操作过了。</li>
+</ul>
+<h1 id="11、常见故障诊断"><a href="#11、常见故障诊断" class="headerlink" title="11、常见故障诊断"></a>11、常见故障诊断</h1><h4 id="响应时间长"><a href="#响应时间长" class="headerlink" title="响应时间长"></a>响应时间长</h4><p><img src="/2022/08/24/mongodb/image-20231230213134594.png" alt="image-20231230213134594"></p>
+<ul>
+<li>合适的索引，使用explain()查看索引的有效性</li>
+<li>工作集超过了RAM的大小，使用mongostat查看服务器的状态<ul>
+<li>表现为，使用mongstat，命令查看时，used的百分比远远超过dirty的百分比。</li>
+</ul>
+</li>
+</ul>
+<h4 id="连接失败"><a href="#连接失败" class="headerlink" title="连接失败"></a>连接失败</h4><ul>
+<li>新建连接不成功</li>
+<li>已有的连接断开</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231231200754564.png" alt="image-20231231200754564"></p>
+<p><img src="/2022/08/24/mongodb/image-20231231200908147.png" alt="image-20231231200908147"></p>
+<ul>
+<li>current，已有连接数</li>
+<li>available，还可以提供的连接数</li>
+<li>totalCreated，总共创建过多少个连接</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231231201145551.png" alt="image-20231231201145551"></p>
+<ul>
+<li>查看mongo.conf文件中的</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231231201306834.png" alt="image-20231231201306834"></p>
+<p><img src="/2022/08/24/mongodb/image-20231231201423883.png" alt="image-20231231201423883"></p>
+<p>现象</p>
+<p><img src="/2022/08/24/mongodb/image-20231231201605363.png" alt="image-20231231201605363"></p>
+<p>查看ulimit配置</p>
+<ul>
+<li>需要退出容器，在容器内部运行这个指令</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20231231202245418.png" alt="image-20231231202245418"></p>
+<p>查看open files参数，它的实际含义是file describes，现在docker容器被支持的最多的文件描述器的数量只有2000，对于mongodb来讲，每一个集合，每一个索引，都需要相对应的文件来保存相对应的数据，而且每一个连接都还需要一个file describe，如果文件描述器的总量只有2000，那么减去对mongoDB，所有的集合，索引需要的文件描述器之后，我们可以留给创建连接的文件描述器的数量就会小于2000。此时想要增大，最大连接数的数量，不止需要调整配置文件中的最大连接数量，还需要调整ulimit的配置。</p>
+<h2 id="mondoDB文档的复制操作"><a href="#mondoDB文档的复制操作" class="headerlink" title="mondoDB文档的复制操作"></a>mondoDB文档的复制操作</h2><p><img src="/2022/08/24/mongodb/image-20231223171845852.png" alt="image-20231223171845852"></p>
+<h2 id><a href="#" class="headerlink" title></a></h2><h1 id="阿里云MongoDB-入门到云上开发"><a href="#阿里云MongoDB-入门到云上开发" class="headerlink" title="阿里云MongoDB - 入门到云上开发"></a>阿里云MongoDB - 入门到云上开发</h1><p><img src="/2022/08/24/mongodb/image-20240101115721862.png" alt="image-20240101115721862"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101115733356.png" alt="image-20240101115733356"></p>
+<h3 id="SQL与MOngoDB对应术语"><a href="#SQL与MOngoDB对应术语" class="headerlink" title="SQL与MOngoDB对应术语"></a>SQL与MOngoDB对应术语</h3><p><img src="/2022/08/24/mongodb/image-20240101141213147.png" alt="image-20240101141213147"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101141525639.png" alt="image-20240101141525639"></p>
+<h3 id="体系架构"><a href="#体系架构" class="headerlink" title="体系架构"></a>体系架构</h3><p><img src="/2022/08/24/mongodb/image-20240101141556598.png" alt="image-20240101141556598"></p>
+<h3 id="主从复制结构"><a href="#主从复制结构" class="headerlink" title="主从复制结构"></a>主从复制结构</h3><p><img src="/2022/08/24/mongodb/image-20240101141708934.png" alt="image-20240101141708934"></p>
+<h3 id="分片集群架构"><a href="#分片集群架构" class="headerlink" title="分片集群架构"></a>分片集群架构</h3><p><img src="/2022/08/24/mongodb/image-20240101141752976.png" alt="image-20240101141752976"></p>
+<h3 id="云数据库MongoDB架构"><a href="#云数据库MongoDB架构" class="headerlink" title="云数据库MongoDB架构"></a>云数据库MongoDB架构</h3><p><img src="/2022/08/24/mongodb/image-20240101141900201.png" alt="image-20240101141900201"></p>
+<h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p><img src="/2022/08/24/mongodb/image-20240101141955429.png" alt="image-20240101141955429"></p>
+<h2 id="数据查询与分析"><a href="#数据查询与分析" class="headerlink" title="数据查询与分析"></a>数据查询与分析</h2><p><img src="/2022/08/24/mongodb/image-20240101142118902.png" alt="image-20240101142118902"></p>
+<h3 id="条件查询"><a href="#条件查询" class="headerlink" title="条件查询"></a>条件查询</h3><p><img src="/2022/08/24/mongodb/image-20240101143022285.png" alt="image-20240101143022285"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101143320048.png" alt="image-20240101143320048"></p>
+<p>嵌套文档的查询</p>
+<p>数组的查询</p>
+<h3 id="映射Projext与过滤"><a href="#映射Projext与过滤" class="headerlink" title="映射Projext与过滤"></a>映射Projext与过滤</h3><p>1，表示选取，0表示不选取，注意除了_id:0，意外，其他字段，0、1不能同时出现。</p>
+<h3 id="去除重复的Distinct"><a href="#去除重复的Distinct" class="headerlink" title="去除重复的Distinct"></a>去除重复的Distinct</h3><h3 id="分组统计Group"><a href="#分组统计Group" class="headerlink" title="分组统计Group"></a>分组统计Group</h3><p><img src="/2022/08/24/mongodb/image-20240101144713650.png" alt="image-20240101144713650"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101144727035.png" alt="image-20240101144727035"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101144913859.png" alt="image-20240101144913859"></p>
+<h2 id="数据库核心知识"><a href="#数据库核心知识" class="headerlink" title="数据库核心知识"></a>数据库核心知识</h2><p><img src="/2022/08/24/mongodb/image-20240101144951876.png" alt="image-20240101144951876"></p>
+<h3 id="MongoDB数据库架构"><a href="#MongoDB数据库架构" class="headerlink" title="MongoDB数据库架构"></a>MongoDB数据库架构</h3><h4 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h4><p><img src="/2022/08/24/mongodb/image-20240101180234590.png" alt="image-20240101180234590"></p>
+<h4 id="逻辑架构"><a href="#逻辑架构" class="headerlink" title="逻辑架构"></a>逻辑架构</h4><p><img src="/2022/08/24/mongodb/image-20240101180544554.png" alt="image-20240101180544554"></p>
+<h3 id="MongoDB的数据库引擎"><a href="#MongoDB的数据库引擎" class="headerlink" title="MongoDB的数据库引擎"></a>MongoDB的数据库引擎</h3><p><img src="/2022/08/24/mongodb/image-20240101183008545.png" alt="image-20240101183008545"></p>
+<ul>
+<li>MMAPv1（早期的）、WiredTiger（3.0之后默认的）、Encrypted（企业版）、In-Memory（企业版），是官方标配的</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20240101183712821.png" alt="image-20240101183712821"></p>
+<ul>
+<li>查看MongoDB已经安装的存储引擎</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.serverStatus().storageEngine</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2022/08/24/mongodb/image-20240101184231530.png" alt="image-20240101184231530"></p>
+<p>参数含义：</p>
+<ul>
+<li>name，存储引擎名称</li>
+<li>supportsCommittedReads，支持提交读，一个会话的修改提交后，其他会话才能继续读取</li>
+</ul>
+<h3 id="集合Collection"><a href="#集合Collection" class="headerlink" title="集合Collection"></a>集合Collection</h3><p><img src="/2022/08/24/mongodb/image-20240101184758750.png" alt="image-20240101184758750"></p>
+<p>查看集合信息</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">db.[集合名称].status</span><br></pre></td></tr></table></figure>
+
+<h3 id="文档模型与BSON"><a href="#文档模型与BSON" class="headerlink" title="文档模型与BSON"></a>文档模型与BSON</h3><p><img src="/2022/08/24/mongodb/image-20240101190217009.png" alt="image-20240101190217009"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101190516976.png" alt="image-20240101190516976"></p>
+<h5 id="嵌入式文档结构"><a href="#嵌入式文档结构" class="headerlink" title="嵌入式文档结构"></a>嵌入式文档结构</h5><p><img src="/2022/08/24/mongodb/image-20240101190920301.png" alt="image-20240101190920301"></p>
+<h5 id="引用式文档结构"><a href="#引用式文档结构" class="headerlink" title="引用式文档结构"></a>引用式文档结构</h5><p><img src="/2022/08/24/mongodb/image-20240101190810694.png" alt="image-20240101190810694"></p>
+<h5 id="面试"><a href="#面试" class="headerlink" title="面试"></a>面试</h5><p><img src="/2022/08/24/mongodb/image-20240101191115857.png" alt="image-20240101191115857"></p>
+<h3 id="日志机制"><a href="#日志机制" class="headerlink" title="日志机制"></a>日志机制</h3><p><img src="/2022/08/24/mongodb/image-20240101191504423.png" alt="image-20240101191504423"></p>
+<ul>
+<li>在conf配置文件中，配置是否启用日志和日志保存的位置</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20240101191606500.png" alt="image-20240101191606500"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101191903010.png" alt="image-20240101191903010"></p>
+<h4 id="面试题"><a href="#面试题" class="headerlink" title="面试题"></a>面试题</h4><p><img src="/2022/08/24/mongodb/image-20240101192206832.png" alt="image-20240101192206832"></p>
+<h2 id="数据库管理备份"><a href="#数据库管理备份" class="headerlink" title="数据库管理备份"></a>数据库管理备份</h2><h3 id="MongoDB的备份机制"><a href="#MongoDB的备份机制" class="headerlink" title="MongoDB的备份机制"></a>MongoDB的备份机制</h3><p><img src="/2022/08/24/mongodb/image-20240101214012477.png" alt="image-20240101214012477"></p>
+<ul>
+<li>1，2需要特殊的设置（快照），</li>
+<li>3进行数据复制操作时，需要考略文件是否是可复制的，在某些情况下，数据库磁盘占用的情况下，无法进行数据复制操作。</li>
+<li>绝大部分的可视化工具，都是在4和5上进行了扩展</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20240101214318013.png" alt="image-20240101214318013"></p>
+<ul>
+<li>增量备份的概念。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20240101214618323.png" alt="image-20240101214618323"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101214944678.png" alt="image-20240101214944678"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101215220760.png" alt="image-20240101215220760"></p>
+<p>备份命令：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># mongodump --host <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span> --port <span class="number">27017</span></span><br><span class="line">mongodump --host [ip] --port [port]</span><br></pre></td></tr></table></figure>
+
+
+
+<p><img src="/2022/08/24/mongodb/image-20240101215537543.png" alt="image-20240101215537543"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101220840164.png" alt="image-20240101220840164"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101220940728.png" alt="image-20240101220940728"></p>
+<p><img src="/2022/08/24/mongodb/image-20240101221030592.png" alt="image-20240101221030592"></p>
+<h3 id="数据库恢复"><a href="#数据库恢复" class="headerlink" title="数据库恢复"></a>数据库恢复</h3><p><img src="/2022/08/24/mongodb/image-20240101221222779.png" alt="image-20240101221222779"></p>
+<h3 id="数据库的导出"><a href="#数据库的导出" class="headerlink" title="数据库的导出"></a>数据库的导出</h3><p><img src="/2022/08/24/mongodb/image-20240101221754313.png" alt="image-20240101221754313"></p>
+<h3 id="数据库的导入"><a href="#数据库的导入" class="headerlink" title="数据库的导入"></a>数据库的导入</h3><p><img src="/2022/08/24/mongodb/image-20240101221900457.png" alt="image-20240101221900457"></p>
+<h3 id="面试题-1"><a href="#面试题-1" class="headerlink" title="面试题"></a>面试题</h3><p><img src="/2022/08/24/mongodb/image-20240101223308606.png" alt="image-20240101223308606"></p>
+<h2 id="一个项目"><a href="#一个项目" class="headerlink" title="一个项目"></a>一个项目</h2><p><img src="/2022/08/24/mongodb/image-20240102115208938.png" alt="image-20240102115208938"></p>
+<p>开发步骤</p>
+<p><img src="/2022/08/24/mongodb/image-20240102115929450.png" alt="image-20240102115929450"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102120042898.png" alt="image-20240102120042898"></p>
+<h2 id="性能分析与优化"><a href="#性能分析与优化" class="headerlink" title="性能分析与优化"></a>性能分析与优化</h2><p><img src="/2022/08/24/mongodb/image-20240102120145408.png" alt="image-20240102120145408"></p>
+<h3 id="数据库性能优化因素"><a href="#数据库性能优化因素" class="headerlink" title="数据库性能优化因素"></a>数据库性能优化因素</h3><p><img src="/2022/08/24/mongodb/image-20240102120248472.png" alt="image-20240102120248472"></p>
+<ul>
+<li>硬件 cpu，硬盘</li>
+<li>网络</li>
+<li>软件，合理创建索引。</li>
+</ul>
+<h3 id="MongoDB数据库索引与查询优化"><a href="#MongoDB数据库索引与查询优化" class="headerlink" title="MongoDB数据库索引与查询优化"></a>MongoDB数据库索引与查询优化</h3><p><img src="/2022/08/24/mongodb/image-20240102125406335.png" alt="image-20240102125406335"></p>
+<p>索引的类型</p>
+<p><img src="/2022/08/24/mongodb/image-20240102122817423.png" alt="image-20240102122817423"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102123104426.png" alt="image-20240102123104426"></p>
+<h3 id="查询计划"><a href="#查询计划" class="headerlink" title="查询计划"></a>查询计划</h3><p><img src="/2022/08/24/mongodb/image-20240102123405476.png" alt="image-20240102123405476"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102123436433.png" alt="image-20240102123436433"></p>
+<h3 id="explain函数分析查询语句的性能"><a href="#explain函数分析查询语句的性能" class="headerlink" title="explain函数分析查询语句的性能"></a>explain函数分析查询语句的性能</h3><p><img src="/2022/08/24/mongodb/image-20240102123647669.png" alt="image-20240102123647669"></p>
+<h3 id="查询过滤器与索引优化器"><a href="#查询过滤器与索引优化器" class="headerlink" title="查询过滤器与索引优化器"></a>查询过滤器与索引优化器</h3><p><img src="/2022/08/24/mongodb/image-20240102124147347.png" alt="image-20240102124147347"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102124223897.png" alt="image-20240102124223897"></p>
+<p>索引的限制</p>
+<p><img src="/2022/08/24/mongodb/image-20240102125122128.png" alt="image-20240102125122128"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102125238050.png" alt="image-20240102125238050"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102125434308.png" alt="image-20240102125434308"></p>
+<h2 id="监控"><a href="#监控" class="headerlink" title="监控"></a>监控</h2><h4 id="意义"><a href="#意义" class="headerlink" title="意义"></a>意义</h4><p><img src="/2022/08/24/mongodb/image-20240102143249003.png" alt="image-20240102143249003"></p>
+<ul>
+<li>db.atatus</li>
+<li>磁盘、内存、CUP的使用量、索引、集合对象的大小、网络链接</li>
+</ul>
+<h4 id="监控指标"><a href="#监控指标" class="headerlink" title="监控指标"></a>监控指标</h4><p><img src="/2022/08/24/mongodb/image-20240102144021756.png" alt="image-20240102144021756"></p>
+<p>功能特性</p>
+<p><img src="/2022/08/24/mongodb/image-20240102144513058.png" alt="image-20240102144513058"></p>
+<p>日志监控级别</p>
+<p><img src="/2022/08/24/mongodb/image-20240102144623327.png" alt="image-20240102144623327"></p>
+<ul>
+<li>开的级别越低，监控到的指标越多，就会占用额外的写入</li>
+</ul>
+<h3 id="日志监控策略"><a href="#日志监控策略" class="headerlink" title="日志监控策略"></a>日志监控策略</h3><p><img src="/2022/08/24/mongodb/image-20240102144929716.png" alt="image-20240102144929716"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102145119189.png" alt="image-20240102145119189"></p>
+<ul>
+<li>使用：db.getFreeMonitoringStatus()，查看监控的状态。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20240102155433164.png" alt="image-20240102155433164"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102160002466.png" alt="image-20240102160002466"></p>
+<h3 id="数据库安全机制"><a href="#数据库安全机制" class="headerlink" title="数据库安全机制"></a>数据库安全机制</h3><p><img src="/2022/08/24/mongodb/image-20240102160443114.png" alt="image-20240102160443114"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102160653128.png" alt="image-20240102160653128"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102160730138.png" alt="image-20240102160730138"></p>
+<ul>
+<li>身份验证、操作鉴权、传输加密、存储加密、审计监控。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20240102161114216.png" alt="image-20240102161114216"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102161134852.png" alt="image-20240102161134852"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102161705521.png" alt="image-20240102161705521"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102161947295.png" alt="image-20240102161947295"></p>
+<p>挑战应答机制</p>
+<p><img src="/2022/08/24/mongodb/image-20240102162112701.png" alt="image-20240102162112701"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102162129255.png" alt="image-20240102162129255"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102162241390.png" alt="image-20240102162241390"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102162327642.png" alt="image-20240102162327642"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102162445814.png" alt="image-20240102162445814"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102162456931.png" alt="image-20240102162456931"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102162705044.png" alt="image-20240102162705044"></p>
+<h3 id="实战MongoDB的安全配置"><a href="#实战MongoDB的安全配置" class="headerlink" title="实战MongoDB的安全配置"></a>实战MongoDB的安全配置</h3><p><img src="/2022/08/24/mongodb/image-20240102162910438.png" alt="image-20240102162910438"></p>
+<ul>
+<li>基于角色认证授权的数据库</li>
+</ul>
+<p>java链接mongodb</p>
+<p><img src="/2022/08/24/mongodb/image-20240102163654668.png" alt="image-20240102163654668"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102164245881.png" alt="image-20240102164245881"></p>
+<h2 id="高可用集群架构"><a href="#高可用集群架构" class="headerlink" title="高可用集群架构"></a>高可用集群架构</h2><h3 id="主从复制架构"><a href="#主从复制架构" class="headerlink" title="主从复制架构"></a>主从复制架构</h3><p><img src="/2022/08/24/mongodb/image-20240102164508437.png" alt="image-20240102164508437"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102165216507.png" alt="image-20240102165216507"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102165325839.png" alt="image-20240102165325839"></p>
+<h3 id="读写分离架构"><a href="#读写分离架构" class="headerlink" title="读写分离架构"></a>读写分离架构</h3><h3 id="高可用集群特性"><a href="#高可用集群特性" class="headerlink" title="高可用集群特性"></a>高可用集群特性</h3><p><img src="/2022/08/24/mongodb/image-20240102165853489.png" alt="image-20240102165853489"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102170249520.png" alt="image-20240102170249520"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102171034965.png" alt="image-20240102171034965"></p>
+<h2 id="数据库运维与容器化"><a href="#数据库运维与容器化" class="headerlink" title="数据库运维与容器化"></a>数据库运维与容器化</h2><h4 id="影响因素"><a href="#影响因素" class="headerlink" title="影响因素"></a>影响因素</h4><p><img src="/2022/08/24/mongodb/image-20240102171508019.png" alt="image-20240102171508019"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102171604797.png" alt="image-20240102171604797"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102171758647.png" alt="image-20240102171758647"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102172305516.png" alt="image-20240102172305516"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102172518124.png" alt="image-20240102172518124"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102173057496.png" alt="image-20240102173057496"></p>
+<h4 id="升级与数据索引迁移"><a href="#升级与数据索引迁移" class="headerlink" title="升级与数据索引迁移"></a>升级与数据索引迁移</h4><ul>
+<li>备份数据时，不会备份索引的数据，在进行数据库迁移工作后，需要重建索引</li>
+</ul>
+<p>版本选择</p>
+<p><img src="/2022/08/24/mongodb/image-20240103141532258.png" alt="image-20240103141532258"></p>
+<p><img src="/2022/08/24/mongodb/image-20240103140948288.png" alt="image-20240103140948288"></p>
+<h4 id="容灾方案"><a href="#容灾方案" class="headerlink" title="容灾方案"></a>容灾方案</h4><ul>
+<li>数据丢失，磁盘损坏都算灾难</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20240103141505300.png" alt="image-20240103141505300"></p>
+<h4 id="安全考量"><a href="#安全考量" class="headerlink" title="安全考量"></a>安全考量</h4><p><img src="/2022/08/24/mongodb/image-20240103142155519.png" alt="image-20240103142155519"></p>
+<ul>
+<li>一定要启动身份验证，要对授权进行鉴权工作，不要给所有的账号关联权限。</li>
+<li>数据的加密传输问题，操作审计。</li>
+</ul>
+<h4 id="数据库监控"><a href="#数据库监控" class="headerlink" title="数据库监控"></a>数据库监控</h4><p><img src="/2022/08/24/mongodb/image-20240103143019089.png" alt="image-20240103143019089"></p>
+<ul>
+<li>官方运维工具 ops manages(收费)</li>
+</ul>
+<h4 id="高可用架构"><a href="#高可用架构" class="headerlink" title="高可用架构"></a>高可用架构</h4><ul>
+<li>一般时义主梁两从模式，一个节点负责，写入数据，两个节点负责同步数据，如果出现读的压力比较大的情况，可以把读的压力拆分到从节点上。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20240103143606115.png" alt="image-20240103143606115"></p>
+<ul>
+<li>每个分片都是一个高可用的集群</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20240102171129125.png" alt="image-20240102171129125"></p>
+<p><img src="/2022/08/24/mongodb/image-20240102171331363.png" alt="image-20240102171331363"></p>
+<h2 id="MongoDB索引原理及使用"><a href="#MongoDB索引原理及使用" class="headerlink" title="MongoDB索引原理及使用"></a>MongoDB索引原理及使用</h2><h4 id="索引原理"><a href="#索引原理" class="headerlink" title="索引原理"></a>索引原理</h4><h5 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h5><p><img src="/2022/08/24/mongodb/image-20240103145127380.png" alt="image-20240103145127380"></p>
+<ul>
+<li>首先网络层开始接收来自客户端的一些请求，之后这些请求会到执行计划层，执行计划层会生成一系列的数据库的访问操作，这些操作又会转化成一系列的k-v的接口，之后会有存储引擎来执行操作，mongodb默认的存储引擎时WiredTiger。</li>
+</ul>
+<p><img src="/2022/08/24/mongodb/image-20240103145635410.png" alt="image-20240103145635410"></p>
+<p><img src="/2022/08/24/mongodb/image-20240103150039390.png" alt="image-20240103150039390"></p>
+<h4 id="执行计划"><a href="#执行计划" class="headerlink" title="执行计划"></a>执行计划</h4><h4 id="Tips"><a href="#Tips" class="headerlink" title="Tips"></a>Tips</h4><hr>
+<p>参考：</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Honesty-is-the-best-policy/p/17147004.html">https://www.cnblogs.com/Honesty-is-the-best-policy/p/17147004.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.amjun.com/1609.html">https://www.amjun.com/1609.html</a></p>
+<h1 id="MongoDB"><a href="#MongoDB" class="headerlink" title="MongoDB"></a>MongoDB</h1><p><img src="/2022/08/24/mongodb/image-20231226171828655.png" alt="image-20231226171828655"></p>
+<p><img src="/2022/08/24/mongodb/image-20231226172040192.png" alt="image-20231226172040192"></p>
+<p><img src="/2022/08/24/mongodb/image-20231226172430102.png" alt="image-20231226172430102"></p>
+<p><img src="/2022/08/24/mongodb/image-20231226214556940.png" alt="image-20231226214556940"></p>
+<p><img src="/2022/08/24/mongodb/image-20231226225015962.png" alt="image-20231226225015962"></p>
+<h1 id="1、安装"><a href="#1、安装" class="headerlink" title="1、安装"></a>1、安装</h1><h2 id="在Docker中安装Docker"><a href="#在Docker中安装Docker" class="headerlink" title="在Docker中安装Docker"></a>在Docker中安装Docker</h2><p>搜索Docker中的mongo镜像</p>
 <p>在Ubuntu中安装Mongo</p>
 <h2 id="下载linux（ubuntu）下的安装文件"><a href="#下载linux（ubuntu）下的安装文件" class="headerlink" title="下载linux（ubuntu）下的安装文件"></a>下载linux（ubuntu）下的安装文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-5.0.11.tgz</span><br></pre></td></tr></table></figure>
 
@@ -342,13 +1333,55 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">show collections</span><br></pre></td></tr></table></figure>
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<p><strong>项目描述：</strong>可管理的威胁检测与响应服务，是绿盟一体化安全运营服务的重要组成部分，是团队项目的核心。使用MDR服务可以对客户平台产生的威胁事件进行快速检测、快速研判和分析、主动处置和闭环管理，进一步提升了客户威胁响应效率，降低了客户平台的安全风险，有助于企业和机构开展安全运营工作。</p>
+<p>•    项目整体使用B/S架构设计开发，客户平台安全事件上报采用C/S架构。</p>
+<p>•    项目采用容器化方式进行部署。</p>
+<p>•    在设计上采用微服务的架构思想，威胁事件提取、威胁事件研判分析、威胁事件闭环处置使用分布部署。</p>
+<p>•    项目对外API采用Django，FastAPI开发，使用MongoDB作为数据库，使用Kafka作为消息队列，使用Celery作为异步任务处理队列。</p>
+<p>项目支持私有化部署</p>
+<p><strong>技术栈：</strong>Python + MongoDB + Kafak + Redis + Celery　+ K8s</p>
+<p><strong>功能设计：</strong>以事件上报驱动事件运营，…</p>
+<p><strong>个人贡献</strong></p>
+<p>•    使用Kafka进行项目间模块的解耦，降低项目后续开发和维护的难度。</p>
+<p>•    主导项目架构升级，提升了项目对外接口的安全性和可扩展性。</p>
+<p>•    保证项目迭代按计划完成，上线后正常平稳运行。</p>
+<p>1、必备技术（消息产生（支持对多来源的事件数据进行处理）、流转、处理）2、稳定性（环境、业务（消费失败，消息的重新入队，保证消息的前后顺序））3、bug处理，链路监控，4、mongodb做为数据库，存储消息推送的结果。持久化数据库，</p>
+
         </div>
         <footer class="article-footer">
             
 
 
 
-    <a data-url="http://example.com/2022/08/24/mongodb/" data-id="clq80f8ao000xskvof6l46dsg" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://example.com/2022/08/24/mongodb/" data-id="clrbu0yzz0038l4vo9r9iami6" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -419,19 +1452,22 @@
             "name": "Wumeng"
         },
         "headline": "mongodb",
-        "image": "http://example.com/2022/08/24/mongodb/image-20220827231922377.png",
+        "image": "http://example.com/2022/08/24/mongodb/image-20231218163538605.png",
         "keywords": "数据库",
         "genre": "学习",
         "datePublished": "2022-08-24",
         "dateCreated": "2022-08-24",
-        "dateModified": "2023-09-12",
+        "dateModified": "2024-01-03",
         "url": "http://example.com/2022/08/24/mongodb/",
-        "description": "1、安装在Docker中安装Docker搜索Docker中的mongo镜像
-在Ubuntu中安装Mongo
-下载linux（ubuntu）下的安装文件1wget https://fastdl.mongodb.org/linux/mongodb-linux-x86_64-ubuntu2004-5.0.11.tgz
+        "description": "
+mongodb是一种存储文档的非关系型数据库
+1、Docker中安装mongodb1docker pull mongo:4
 
-解压1tar -xvf mongodb-linux-x86_64-ubuntu200",
-        "wordCount": 596
+
+
+使用Docker容器运行MongoDB
+1docker run -p 27017:27017 --name mongo_1 -v /d/docker/mongo/data:/data/db -v /d/docker/mongo/conf:/etc/mongo -e M",
+        "wordCount": 4183
     }
 </script>
 
@@ -523,9 +1559,9 @@
     </a>
     
     
-        <a href="/2022/07/01/Django%E5%85%A5%E9%97%A8%E7%AC%94%E8%AE%B0/" id="article-nav-older" class="article-nav-link-wrap">
+        <a href="/2022/06/03/Centos7%E5%AE%89%E8%A3%85Docker/" id="article-nav-older" class="article-nav-link-wrap">
         <strong class="article-nav-caption">上一篇</strong>
-        <p class="article-nav-title">Django入门笔记</p>
+        <p class="article-nav-title">Centos7安装Docker</p>
         <i class="icon fa fa-chevron-left" id="icon-chevron-left"></i>
         </a>
     
@@ -543,6 +1579,26 @@
         <h3 class="widget-title">最新文章</h3>
         <div class="widget">
             <ul id="recent-post" class="">
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
+                            <a href="/2023/12/16/redis/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E7%BC%93%E5%AD%98/">缓存</a></p>
+                            <p class="item-title"><a href="/2023/12/16/redis/" class="title">redis</a></p>
+                            <p class="item-date"><time datetime="2023-12-16T12:51:09.000Z" itemprop="datePublished">2023-12-16</time></p>
+                        </div>
+                    </li>
                 
                     <li>
                         
@@ -624,26 +1680,6 @@
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2023/03/08/Golang/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2023/03/08/Golang/" class="title">Golang</a></p>
-                            <p class="item-date"><time datetime="2023-03-08T13:34:40.000Z" itemprop="datePublished">2023-03-08</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -653,7 +1689,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/">安全设备</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/">安全设备</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%93%E5%AD%98/">缓存</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -663,7 +1699,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li></ul>
         </div>
     </div>
 
@@ -673,7 +1709,7 @@
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8S/" rel="tag">K8S</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/" rel="tag">K8s</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytest/" rel="tag">pytest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/" rel="tag">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag">环境搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8S/" rel="tag">K8S</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/" rel="tag">K8s</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytest/" rel="tag">pytest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/" rel="tag">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag">环境搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -683,7 +1719,7 @@
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Django/" style="font-size: 15px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/K8S/" style="font-size: 10px;">K8S</a> <a href="/tags/K8s/" style="font-size: 10px;">K8s</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/pytest/" style="font-size: 10px;">pytest</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 15px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">基础</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 15px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" style="font-size: 10px;">环境搭建</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+            <a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/K8S/" style="font-size: 10px;">K8S</a> <a href="/tags/K8s/" style="font-size: 10px;">K8s</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/pytest/" style="font-size: 10px;">pytest</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 20px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">基础</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 15px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" style="font-size: 10px;">环境搭建</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
         </div>
     </div>
 
@@ -720,7 +1756,7 @@
                 <h1 class="logo-wrap">
                     <a href="/" class="logo"></a>
                 </h1>
-                <p>&copy; 2023 Wumeng</p>
+                <p>&copy; 2024 Wumeng</p>
                 
                 <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
                 

@@ -12,16 +12,16 @@
     
     <meta name="keywords" content="python" />
     
-    <meta name="description" content="python在一切皆对象在python中函数和类也是对象 赋值给一个变量 可以添加到集合对象中 可以作为参数传递给函数 可以当作函数的返回值  type、object和class的关系 基本所有的内置类型，都是默认会继承object object是type的一个实例，type创建了所有的对象（类、函数） type自己实例化了自己 python中常见的内置类型通过id函数查看对象在内存中的地址 No">
+    <meta name="description" content="python中一切皆对象在python中函数和类也是对象 赋值给一个变量 可以添加到集合对象中 可以作为参数传递给函数 可以当作函数的返回值  type、object和class的关系  object是最顶层的积累 type是一个类，同时也是一个对象  基本所有的内置类型，都是默认会继承object object是type的一个实例，type创建了所有的对象（类、函数） type自己实例化了自己">
 <meta property="og:type" content="article">
 <meta property="og:title" content="python_adv">
 <meta property="og:url" content="http://example.com/2023/04/15/python-adv/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="python在一切皆对象在python中函数和类也是对象 赋值给一个变量 可以添加到集合对象中 可以作为参数传递给函数 可以当作函数的返回值  type、object和class的关系 基本所有的内置类型，都是默认会继承object object是type的一个实例，type创建了所有的对象（类、函数） type自己实例化了自己 python中常见的内置类型通过id函数查看对象在内存中的地址 No">
+<meta property="og:description" content="python中一切皆对象在python中函数和类也是对象 赋值给一个变量 可以添加到集合对象中 可以作为参数传递给函数 可以当作函数的返回值  type、object和class的关系  object是最顶层的积累 type是一个类，同时也是一个对象  基本所有的内置类型，都是默认会继承object object是type的一个实例，type创建了所有的对象（类、函数） type自己实例化了自己">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2023/04/15/python-adv/image-20230415150555194.png">
 <meta property="article:published_time" content="2023-04-15T05:50:34.000Z">
-<meta property="article:modified_time" content="2023-09-24T11:26:37.560Z">
+<meta property="article:modified_time" content="2024-01-11T10:21:45.580Z">
 <meta property="article:author" content="Wumeng">
 <meta property="article:tag" content="python">
 <meta name="twitter:card" content="summary">
@@ -90,7 +90,7 @@
                                     <a class="main-nav-list-link" href="/">主页</a>
                                 </li>
                             
-                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/python/">python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/">安全设备</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
+                                    <ul class="main-nav-list"><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/Linux/">Linux</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/NoSQL/">NoSQL</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/python/">python</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/">安全设备</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E7%BC%93%E5%AD%98/">缓存</a></li><li class="main-nav-list-item"><a class="main-nav-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a></li></ul>
                                 
                                 <li class="main-nav-list-item" >
                                     <a class="main-nav-list-link" href="/about/index.html">关于</a>
@@ -187,7 +187,7 @@
 <div class="article-date">
   <i class="fa fa-calendar-plus-o"></i>
   <a href="/2023/04/15/python-adv/" class="article-date">
-     <time datetime="2023-09-24T11:26:37.560Z" itemprop="dateModified">2023-09-24</time>
+     <time datetime="2024-01-11T10:21:45.580Z" itemprop="dateModified">2024-01-11</time>
   </a>
 </div>
 
@@ -214,22 +214,132 @@
 
             
 
-            <h1 id="python在一切皆对象"><a href="#python在一切皆对象" class="headerlink" title="python在一切皆对象"></a>python在一切皆对象</h1><h4 id="在python中函数和类也是对象"><a href="#在python中函数和类也是对象" class="headerlink" title="在python中函数和类也是对象"></a>在python中函数和类也是对象</h4><ul>
+            <h1 id="python中一切皆对象"><a href="#python中一切皆对象" class="headerlink" title="python中一切皆对象"></a>python中一切皆对象</h1><h4 id="在python中函数和类也是对象"><a href="#在python中函数和类也是对象" class="headerlink" title="在python中函数和类也是对象"></a>在python中函数和类也是对象</h4><ul>
 <li>赋值给一个变量</li>
 <li>可以添加到集合对象中</li>
 <li>可以作为参数传递给函数</li>
 <li>可以当作函数的返回值</li>
 </ul>
 <h4 id="type、object和class的关系"><a href="#type、object和class的关系" class="headerlink" title="type、object和class的关系"></a>type、object和class的关系</h4><p><img src="/2023/04/15/python-adv/image-20230415150555194.png" alt="image-20230415150555194"></p>
+<ul>
+<li>object是最顶层的积累</li>
+<li>type是一个类，同时也是一个对象</li>
+</ul>
 <p>基本所有的内置类型，都是默认会继承object</p>
 <p>object是type的一个实例，type创建了所有的对象（类、函数）</p>
 <p>type自己实例化了自己</p>
-<h4 id="python中常见的内置类型"><a href="#python中常见的内置类型" class="headerlink" title="python中常见的内置类型"></a>python中常见的内置类型</h4><p>通过id函数查看对象在内存中的地址</p>
+<p><img src="/2023/04/15/python-adv/image-20240106210002832.png" alt="image-20240106210002832"></p>
+<p><img src="/2023/04/15/python-adv/image-20240106210050774.png" alt="image-20240106210050774"></p>
+<h4 id="python中常见的内置类型"><a href="#python中常见的内置类型" class="headerlink" title="python中常见的内置类型"></a>python中常见的内置类型</h4><p><img src="/2023/04/15/python-adv/image-20240106205324502.png" alt="image-20240106205324502"></p>
+<p>通过id函数查看对象在内存中的地址</p>
 <p>None：全局只有一个</p>
-<h1 id="python的魔法函数"><a href="#python的魔法函数" class="headerlink" title="python的魔法函数"></a>python的魔法函数</h1><h1 id="vscode-python环境"><a href="#vscode-python环境" class="headerlink" title="vscode + python环境"></a>vscode + python环境</h1><ul>
-<li>vscode下载：<a target="_blank" rel="noopener" href="https://code.visualstudio.com/">https://code.visualstudio.com/</a></li>
+<h5 id="数值类型"><a href="#数值类型" class="headerlink" title="数值类型"></a>数值类型</h5><p><img src="/2023/04/15/python-adv/image-20240106205611332.png" alt="image-20240106205611332"></p>
+<h5 id="迭代类型"><a href="#迭代类型" class="headerlink" title="迭代类型"></a>迭代类型</h5><h5 id="序列类型"><a href="#序列类型" class="headerlink" title="序列类型"></a>序列类型</h5><p><img src="/2023/04/15/python-adv/image-20240106205638154.png" alt="image-20240106205638154"></p>
+<h5 id="集合"><a href="#集合" class="headerlink" title="集合"></a>集合</h5><p><img src="/2023/04/15/python-adv/image-20240106205708073.png" alt="image-20240106205708073"></p>
+<h5 id="上下文管理类型"><a href="#上下文管理类型" class="headerlink" title="上下文管理类型"></a>上下文管理类型</h5><ul>
+<li>with</li>
+</ul>
+<h5 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h5><p><img src="/2023/04/15/python-adv/image-20240106205810603.png" alt="image-20240106205810603"></p>
+<h1 id="魔法函数"><a href="#魔法函数" class="headerlink" title="魔法函数"></a>魔法函数</h1><p><img src="/2023/04/15/python-adv/image-20240106210437507.png" alt="image-20240106210437507"></p>
+<ul>
+<li>以双下划线开头，以双下划线结尾。</li>
+</ul>
+<h5 id="python的数据模型以及python数据模型对python的影响"><a href="#python的数据模型以及python数据模型对python的影响" class="headerlink" title="python的数据模型以及python数据模型对python的影响"></a>python的数据模型以及python数据模型对python的影响</h5><ul>
+<li>使用魔法函数可以在我们定义类或者对象时它的行为</li>
+</ul>
+<p>ipython工具</p>
+<p>关于数学运算的魔法函数</p>
+<p><img src="/2023/04/15/python-adv/image-20240107113129209.png" alt="image-20240107113129209"></p>
+<h5 id="len函数的特殊性"><a href="#len函数的特殊性" class="headerlink" title="len函数的特殊性"></a>len函数的特殊性</h5><h1 id="深入类和对象"><a href="#深入类和对象" class="headerlink" title="深入类和对象"></a>深入类和对象</h1><p><img src="/2023/04/15/python-adv/image-20240107161426492.png" alt="image-20240107161426492"></p>
+<p>鸭子类型和多态</p>
+<ul>
 <li></li>
 </ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Company</span>(<span class="params"><span class="built_in">object</span></span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, employee_list</span>):</span></span><br><span class="line">        self.employee = employee_list</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem__</span>(<span class="params">self, item</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.employee[item]</span><br><span class="line">    </span><br><span class="line">a = [<span class="string">&quot;ll&quot;</span>]</span><br><span class="line">company = Company([<span class="string">&quot;bob&quot;</span>, <span class="string">&quot;tom&quot;</span>, <span class="string">&quot;jane&quot;</span>])</span><br><span class="line"></span><br><span class="line">a.extend(company)</span><br><span class="line"><span class="built_in">print</span>(a)</span><br></pre></td></tr></table></figure>
+
+<p>以上代码如果想要成功执行，需要Company类是一个可迭代对象（具有__getitem__这个魔法方法），如果没有这个·方法，会报错，</p>
+<p><img src="/2023/04/15/python-adv/image-20240107161124658.png" alt="image-20240107161124658"></p>
+<p><img src="/2023/04/15/python-adv/image-20240107161210320.png" alt="image-20240107161210320"></p>
+<h2 id="抽象基类"><a href="#抽象基类" class="headerlink" title="抽象基类"></a>抽象基类</h2><ul>
+<li>可以认为是java里面的接口</li>
+<li>python里的抽象基类不能被实例化，类的不同特性是通过魔法函数赋予的。不需要去继承某个特定的类</li>
+<li>python不是统计继承某一个类、某一个接口，就有某些特性，而是通过实现指定的魔法函数，就是某种类型的对象。</li>
+</ul>
+<h2 id="isinstance和type的区别"><a href="#isinstance和type的区别" class="headerlink" title="isinstance和type的区别"></a>isinstance和type的区别</h2><p>python中，is表示id()是否相同的</p>
+<ul>
+<li>isinstance，会根据继承列表进行判断，会判断两个对象是不是在一个继承链上</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">B</span>(<span class="params">A</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">C</span>(<span class="params">B</span>):</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">b = B()</span><br><span class="line">c = C()</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(b, B))	<span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(b, A))	<span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(c, A))	<span class="comment"># True</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">isinstance</span>(c, B))	<span class="comment"># True</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="类变量和实例变量"><a href="#类变量和实例变量" class="headerlink" title="类变量和实例变量"></a>类变量和实例变量</h2><ul>
+<li>类变量被修改后，相关的实例也会改变</li>
+</ul>
+<h2 id="类属性和实例属性以及查找顺序"><a href="#类属性和实例属性以及查找顺序" class="headerlink" title="类属性和实例属性以及查找顺序"></a>类属性和实例属性以及查找顺序</h2><ul>
+<li>类属性，定义在类内部的一些变量和方法，都成为类的属性</li>
+<li>s</li>
+</ul>
+<h3 id="查找顺序"><a href="#查找顺序" class="headerlink" title="查找顺序"></a>查找顺序</h3><p>属性查找算法，C3算法</p>
+<h2 id="类方法、静态方法和实例方法（对象方法）"><a href="#类方法、静态方法和实例方法（对象方法）" class="headerlink" title="类方法、静态方法和实例方法（对象方法）"></a>类方法、静态方法和实例方法（对象方法）</h2><ul>
+<li></li>
+</ul>
+<h1 id="数据封装和私有属性"><a href="#数据封装和私有属性" class="headerlink" title="数据封装和私有属性"></a>数据封装和私有属性</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">私有属性无法通过对象点私有属性进行调用的，也不能通过子类继承的方式使用，只能通过，类中的公共的方法进行调用，从而实现数据的封装</span><br><span class="line">也可以通过在函数前面添加两个下划线，实现方法的私有化。</span><br><span class="line">并不是从语言角度解决的，只是修改了变量的名称,</span><br><span class="line">在Python中，类的私有属性和方法可以通过“_className__attributeName”或“_className__methodName”来访问。</span><br></pre></td></tr></table></figure>
+
+<h1 id="python自省机制"><a href="#python自省机制" class="headerlink" title="python自省机制"></a>python自省机制</h1><ul>
+<li>```<br>python的自省机制，是指通过一定的机制查询对象的内部结构<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+class Person:<br>  “””<br>  文档<br>  “””<br>  name = “user”</li>
+</ul>
+<p>class Student(Person):<br>    def <strong>init</strong>(self, school_name):<br>        self.school_name = school_name</p>
+<p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    stu = Student(“imooc”)</p>
+<pre><code># 通过__dict__查询属性
+print(stu.__dict__)
+# 赋值
+stu.__dict__[&quot;school_addr&quot;] = &quot;aaa&quot;
+# 直接取值
+print(stu.school_addr)
+
+print(stu.name)
+print(Person.__dict__)
+# 列出对象中的所有属性
+print(dir(stu))
+</code></pre>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">## super函数调用父类</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>class A:<br>    def <strong>init</strong>(self):<br>        print(“A”)</p>
+<p>class B(A):<br>    def <strong>init</strong>(self):<br>        print(“B”)<br>        # 执行父类的__init__方法<br>        super().<strong>init</strong>()</p>
+<p>class C(A):<br>    def <strong>init</strong>(self):<br>        print(“C”)<br>        super().<strong>init</strong>()</p>
+<p>class D(B, C):<br>    def <strong>init</strong>(self):<br>        print(“D”)<br>        super(D, self).<strong>init</strong>()</p>
+<h1 id="已经重写了B的构造函数，为什么还需要去调用super，重用父类的方法"><a href="#已经重写了B的构造函数，为什么还需要去调用super，重用父类的方法" class="headerlink" title="已经重写了B的构造函数，为什么还需要去调用super，重用父类的方法"></a>已经重写了B的构造函数，为什么还需要去调用super，重用父类的方法</h1><h1 id="super的执行顺序是什么-与实例属性的查找顺序有关，调用顺序是mro"><a href="#super的执行顺序是什么-与实例属性的查找顺序有关，调用顺序是mro" class="headerlink" title="super的执行顺序是什么 与实例属性的查找顺序有关，调用顺序是mro"></a>super的执行顺序是什么 与实例属性的查找顺序有关，调用顺序是mro</h1><p>if <strong>name</strong> == ‘<strong>main</strong>‘:<br>    print(‘Python’)<br>    d = D()<br>    print(D.<strong>mro</strong>)</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">执行结果</span><br><span class="line"></span><br><span class="line">![image-20240109113306305](python-adv/image-20240109113306305.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 多继承设计经验</span><br><span class="line"></span><br><span class="line">## mixin模式</span><br><span class="line"></span><br><span class="line">- mixin类功能单一</span><br><span class="line">- 不和基类关联，可以和任何基类组合，基类可以不和mixin关联，就能初始化成功</span><br><span class="line">- 在mixin中不要使用super这种用法</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## python中的with</span><br><span class="line"></span><br><span class="line">- with就是上下文管理器</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 自定义序列类</span><br><span class="line"></span><br><span class="line">## 分类</span><br><span class="line"></span><br><span class="line">![image-20240109154017596](python-adv/image-20240109154017596.png)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 序列类型的abc继承关系</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">## 实现可切片对象</span><br><span class="line"></span><br><span class="line">```python</span><br><span class="line"></span><br><span class="line">#模式[start:end:step]</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">    其中，第一个数字start表示切片开始位置，默认为0；</span><br><span class="line">    第二个数字end表示切片截止（但不包含）位置（默认为列表长度）；</span><br><span class="line">    第三个数字step表示切片的步长（默认为1）。</span><br><span class="line">    当start为0时可以省略，当end为列表长度时可以省略，</span><br><span class="line">    当step为1时可以省略，并且省略步长时可以同时省略最后一个冒号。</span><br><span class="line">    另外，当step为负整数时，表示反向切片，这时start应该比end的值要大才行。</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">aList = [3, 4, 5, 6, 7, 9, 11, 13, 15, 17]</span><br><span class="line">print (aList[::])  # 返回包含原列表中所有元素的新列表</span><br><span class="line">print (aList[::-1])  # 返回包含原列表中所有元素的逆序列表</span><br><span class="line">print (aList[::2])  # 隔一个取一个，获取偶数位置的元素</span><br><span class="line">print (aList[1::2])  # 隔一个取一个，获取奇数位置的元素</span><br><span class="line">print (aList[3:6])  # 指定切片的开始和结束位置</span><br><span class="line">print(aList[0:100])  # 切片结束位置大于列表长度时，从列表尾部截断</span><br><span class="line">print(aList[100:])  # 切片开始位置大于列表长度时，返回空列表</span><br><span class="line">#</span><br><span class="line">aList[len(aList):] = [9]  # 在列表尾部增加元素</span><br><span class="line">print(aList)</span><br><span class="line">aList[:0] = [1, 2]  # 在列表头部插入元素</span><br><span class="line">print(aList)</span><br><span class="line">aList[3:3] = [666]  # 在列表中间位置插入元素，起始插入在第四个位置，前面有三个元素；</span><br><span class="line">print(aList)</span><br><span class="line">aList[:3] = [1, 2]  # 替换列表元素，等号两边的列表长度相等</span><br><span class="line">print(aList)</span><br><span class="line">aList[3:] = [4, 5, 6]  # 等号两边的列表长度也可以不相等</span><br><span class="line">print(aList)</span><br><span class="line">aList[::2] = [0] * 3  # 隔一个修改一个</span><br><span class="line">print (aList)</span><br><span class="line">aList[::2] = [&#x27;a&#x27;, &#x27;b&#x27;, &#x27;c&#x27;]  # 隔一个修改一个</span><br><span class="line">print(aList)</span><br><span class="line">aList[::2] = [1,2,3]  # 左侧切片不连续，等号两边列表长度必须相等</span><br><span class="line">print(aList)</span><br><span class="line"># aList[:3] = []  # 删除列表中前3个元素</span><br><span class="line"># print(aList)</span><br><span class="line">del aList[:3]  # 切片元素连续</span><br><span class="line">print(aList)</span><br><span class="line">del aList[::2]  # 切片元素不连续，隔一个删一个</span><br><span class="line">print(aList)</span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li>切片后，返回的是一个新的列表对象</li>
+</ul>
+<h1 id="对象的引用、可变性和垃圾回收"><a href="#对象的引用、可变性和垃圾回收" class="headerlink" title="对象的引用、可变性和垃圾回收"></a>对象的引用、可变性和垃圾回收</h1><h2 id="和-is的区别"><a href="#和-is的区别" class="headerlink" title="== 和 is的区别"></a>== 和 is的区别</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">a_1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">b_1 = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;a_1 ：<span class="subst">&#123;<span class="built_in">id</span>(a_1)&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;b_1 ：<span class="subst">&#123;<span class="built_in">id</span>(b_1)&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(a_1 <span class="keyword">is</span> b_1)</span><br><span class="line"><span class="built_in">print</span>(a_1 == b_1)</span><br><span class="line"></span><br><span class="line">a_11 = <span class="string">&quot;abc&quot;</span></span><br><span class="line">b_11 = <span class="string">&quot;abc&quot;</span></span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;a_11 : <span class="subst">&#123;<span class="built_in">id</span>(a_11)&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(<span class="string">f&quot;b_11 : <span class="subst">&#123;<span class="built_in">id</span>(b_11)&#125;</span>&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(a_11 <span class="keyword">is</span> b_11)</span><br><span class="line"><span class="built_in">print</span>(a_11 == b_11)</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2023/04/15/python-adv/image-20240111112456744.png" alt="image-20240111112456744"></p>
+<h2 id="python中垃圾回收的算法，采用的是引用计数"><a href="#python中垃圾回收的算法，采用的是引用计数" class="headerlink" title="python中垃圾回收的算法，采用的是引用计数"></a>python中垃圾回收的算法，采用的是引用计数</h2><p>对象只有在引用计数器减到0的时候，才会被垃圾回收器回收。</p>
+<p>使用del这个魔法函数可以定义一些这个对象在被垃圾回收器回收时执行的操作。</p>
+<hr>
+<p><a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=Python%E8%BF%9B%E9%98%B6&amp;t=blog&amp;u=qq_29027865">https://so.csdn.net/so/search?q=Python%E8%BF%9B%E9%98%B6&amp;t=blog&amp;u=qq_29027865</a></p>
+<h1 id="python作用域划分"><a href="#python作用域划分" class="headerlink" title="python作用域划分"></a>python作用域划分</h1><p><img src="/2023/04/15/python-adv/image-20240106120208131.png" alt="image-20240106120208131"></p>
+<p>作用域是，python函数能够使用的一个区域</p>
+<p>内建作用域：Built-in，比如max、min、len等，只要有python环境，就都可以使用</p>
+<p>全局作用域：global</p>
+<p>函数作用域：Enclosing    闭包</p>
+<p>局部作用域：local</p>
+<p>局部变量</p>
+<p>全局变量</p>
+<ul>
+<li>在if、elif、else、while、for、try、except不会引入新的作用域</li>
+<li>在模块、类、函数引入了作用域</li>
+</ul>
+<p>post和get请求的区别</p>
+<p><img src="/2023/04/15/python-adv/image-20240106121155318.png" alt="image-20240106121155318"></p>
+<p>正则表达式提取数据</p>
+<p><img src="/2023/04/15/python-adv/image-20240106154743658.png" alt="image-20240106154743658"></p>
 
         </div>
         <footer class="article-footer">
@@ -237,7 +347,7 @@
 
 
 
-    <a data-url="http://example.com/2023/04/15/python-adv/" data-id="clq80f8aq0016skvo877u4084" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
+    <a data-url="http://example.com/2023/04/15/python-adv/" data-id="clrbu0yzb0011l4vohqge5sqo" class="article-share-link"><i class="fa fa-share"></i>分享到</a>
 <script>
     (function ($) {
         $('body').on('click', function() {
@@ -313,21 +423,24 @@
         "genre": "python",
         "datePublished": "2023-04-15",
         "dateCreated": "2023-04-15",
-        "dateModified": "2023-09-24",
+        "dateModified": "2024-01-11",
         "url": "http://example.com/2023/04/15/python-adv/",
-        "description": "python在一切皆对象在python中函数和类也是对象
+        "description": "python中一切皆对象在python中函数和类也是对象
 赋值给一个变量
 可以添加到集合对象中
 可以作为参数传递给函数
 可以当作函数的返回值
 
 type、object和class的关系
+
+object是最顶层的积累
+type是一个类，同时也是一个对象
+
 基本所有的内置类型，都是默认会继承object
 object是type的一个实例，type创建了所有的对象（类、函数）
 type自己实例化了自己
-python中常见的内置类型通过id函数查看对象在内存中的地址
-No",
-        "wordCount": 32
+",
+        "wordCount": 918
     }
 </script>
 
@@ -443,6 +556,26 @@ No",
                     <li>
                         
                         <div class="item-thumbnail">
+                            <a href="/2023/12/16/redis/" class="thumbnail">
+    
+    
+        <span class="thumbnail-image thumbnail-none"></span>
+    
+    
+</a>
+
+                        </div>
+                        
+                        <div class="item-inner">
+                            <p class="item-category"><a class="article-category-link" href="/categories/%E7%BC%93%E5%AD%98/">缓存</a></p>
+                            <p class="item-title"><a href="/2023/12/16/redis/" class="title">redis</a></p>
+                            <p class="item-date"><time datetime="2023-12-16T12:51:09.000Z" itemprop="datePublished">2023-12-16</time></p>
+                        </div>
+                    </li>
+                
+                    <li>
+                        
+                        <div class="item-thumbnail">
                             <a href="/2023/09/07/%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F/" class="thumbnail">
     
     
@@ -520,26 +653,6 @@ No",
                         </div>
                     </li>
                 
-                    <li>
-                        
-                        <div class="item-thumbnail">
-                            <a href="/2023/03/08/Golang/" class="thumbnail">
-    
-    
-        <span class="thumbnail-image thumbnail-none"></span>
-    
-    
-</a>
-
-                        </div>
-                        
-                        <div class="item-inner">
-                            <p class="item-category"></p>
-                            <p class="item-title"><a href="/2023/03/08/Golang/" class="title">Golang</a></p>
-                            <p class="item-date"><time datetime="2023-03-08T13:34:40.000Z" itemprop="datePublished">2023-03-08</time></p>
-                        </div>
-                    </li>
-                
             </ul>
         </div>
     </div>
@@ -549,7 +662,7 @@ No",
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">分类</h3>
         <div class="widget">
-            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/">安全设备</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">3</span></li></ul>
+            <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Linux/">Linux</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/NoSQL/">NoSQL</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/python/">python</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E4%B8%AD%E9%97%B4%E4%BB%B6/">中间件</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%A4%A7%E6%95%B0%E6%8D%AE/">大数据</a><span class="category-list-count">8</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AD%A6%E4%B9%A0/">学习</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%89%E5%85%A8%E8%AE%BE%E5%A4%87/">安全设备</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%AE%B9%E5%99%A8/">容器</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E5%B7%A5%E5%85%B7/">工具</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%AE%97%E6%B3%95/">算法</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E7%BC%93%E5%AD%98/">缓存</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/%E9%A1%B9%E7%9B%AE/">项目</a><span class="category-list-count">2</span></li></ul>
         </div>
     </div>
 
@@ -559,7 +672,7 @@ No",
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">归档</h3>
         <div class="widget">
-            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/07/">七月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li></ul>
+            <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/12/">十二月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/09/">九月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/06/">六月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/04/">四月 2023</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/03/">三月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/01/">一月 2023</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/10/">十月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/09/">九月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/08/">八月 2022</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/06/">六月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/04/">四月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/02/">二月 2022</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/01/">一月 2022</a><span class="archive-list-count">6</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/12/">十二月 2021</a><span class="archive-list-count">5</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a><span class="archive-list-count">3</span></li></ul>
         </div>
     </div>
 
@@ -569,7 +682,7 @@ No",
     <div class="widget-wrap widget-list">
         <h3 class="widget-title">标签</h3>
         <div class="widget">
-            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8S/" rel="tag">K8S</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/" rel="tag">K8s</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytest/" rel="tag">pytest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/" rel="tag">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag">环境搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
+            <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Django/" rel="tag">Django</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hadoop/" rel="tag">Hadoop</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8S/" rel="tag">K8S</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/K8s/" rel="tag">K8s</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Linux/" rel="tag">Linux</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hadoop/" rel="tag">hadoop</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/leetcode%E9%A2%98%E8%A7%A3/" rel="tag">leetcode题解</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/pytest/" rel="tag">pytest</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/python/" rel="tag">python</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/scala/" rel="tag">scala</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/shell/" rel="tag">shell</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" rel="tag">中间件</a><span class="tag-list-count">3</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" rel="tag">内存计算</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%9F%BA%E7%A1%80/" rel="tag">基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag">大数据</a><span class="tag-list-count">2</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%AD%A6%E4%B9%A0/" rel="tag">学习</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" rel="tag">数据仓库软件</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" rel="tag">数据结构基础</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" rel="tag">消息队列</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag">环境搭建</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" rel="tag">计算机网络</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" rel="tag">集群管理工具</a><span class="tag-list-count">1</span></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%A1%B9%E7%9B%AE/" rel="tag">项目</a><span class="tag-list-count">1</span></li></ul>
         </div>
     </div>
 
@@ -579,7 +692,7 @@ No",
     <div class="widget-wrap widget-float">
         <h3 class="widget-title">标签云</h3>
         <div class="widget tagcloud">
-            <a href="/tags/Django/" style="font-size: 15px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/K8S/" style="font-size: 10px;">K8S</a> <a href="/tags/K8s/" style="font-size: 10px;">K8s</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/pytest/" style="font-size: 10px;">pytest</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 15px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">基础</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 15px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" style="font-size: 10px;">环境搭建</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
+            <a href="/tags/Django/" style="font-size: 10px;">Django</a> <a href="/tags/Hadoop/" style="font-size: 15px;">Hadoop</a> <a href="/tags/K8S/" style="font-size: 10px;">K8S</a> <a href="/tags/K8s/" style="font-size: 10px;">K8s</a> <a href="/tags/Linux/" style="font-size: 10px;">Linux</a> <a href="/tags/hadoop/" style="font-size: 10px;">hadoop</a> <a href="/tags/leetcode%E9%A2%98%E8%A7%A3/" style="font-size: 10px;">leetcode题解</a> <a href="/tags/pytest/" style="font-size: 10px;">pytest</a> <a href="/tags/python/" style="font-size: 20px;">python</a> <a href="/tags/scala/" style="font-size: 10px;">scala</a> <a href="/tags/shell/" style="font-size: 10px;">shell</a> <a href="/tags/%E4%B8%AD%E9%97%B4%E4%BB%B6/" style="font-size: 20px;">中间件</a> <a href="/tags/%E5%86%85%E5%AD%98%E8%AE%A1%E7%AE%97/" style="font-size: 10px;">内存计算</a> <a href="/tags/%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">基础</a> <a href="/tags/%E5%A4%A7%E6%95%B0%E6%8D%AE/" style="font-size: 15px;">大数据</a> <a href="/tags/%E5%AD%A6%E4%B9%A0/" style="font-size: 10px;">学习</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E4%BB%93%E5%BA%93%E8%BD%AF%E4%BB%B6/" style="font-size: 10px;">数据仓库软件</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" style="font-size: 10px;">数据库</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E5%9F%BA%E7%A1%80/" style="font-size: 10px;">数据结构基础</a> <a href="/tags/%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97/" style="font-size: 10px;">消息队列</a> <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" style="font-size: 10px;">环境搭建</a> <a href="/tags/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C/" style="font-size: 10px;">计算机网络</a> <a href="/tags/%E9%9B%86%E7%BE%A4%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7/" style="font-size: 10px;">集群管理工具</a> <a href="/tags/%E9%A1%B9%E7%9B%AE/" style="font-size: 10px;">项目</a>
         </div>
     </div>
 
@@ -616,7 +729,7 @@ No",
                 <h1 class="logo-wrap">
                     <a href="/" class="logo"></a>
                 </h1>
-                <p>&copy; 2023 Wumeng</p>
+                <p>&copy; 2024 Wumeng</p>
                 
                 <p>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>. Theme by <a href="https://github.com/ppoffice" target="_blank">PPOffice</a></p>
                 
